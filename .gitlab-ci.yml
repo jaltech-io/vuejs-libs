@@ -1,0 +1,117 @@
+# =============================================================================
+# vuejs-libs — packages npm @profeskills/* Vue (vuejs-ui)
+# Repo standalone, ex platform-apps/libs/vuejs-ui
+#
+# STAGES : lint | deploy
+#
+# lint:libs      — auto sur main/MR : typecheck + build + verify
+# deploy:vuejs-ui — publie sur npmjs.com quand le tag "vuejs-ui@<version>"
+#                   est pousse. Necessite la variable CI/CD NPM_TOKEN.
+#
+# Release :
+#   1. bump "version" dans libs/vuejs-ui/package.json + CHANGELOG, merger sur main
+#   2. git tag vuejs-ui@<version> && git push origin vuejs-ui@<version>
+# =============================================================================
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - when: never
+
+stages:
+  - lint
+  - deploy
+
+lint:libs:
+  stage: lint
+  image: node:22.18.0-alpine
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@10.12.1 --activate
+  script:
+    - pnpm install --frozen-lockfile
+    - pnpm check
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+    - when: manual
+      allow_failure: true
+
+deploy:vuejs-ui:
+  stage: deploy
+  image: node:22.18.0-alpine
+  variables:
+    GIT_DEPTH: "0"
+    LIB_PROJECT: vuejs-ui
+  before_script:
+    - apk add --no-cache git
+    - npm install --global npm@11.18.0
+    - corepack enable
+    - corepack prepare pnpm@10.12.1 --activate
+  script:
+    - |
+      set -eu
+
+      PROJECT="$LIB_PROJECT"
+      TAG="${CI_COMMIT_TAG:-}"
+      VERSION="${TAG#*@}"
+
+      if [ -z "$TAG" ]; then
+        echo "❌ Ce job se declenche sur un tag $PROJECT@<version> — lancez-le uniquement depuis le pipeline de ce tag."
+        exit 1
+      fi
+
+      case "$TAG" in
+        "$PROJECT@$VERSION") ;;
+        *) echo "❌ Tag $TAG incoherent (attendu: $PROJECT@<version>)"; exit 1 ;;
+      esac
+
+      PACKAGE_JSON="libs/$PROJECT/package.json"
+      EXPECTED_NAME="@profeskills/$PROJECT"
+      PACKAGE_NAME=$(node -p "require('./$PACKAGE_JSON').name")
+      PACKAGE_VERSION=$(node -p "require('./$PACKAGE_JSON').version")
+      PACKAGE_LICENSE=$(node -p "require('./$PACKAGE_JSON').license")
+      PACKAGE_PRIVATE=$(node -p "String(require('./$PACKAGE_JSON').private === true)")
+      PACKAGE_ACCESS=$(node -p "require('./$PACKAGE_JSON').publishConfig?.access ?? ''")
+
+      [ "$PACKAGE_NAME" = "$EXPECTED_NAME" ] || { echo "❌ Nom $PACKAGE_NAME != $EXPECTED_NAME"; exit 1; }
+      [ "$PACKAGE_VERSION" = "$VERSION" ] || { echo "❌ Version du tag ($VERSION) != package.json ($PACKAGE_VERSION)"; exit 1; }
+      [ "$PACKAGE_LICENSE" = "MIT" ] || { echo "❌ License doit etre MIT"; exit 1; }
+      [ "$PACKAGE_PRIVATE" = "false" ] || { echo "❌ Package marque private"; exit 1; }
+      [ "$PACKAGE_ACCESS" = "public" ] || { echo "❌ publishConfig.access doit etre 'public'"; exit 1; }
+
+      git fetch origin main --quiet
+      git merge-base --is-ancestor "$CI_COMMIT_SHA" origin/main || { echo "❌ Le commit tagge doit appartenir a main"; exit 1; }
+
+      pnpm install --frozen-lockfile
+      pnpm check
+
+      DIST_DIR="dist/libs/$PROJECT"
+
+      # Le package publie = la SOURCE de la lib (src/ + dist/), pas le dossier dist :
+      # les exports pointent vers src/*, le dist ne contient que le build compile.
+      # On publie donc depuis libs/vuejs-ui en y copiant le dist fraichement construit.
+      rm -rf "libs/$PROJECT/dist"
+      cp -r "$DIST_DIR" "libs/$PROJECT/dist"
+
+      npm pack "libs/$PROJECT" --dry-run
+
+      case "$VERSION" in
+        *-*) NPM_DIST_TAG="next" ;;
+        *)   NPM_DIST_TAG="latest" ;;
+      esac
+
+      npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
+      npm publish "libs/$PROJECT" --access public --tag "$NPM_DIST_TAG"
+      echo "✅ Publie $PACKAGE_NAME@$VERSION sur npm (dist-tag: $NPM_DIST_TAG)"
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^vuejs-ui@/
+      when: on_success
+    - when: manual
+      allow_failure: true
+  environment:
+    name: npm-publish/vuejs-ui

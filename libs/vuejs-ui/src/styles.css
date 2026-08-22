@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 213 33% 97%;
+    --foreground: 218 42% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 218 42% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 42% 15%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 213 28% 93%;
+    --secondary-foreground: 218 42% 15%;
+    --muted: 213 28% 93%;
+    --muted-foreground: 215 18% 46%;
+    --accent: 213 28% 93%;
+    --accent-foreground: 218 42% 15%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 213 22% 88%;
+    --input: 213 22% 88%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+    --h-bg: #edf2f7;
+    --h-surface: #fff;
+    --h-surface2: #f1f5fb;
+    --h-border: rgb(50 80 130 / 10%);
+    --h-border-strong: rgb(50 80 130 / 18%);
+    --h-text: #0f1c35;
+    --h-text-2: #3d567a;
+    --h-text-3: #7a95b5;
+    --h-blue-50: #ebf1f9;
+    --h-blue-800: #0c4fa8;
+    --h-green-50: #eaf3de;
+    --h-green-700: #2f6b14;
+    --h-amber-50: #fef3da;
+    --h-amber-700: #7c4e0a;
+    --h-red-50: #fdeaea;
+    --h-red-700: #991f1f;
+    --h-purple-50: #eeedfe;
+    --h-purple-700: #3c3489;
+    --h-radius-lg: 12px;
+  }
+
+  .dark {
+    --background: 222 18% 8%;
+    --foreground: 210 22% 90%;
+    --card: 222 16% 13%;
+    --card-foreground: 210 22% 90%;
+    --popover: 222 16% 13%;
+    --popover-foreground: 210 22% 90%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 14% 19%;
+    --secondary-foreground: 210 22% 90%;
+    --muted: 222 14% 19%;
+    --muted-foreground: 215 16% 62%;
+    --accent: 222 14% 19%;
+    --accent-foreground: 210 22% 90%;
+    --destructive: 0 63% 47%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 13% 23%;
+    --input: 220 13% 23%;
+    --ring: 217 91% 60%;
+    --h-bg: #0e1c38;
+    --h-surface: #162040;
+    --h-surface2: #1e2d52;
+    --h-border: rgb(99 160 255 / 12%);
+    --h-border-strong: rgb(99 160 255 / 22%);
+    --h-text: #e2eeff;
+    --h-text-2: #90aed4;
+    --h-text-3: #4d6f9a;
+    --h-blue-50: #0c1f3d;
+    --h-blue-800: #1877f2;
+    --h-green-50: #0f2218;
+    --h-green-700: #4ade80;
+    --h-amber-50: #2a1a05;
+    --h-amber-700: #fbbf24;
+    --h-red-50: #2d0a0a;
+    --h-red-700: #f87171;
+    --h-purple-50: #1e1a40;
+    --h-purple-700: #534ab7;
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: hsl(var(--border));
+    border-style: solid;
+    border-width: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-color: inherit;
+    text-indent: 0;
+  }
+
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    margin: 0;
+  }
+}
