@@ -25,7 +25,9 @@ export default defineConfig({
   build: {
     cssCodeSplit: false,
     emptyOutDir: true,
-    outDir: '../../dist/libs/vuejs-ui',
+    // dist/ DANS le dossier du paquet : `files: ["dist", ...]` du package.json
+    // packe depuis ici — un outDir racine laissait le tarball sans dist (bug 0.3.0).
+    outDir: 'dist',
     lib: {
       cssFileName: 'styles',
       formats: ['es'],

@@ -5,7 +5,7 @@
     "declarationMap": false,
     "emitDeclarationOnly": true,
     "noEmit": false,
-    "outDir": "../../dist/libs/vuejs-ui",
+    "outDir": "./dist",
     "rootDir": "./src"
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.css"]
