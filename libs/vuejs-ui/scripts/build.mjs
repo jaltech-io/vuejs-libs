@@ -32,6 +32,7 @@ run(process.execPath, [
   resolve(libraryRoot, 'vite.config.ts'),
 ]);
 
+
 // Vue conserve sinon le chemin absolu de chaque SFC dans la propriété __file.
 // Un chemin stable protège la vie privée des mainteneurs et rend le tarball reproductible.
 const sourcePrefix = `${resolve(libraryRoot, 'src').replaceAll('\\', '/')}/`;
@@ -48,13 +49,19 @@ const sanitizeCompiledPaths = (directory) => {
   }
 };
 
-sanitizeCompiledPaths(outputDirectory);
-
 run(process.execPath, [
   resolve(workspaceRoot, 'node_modules/vue-tsc/bin/vue-tsc.js'),
   '--project',
   resolve(libraryRoot, 'tsconfig.lib.json'),
 ]);
+
+// Depuis le fix 0.3.1 (tarball sans dist), vite et vue-tsc ecrivent dans
+// libs/vuejs-ui/dist (outDir local, voir vite.config.ts / tsconfig.lib.json) :
+// on recopie vers la sortie standard du workspace (dist/libs/vuejs-ui) que
+// verify-library-packages et la CI publient.
+cpSync(resolve(libraryRoot, 'dist'), outputDirectory, { recursive: true });
+
+sanitizeCompiledPaths(outputDirectory);
 
 // La feuille CSS est publiée via l'export `./styles.css` et doit être importée
 // explicitement par l'application. Son import de build n'a aucun effet de type et
