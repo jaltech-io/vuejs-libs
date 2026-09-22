@@ -36,7 +36,7 @@ pnpm check        # typecheck (vue-tsc) + build (vite lib + vue-tsc d.ts) + veri
 2. Tagger : `git tag vuejs-ui@0.3.0 && git push origin vuejs-ui@0.3.0`
 3. Le job `deploy:vuejs-ui` du pipeline du tag valide puis publie sur npm
 
-## Variables CI/CD requises (GitLab > Settings > CI/CD > Variables)
+## Variables CI/CD requises (Forgejo > Settings > Actions > Secrets)
 
 | Variable | Rôle |
 |---|---|
