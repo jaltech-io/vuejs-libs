@@ -1,5 +1,5 @@
 // Types volontairement dupliqués (et non importés depuis l'app) — libs/vuejs-ui ne doit dépendre
-// d'aucun code applicatif (voir CLAUDE.md, libs/vuejs-ui : "Technical UI only"). Les valeurs
+// d'aucun code applicatif (règle « Technical UI only » de libs/vuejs-ui). Les valeurs
 // correspondent exactement à IssueStatus/IssuePriority/IssueType de
 // apps/pf-admin_front-app/src/shared/types.
 
