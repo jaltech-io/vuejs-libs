@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@profeskills/vuejs-ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@jaltech/vuejs-ui/select';
 import type { Table } from '@tanstack/vue-table';
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-vue-next';
 import { computed } from 'vue';

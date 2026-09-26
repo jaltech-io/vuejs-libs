@@ -1,26 +1,26 @@
-# vuejs-libs — packages npm `@profeskills/*` Vue
+# vuejs-libs — packages npm `@jaltech/*` Vue
 
 Bibliothèques UI Vue de la plateforme (repo standalone, anciennement `platform-apps/libs/vuejs-ui`). Publiées sur [npmjs.org](https://www.npmjs.com/org/profeskills), consommées comme n'importe quelle dépendance npm par les projets (projectflow et autres).
 
 | Package | Contenu |
 |---|---|
-| [`@profeskills/vuejs-ui`](libs/vuejs-ui) | Design system Vue 3 : ~65 familles de composants (button, dialog, data-table avancée, select, sheet, sidebar…), composables (`useConfirm`, `useTableInstance`), `types`, `utils` |
+| [`@jaltech/vuejs-ui`](libs/vuejs-ui) | Design system Vue 3 : ~65 familles de composants (button, dialog, data-table avancée, select, sheet, sidebar…), composables (`useConfirm`, `useTableInstance`), `types`, `utils` |
 
 ## Nature du package : source-first
 
-Depuis la **0.3.0**, le package expose ses **sources** (`src/*.vue`, `src/*.ts`) via son champ `exports` — chaque dossier de composant a son entrée (`@profeskills/vuejs-ui/dialog`), les fichiers profonds passent par le wildcard (`@profeskills/vuejs-ui/data-table/DataTable.vue`). Le `dist/` compilé est aussi livré (`./styles.css` + typings pour le gate de vérification).
+Depuis la **0.3.0**, le package expose ses **sources** (`src/*.vue`, `src/*.ts`) via son champ `exports` — chaque dossier de composant a son entrée (`@jaltech/vuejs-ui/dialog`), les fichiers profonds passent par le wildcard (`@jaltech/vuejs-ui/data-table/DataTable.vue`). Le `dist/` compilé est aussi livré (`./styles.css` + typings pour le gate de vérification).
 
 **Prérequis consommateur** : un bundler qui compile Vue SFC + TypeScript (Vite + `@vitejs/plugin-vue`), et :
 
 ```js
 // vite.config — le prébundling esbuild ne sait pas traiter les .vue
-optimizeDeps: { exclude: ['@profeskills/vuejs-ui'] }
+optimizeDeps: { exclude: ['@jaltech/vuejs-ui'] }
 ```
 
 Pour Tailwind, ajouter les sources de la lib au `content` :
 
 ```js
-content: ['./node_modules/@profeskills/vuejs-ui/src/**/*.{vue,js,ts}']
+content: ['./node_modules/@jaltech/vuejs-ui/src/**/*.{vue,js,ts}']
 ```
 
 ## Développement

@@ -1,4 +1,4 @@
-import type { DataTableFilterOption, FilterItem, FilterParams, ViewItem } from '@profeskills/vuejs-ui/types';
+import type { DataTableFilterOption, FilterItem, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 
 export const COLUMNS = ['title', 'status', 'priority', 'createdAt'] as const;
 export const FILTERABLE_FIELDS = ['title', 'status', 'priority', 'sort', 'operator'] as const;

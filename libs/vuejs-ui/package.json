@@ -1,5 +1,5 @@
 {
-  "name": "@profeskills/vuejs-ui",
+  "name": "@jaltech/vuejs-ui",
   "version": "0.3.2",
   "description": "Composants Vue 3 accessibles et réutilisables pour les applications ProfesSkills.",
   "type": "module",

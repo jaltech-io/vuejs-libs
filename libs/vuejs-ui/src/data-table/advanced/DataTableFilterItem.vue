@@ -118,7 +118,7 @@
 </template>
 
 <script setup lang="ts">
-import type { DataTableFilterOption } from '@profeskills/vuejs-ui/types';
+import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
 import { ChevronDownIcon, ListIcon, SearchIcon, TypeIcon, XIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 

@@ -38,7 +38,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@profeskills/vuejs-ui/dropdown-menu';
+} from '@jaltech/vuejs-ui/dropdown-menu';
 import type { Column } from '@tanstack/vue-table';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, EyeOffIcon } from 'lucide-vue-next';
 

@@ -158,10 +158,10 @@
 </template>
 
 <script setup lang="ts">
-import { showConfirm } from '@profeskills/vuejs-ui/composables/useConfirm';
-import { useTableInstance } from '@profeskills/vuejs-ui/composables/useTableInstance';
-import type { FilterParams, ViewItem } from '@profeskills/vuejs-ui/types';
-import { getIsMacOS } from '@profeskills/vuejs-ui/utils';
+import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
+import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
+import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
+import { getIsMacOS } from '@jaltech/vuejs-ui/utils';
 import { ChevronDownIcon, ChevronLeftIcon, PencilIcon, PlusIcon, SearchIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

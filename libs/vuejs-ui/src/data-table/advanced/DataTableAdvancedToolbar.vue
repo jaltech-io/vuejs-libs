@@ -165,8 +165,8 @@
 </template>
 
 <script setup lang="ts">
-import { useTableInstance } from '@profeskills/vuejs-ui/composables/useTableInstance';
-import type { DataTableFilterOption, FilterParams, ViewItem } from '@profeskills/vuejs-ui/types';
+import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
+import type { DataTableFilterOption, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import {
   BookmarkIcon,
   BookmarkPlusIcon,

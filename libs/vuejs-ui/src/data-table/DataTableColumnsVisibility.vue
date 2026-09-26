@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTableInstance } from '@profeskills/vuejs-ui/composables/useTableInstance';
+import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { Column } from '@tanstack/vue-table';
 import { SlidersHorizontalIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';

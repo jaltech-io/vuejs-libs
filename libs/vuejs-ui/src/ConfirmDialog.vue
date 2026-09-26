@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { _confirmOpen, _confirmOpts, resolveConfirm } from '@profeskills/vuejs-ui/composables/useConfirm';
+import { _confirmOpen, _confirmOpts, resolveConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import {
   Dialog,
   DialogContent,
@@ -41,5 +41,5 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@profeskills/vuejs-ui/dialog';
+} from '@jaltech/vuejs-ui/dialog';
 </script>

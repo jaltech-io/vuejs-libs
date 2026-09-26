@@ -13,7 +13,7 @@
 
 ### ⚠️ Notes
 
-- Le package expose désormais ses sources (`.vue`/`.ts`) : le consommateur doit avoir un bundler qui les compile (Vite + @vitejs/plugin-vue). Ajouter `@profeskills/vuejs-ui` à `optimizeDeps.exclude`
+- Le package expose désormais ses sources (`.vue`/`.ts`) : le consommateur doit avoir un bundler qui les compile (Vite + @vitejs/plugin-vue). Ajouter `@jaltech/vuejs-ui` à `optimizeDeps.exclude`
 - Repo déplacé : gitlab.com/jalil.mestaoui/vuejs-libs (ex platform-apps/libs/vuejs-ui)
 
 ## 0.2.3 (2026-07-19)

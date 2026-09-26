@@ -74,7 +74,7 @@ for (const project of libraries) {
   if (!existsSync(manifestPath)) fail(`${project}: missing built package.json`);
 
   const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-  const expectedName = `@profeskills/${project}`;
+  const expectedName = `@jaltech/${project}`;
 
   if (manifest.name !== expectedName) fail(`${project}: expected package name ${expectedName}`);
   if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(manifest.version)) {
@@ -141,7 +141,7 @@ try {
 
   writeFileSync(
     consumerEntry,
-    "import { Dialog, HBadge, Tabs } from '@profeskills/vuejs-ui'\nvoid [Dialog, HBadge, Tabs]\n",
+    "import { Dialog, HBadge, Tabs } from '@jaltech/vuejs-ui'\nvoid [Dialog, HBadge, Tabs]\n",
     'utf8',
   );
   writeFileSync(
@@ -165,8 +165,8 @@ try {
           ],
           types: ['web-bluetooth'],
           paths: {
-            '@profeskills/vuejs-ui': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/index.d.ts')],
-            '@profeskills/vuejs-ui/*': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/*')],
+            '@jaltech/vuejs-ui': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/index.d.ts')],
+            '@jaltech/vuejs-ui/*': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/*')],
           },
         },
         files: [consumerEntry],
@@ -186,7 +186,7 @@ try {
   if (typecheck.status !== 0) {
     fail(`vuejs-ui: strict consumer typecheck failed\n${typecheck.stdout}${typecheck.stderr}`);
   }
-  console.log('✓ @profeskills/vuejs-ui strict consumer declarations');
+  console.log('✓ @jaltech/vuejs-ui strict consumer declarations');
 } finally {
   rmSync(consumerDirectory, { recursive: true, force: true });
 }

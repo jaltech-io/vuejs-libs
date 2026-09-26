@@ -11,8 +11,8 @@
     "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "paths": {
-      "@profeskills/vuejs-ui": ["src/index.ts"],
-      "@profeskills/vuejs-ui/*": ["src/*"]
+      "@jaltech/vuejs-ui": ["src/index.ts"],
+      "@jaltech/vuejs-ui/*": ["src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.vue"]

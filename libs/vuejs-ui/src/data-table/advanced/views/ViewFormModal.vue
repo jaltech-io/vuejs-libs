@@ -35,8 +35,8 @@
 </template>
 
 <script setup lang="ts">
-import { showConfirm } from '@profeskills/vuejs-ui/composables/useConfirm';
-import type { FilterParams, ViewItem } from '@profeskills/vuejs-ui/types';
+import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
+import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { TrashIcon } from 'lucide-vue-next';
 import { computed, nextTick, ref, watch } from 'vue';
 import FormDialog from '../../../FormDialog.vue';

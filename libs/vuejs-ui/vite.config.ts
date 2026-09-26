@@ -19,7 +19,7 @@ export default defineConfig({
   plugins: [vue({ isProduction: true })],
   resolve: {
     alias: {
-      '@profeskills/vuejs-ui': source,
+      '@jaltech/vuejs-ui': source,
     },
   },
   build: {

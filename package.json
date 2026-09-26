@@ -2,7 +2,7 @@
   "name": "vuejs-libs",
   "version": "1.0.0",
   "private": true,
-  "description": "Bibliothèques Vue @profeskills/* (vuejs-ui) — repo standalone, ex platform-apps/libs/vuejs-ui",
+  "description": "Bibliothèques Vue @jaltech/* (vuejs-ui) — repo standalone, ex platform-apps/libs/vuejs-ui",
   "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">=20"

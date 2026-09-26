@@ -42,9 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar, AvatarFallback } from '@profeskills/vuejs-ui/avatar';
-import type { ActivityEventItem, ActivityEventKind } from '@profeskills/vuejs-ui/types';
-import { getInitials } from '@profeskills/vuejs-ui/utils';
+import { Avatar, AvatarFallback } from '@jaltech/vuejs-ui/avatar';
+import type { ActivityEventItem, ActivityEventKind } from '@jaltech/vuejs-ui/types';
+import { getInitials } from '@jaltech/vuejs-ui/utils';
 import { useRoute } from 'vue-router';
 
 defineProps<{ events: ActivityEventItem[] }>();

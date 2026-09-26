@@ -45,7 +45,7 @@ const sanitizeCompiledPaths = (directory) => {
     }
     if (!path.endsWith('.js')) continue;
     const content = readFileSync(path, 'utf8');
-    writeFileSync(path, content.replaceAll(sourcePrefix, '@profeskills/vuejs-ui/'), 'utf8');
+    writeFileSync(path, content.replaceAll(sourcePrefix, '@jaltech/vuejs-ui/'), 'utf8');
   }
 };
 

@@ -1,4 +1,4 @@
-# @profeskills/vuejs-ui
+# @jaltech/vuejs-ui
 
 Bibliothèque de composants Vue 3 partagée par les applications ProfesSkills.
 
@@ -7,30 +7,30 @@ Bibliothèque de composants Vue 3 partagée par les applications ProfesSkills.
 ## Installation
 
 ```bash
-pnpm add @profeskills/vuejs-ui vue vue-router @tanstack/vue-table
+pnpm add @jaltech/vuejs-ui vue vue-router @tanstack/vue-table
 ```
 
 Importez ensuite la feuille de styles une seule fois dans le point d’entrée de
 l’application :
 
 ```ts
-import '@profeskills/vuejs-ui/styles.css'
+import '@jaltech/vuejs-ui/styles.css'
 ```
 
 ## Utilisation
 
 ```vue
 <script setup lang="ts">
-import { HBadge, HDialog } from '@profeskills/vuejs-ui'
+import { HBadge, HDialog } from '@jaltech/vuejs-ui'
 </script>
 ```
 
 Les groupes volumineux sont également disponibles par sous-chemins :
 
 ```ts
-import { Dialog, DialogContent } from '@profeskills/vuejs-ui/dialog'
-import { DataTable } from '@profeskills/vuejs-ui/data-table'
-import { showConfirm } from '@profeskills/vuejs-ui/confirm'
+import { Dialog, DialogContent } from '@jaltech/vuejs-ui/dialog'
+import { DataTable } from '@jaltech/vuejs-ui/data-table'
+import { showConfirm } from '@jaltech/vuejs-ui/confirm'
 ```
 
 La classe `dark` appliquée à l’élément racine active les variables du thème
