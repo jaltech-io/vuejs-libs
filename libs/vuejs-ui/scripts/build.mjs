@@ -61,6 +61,14 @@ run(process.execPath, [
 // verify-library-packages et la CI publient.
 cpSync(resolve(libraryRoot, 'dist'), outputDirectory, { recursive: true });
 
+// Paquet SOURCE-FIRST : les `exports` pointent vers `./src/*` (et le wildcard
+// `./* -> ./src/*`), donc le tarball DOIT contenir les sources. Sans cette copie,
+// le package publie n'expose que le compile (.js/.d.ts) et tous les sous-chemins
+// des consommateurs echouent en TS2307. Regression introduite quand le build a
+// commence a restreindre `files` en excluant `src` (voir plus bas) — corrige le
+// 27/09/2026, l'ancien @profeskills@0.3.2 publiait bien `src`.
+cpSync(resolve(libraryRoot, 'src'), resolve(outputDirectory, 'src'), { recursive: true });
+
 sanitizeCompiledPaths(outputDirectory);
 
 // La feuille CSS est publiée via l'export `./styles.css` et doit être importée
@@ -94,7 +102,7 @@ const rewriteDistPaths = (value) => {
 };
 
 const distributionPackageJson = rewriteDistPaths(packageJson);
-distributionPackageJson.files = ['**/*.js', '**/*.d.ts', 'styles.css', 'README.md', 'LICENSE'];
+distributionPackageJson.files = ['src', '**/*.js', '**/*.d.ts', 'styles.css', 'README.md', 'LICENSE'];
 
 writeFileSync(
   resolve(outputDirectory, 'package.json'),
