@@ -86,7 +86,7 @@ for (const project of libraries) {
   if (manifest.publishConfig?.registry && manifest.publishConfig.registry !== 'https://registry.npmjs.org/') {
     fail(`${project}: unexpected npm registry ${manifest.publishConfig.registry}`);
   }
-  if (!String(manifest.repository?.url ?? '').includes('forge.profeskills.com/jal-group/vuejs-libs')) {
+  if (!String(manifest.repository?.url ?? '').includes('github.com/jaltech-io/vuejs-libs')) {
     fail(`${project}: repository metadata does not point to the vuejs-libs repo`);
   }
 

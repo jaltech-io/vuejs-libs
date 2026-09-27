@@ -364,12 +364,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://forge.profeskills.com/jal-group/vuejs-libs.git",
+    "url": "git+https://github.com/jaltech-io/vuejs-libs.git",
     "directory": "libs/vuejs-ui"
   },
-  "homepage": "https://forge.profeskills.com/jal-group/vuejs-libs/src/branch/main/libs/vuejs-ui#readme",
+  "homepage": "https://github.com/jaltech-io/vuejs-libs/tree/main/libs/vuejs-ui#readme",
   "bugs": {
-    "url": "https://forge.profeskills.com/jal-group/vuejs-libs/issues"
+    "url": "https://github.com/jaltech-io/vuejs-libs/issues"
   },
   "keywords": [
     "vue",
