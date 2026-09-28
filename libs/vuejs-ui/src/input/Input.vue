@@ -4,12 +4,15 @@ import type { HTMLAttributes } from 'vue';
 import { cn } from '../utils';
 
 const props = defineProps<{
-  defaultValue?: string | number;
-  modelValue?: string | number;
+  defaultValue?: string | number | null;
+  // `null` accepté : les champs de formulaire numériques optionnels portent un modèle
+  // `number | null` (v-model.number sur une valeur effaçable) — sans lui l'Input ne peut
+  // pas s'y lier (industrialisation des <input> natifs).
+  modelValue?: string | number | null;
   class?: HTMLAttributes['class'];
 }>();
 
-const emits = defineEmits<(e: 'update:modelValue', payload: string | number) => void>();
+const emits = defineEmits<(e: 'update:modelValue', payload: string | number | null) => void>();
 
 const modelValue = useVModel(props, 'modelValue', emits, {
   passive: true,
