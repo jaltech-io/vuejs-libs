@@ -49,12 +49,17 @@ export function calcFilterParams(
   };
 }
 
-export function calcViewSearchParams(view: ViewItem): Record<string, string> {
+export function calcViewSearchParams(
+  view: ViewItem,
+  // Jeu de colonnes du programme appelant. Sert uniquement de SEUIL : on ne sérialise `cols`
+  // que si la vue masque au moins une colonne. Défaut = COLUMNS (issues) par compatibilité.
+  allColumns: readonly string[] = COLUMNS,
+): Record<string, string> {
   const params: Record<string, string> = {};
   const fp = view.filterParams;
 
   // Colonnes visibles sauvegardees dans la vue
-  if (view.columns && view.columns.length > 0 && view.columns.length < COLUMNS.length) {
+  if (view.columns && view.columns.length > 0 && view.columns.length < allColumns.length) {
     params.cols = view.columns.join('.');
   }
 
