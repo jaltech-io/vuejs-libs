@@ -16,6 +16,18 @@ export const buttonVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
+        // ── Variantes « design-system ProjectFlow » (tokens --h-*) ─────────────
+        // Reprennent À L'IDENTIQUE les anciennes classes globales .h-btn-* de
+        // globals.css (couleur/bordure/hover) pour ne plus laisser de style de
+        // composant en CSS global. La géométrie (padding/taille/texte) est portée
+        // par les tailles `hbtn`/`hicon` ci-dessous. À utiliser ensemble.
+        hprimary: 'border-[var(--h-blue-600)] bg-[var(--h-blue-600)] text-white hover:bg-[var(--h-blue-800)]',
+        hneutral: 'border-[var(--h-border-strong)] bg-[var(--h-surface)] text-[var(--h-text)] hover:bg-[var(--h-surface2)]',
+        hdanger:
+          'border-[var(--h-danger)] bg-[var(--h-danger)] text-white hover:border-[var(--h-danger-hover)] hover:bg-[var(--h-danger-hover)]',
+        hpurple: 'border-[var(--h-purple-600)] bg-[var(--h-purple-600)] text-white hover:bg-[var(--h-purple-700)]',
+        hicon:
+          'border-[var(--h-border-strong)] bg-[var(--h-surface)] text-[var(--h-text-3)] hover:bg-[var(--h-surface2)] hover:text-[var(--h-text)]',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
@@ -26,6 +38,9 @@ export const buttonVariants = cva(
         'icon-xs': "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',
+        // Géométrie des ex-.h-btn-* (bouton texte) et .h-icon-btn (bouton icône).
+        hbtn: 'h-auto gap-1.5 rounded-[var(--h-radius)] border-[0.5px] px-3.5 py-[7px] text-[13px] font-normal whitespace-nowrap disabled:opacity-55',
+        hicon: 'size-7 rounded-md border-[0.5px]',
       },
     },
     defaultVariants: {
