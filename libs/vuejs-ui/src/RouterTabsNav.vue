@@ -1,0 +1,41 @@
+<template>
+  <div class="flex gap-1">
+    <RouterLink
+      v-for="tab in tabs"
+      :key="tab.to"
+      :to="tab.to"
+      :class="[
+        'inline-flex items-center gap-1.5 rounded-[var(--h-radius)] border-[0.5px] px-3.5 py-1.5 text-[12.5px] font-medium font-[inherit] no-underline cursor-pointer',
+        isActive(tab)
+          ? 'border-[var(--h-border)] bg-[var(--h-surface2)] text-[var(--h-text)]'
+          : 'border-transparent bg-none text-[var(--h-text-3)] transition-[background,color] duration-100 hover:bg-[var(--h-surface2)] hover:text-[var(--h-text)]',
+      ]"
+    >
+      <component :is="tab.icon" v-if="tab.icon" :size="14" />
+      {{ tab.label }}
+    </RouterLink>
+  </div>
+</template>
+
+<script setup lang="ts">
+// Barre d'onglets GÉNÉRIQUE basée sur le routeur (RouterLink), coque réutilisable pour toute
+// navigation par onglets liée à une route (planification sprints/backlog/vélocité, etc.).
+// Le CONTENU (libellés, icônes, routes) est fourni par le consommateur via `tabs` — la lib ne
+// connaît aucune route produit. L'onglet actif est dérivé du chemin courant, pas passé en prop.
+import type { Component } from 'vue';
+import { useRoute } from 'vue-router';
+
+export interface RouterTab {
+  label: string;
+  to: string;
+  icon?: Component;
+}
+
+defineProps<{ tabs: RouterTab[] }>();
+
+const route = useRoute();
+
+function isActive(tab: RouterTab): boolean {
+  return route.path === tab.to || route.path.startsWith(`${tab.to}/`);
+}
+</script>
