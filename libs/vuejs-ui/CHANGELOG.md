@@ -1,3 +1,10 @@
+## 0.3.13 (2026-09-29)
+
+### 🚀 Features
+
+- **exports:** added folder barrels so consumers import from clean paths instead of deep `.vue` files — `@jaltech/vuejs-ui/composables`, `@jaltech/vuejs-ui/data-table/advanced`, `@jaltech/vuejs-ui/data-table/advanced/views` (ViewsSidebar, ViewFormModal), plus per-component subpaths for the composed components (`form-dialog`, `confirm-dialog`, `empty-state`, `h-dialog`, `h-tooltip`, `stat-card`, `h-metric-card`, `activity-feed`, `router-tabs-nav`, `table-selection-bar`).
+- **exports:** the root barrel now also exports `EmptyState` and `RouterTabsNav` (were missing).
+
 ## 0.3.12 (2026-09-29)
 
 ### 📝 Documentation
