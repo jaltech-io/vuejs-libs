@@ -58,3 +58,40 @@ defineProps<{
   columns: ColumnDef<TData, any>[];
 }>();
 </script>
+
+<style scoped>
+/* Le style du tableau vit ICI, au plus près du composant (voir docs/UI.md côté app) —
+   il ne dépend du global que pour les tokens de couleur --h-* (définis en :root par l'app).
+   Auparavant ces classes étaient définies dans le globals.css de l'app consommatrice, ce qui
+   cassait le rendu dès que l'app purgeait son CSS composant du global. */
+.h-dt-scroll {
+  @apply flex-1 overflow-auto min-h-0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--h-border-strong) transparent;
+}
+.h-dt-scroll::-webkit-scrollbar {
+  @apply w-1.5 h-1.5;
+}
+.h-dt-scroll::-webkit-scrollbar-thumb {
+  background: var(--h-border-strong);
+  @apply rounded;
+}
+.h-dt-table {
+  @apply w-full text-[13px] border-collapse max-md:min-w-[600px];
+}
+.h-dt-th {
+  @apply h-[38px] px-3.5 text-left text-[11px] font-semibold text-[var(--h-text-3)] tracking-[0.06em] uppercase bg-[var(--h-surface2)] whitespace-nowrap sticky top-0 z-[1];
+}
+.h-dt-row:hover {
+  @apply bg-[var(--h-surface2)];
+}
+.h-dt-row[data-state='selected'] {
+  @apply bg-[var(--h-blue-50)];
+}
+.h-dt-td {
+  @apply py-[11px] px-3.5 align-middle text-[13px] text-[var(--h-text)];
+}
+.h-dt-empty {
+  @apply py-14 px-6 text-center text-[var(--h-text-3)] text-[13px];
+}
+</style>
