@@ -7,12 +7,24 @@
 /* Wide pages (frontmatter `pageClass: wide-page`) — e.g. the advanced data
    table needs room. Break the prose out of the default ~688px column and use
    the full content width. */
-.wide-page .content-container,
-.VPDoc.wide-page .content-container {
-  max-width: 1200px !important;
+.wide-page .VPDoc .container,
+.wide-page .content-container {
+  max-width: 100% !important;
+}
+/* Reclaim the nested horizontal padding VitePress applies to prose so the
+   advanced table can use the full content width. */
+.wide-page .content {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .wide-page .vp-doc .content {
   max-width: 100% !important;
+}
+@media (min-width: 960px) {
+  .wide-page .VPDoc {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
 }
 
 /* Give live component demos a consistent frame inside the docs. */

@@ -40,11 +40,11 @@
       />
 
       <div class="min-w-0 w-full flex-1">
-        <div class="overflow-hidden rounded-md border border-[hsl(var(--border))]">
+        <div class="flex flex-col overflow-hidden rounded-[var(--h-radius-lg)] border-[0.5px] border-[var(--h-border)] bg-[var(--h-surface)] shadow-[0_1px_3px_rgba(0,0,0,0.07),0_4px_14px_rgba(0,0,0,0.05)]">
           <DataTable :table="table" :columns="columns" />
-        </div>
-        <div class="mt-2">
-          <DataTablePagination :table="table" />
+          <div class="shrink-0 border-t-[0.5px] border-t-[var(--h-border)] bg-[var(--h-surface2)] px-2.5 py-[3px]">
+            <DataTablePagination :table="table" />
+          </div>
         </div>
       </div>
     </div>
