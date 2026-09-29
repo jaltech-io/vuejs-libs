@@ -3,7 +3,7 @@
     <button
       type="button"
       @click="toggleOpen"
-      class="flex h-7 w-36 shrink-0 items-center justify-between rounded-md border border-input bg-background px-2.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none"
+      class="flex h-7 w-36 shrink-0 items-center justify-between rounded-md border border-input bg-background px-2.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-hidden"
       :title="`Open views (${isMac ? '⌘' : 'Ctrl'}+V)`"
     >
       <span class="truncate">{{ currentView?.name || props.defaultLabel || 'Tout' }}</span>
@@ -14,7 +14,7 @@
       <div
         v-if="open"
         :style="panelStyle"
-        class="fixed z-[500] w-[200px] rounded-md border bg-popover shadow-md"
+        class="fixed z-500 w-[200px] rounded-md border bg-popover shadow-md"
         @mousedown.stop
         @click.stop
       >
@@ -32,7 +32,7 @@
               ref="createInputRef"
               v-model="createName"
               placeholder="View name"
-              class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
+              class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-hidden focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
               @keyup.enter="handleCreate"
               @keyup.escape="mode = 'list'"
             />
@@ -65,7 +65,7 @@
               ref="editInputRef"
               v-model="editName"
               placeholder="View name"
-              class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
+              class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-hidden focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
               @keyup.enter="handleEdit"
               @keyup.escape="mode = 'list'"
             />
@@ -102,7 +102,7 @@
             <input
               v-model="search"
               placeholder="Search views…"
-              class="h-8 w-full bg-transparent py-1 text-sm outline-none placeholder:text-muted-foreground"
+              class="h-8 w-full bg-transparent py-1 text-sm outline-hidden placeholder:text-muted-foreground"
             />
           </div>
 

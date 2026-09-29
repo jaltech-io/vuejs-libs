@@ -60,6 +60,7 @@ defineProps<{
 </script>
 
 <style scoped>
+@reference "../styles.css";
 /* Le style du tableau vit ICI, au plus près du composant (voir docs/UI.md côté app) —
    il ne dépend du global que pour les tokens de couleur --h-* (définis en :root par l'app).
    Auparavant ces classes étaient définies dans le globals.css de l'app consommatrice, ce qui
@@ -80,7 +81,7 @@ defineProps<{
   @apply w-full text-[13px] border-collapse max-md:min-w-[600px];
 }
 .h-dt-th {
-  @apply h-[38px] px-3.5 text-left text-[11px] font-semibold text-[var(--h-text-3)] tracking-[0.06em] uppercase bg-[var(--h-surface2)] whitespace-nowrap sticky top-0 z-[1];
+  @apply h-[38px] px-3.5 text-left text-[11px] font-semibold text-(--h-text-3) tracking-[0.06em] uppercase bg-(--h-surface2) whitespace-nowrap sticky top-0 z-[1];
 }
 .h-dt-row:hover {
   @apply bg-[var(--h-surface2)];
@@ -92,6 +93,6 @@ defineProps<{
   @apply py-[11px] px-3.5 align-middle text-[13px] text-[var(--h-text)];
 }
 .h-dt-empty {
-  @apply py-14 px-6 text-center text-[var(--h-text-3)] text-[13px];
+  @apply py-14 px-6 text-center text-(--h-text-3) text-[13px];
 }
 </style>

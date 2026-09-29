@@ -1,8 +1,9 @@
-/* Pull in the library's design tokens + Tailwind layers. The imported file
-   carries `@tailwind base/components/utilities` and the :root / .dark token
-   sets; the demo's PostCSS/Tailwind pipeline expands the utilities from the
-   content globs (which include the library source). */
-@import '@jaltech/vuejs-ui/styles.css';
+/* Pull in the library's design tokens + Tailwind v4 layers (@import
+   "tailwindcss/*", @theme, @custom-variant, :root tokens). Tailwind v4 does not
+   scan node_modules, so @source explicitly points at the library source to
+   generate the utilities its components use. */
+@import '../../../vuejs-ui/src/styles.css';
+@source '../../../vuejs-ui/src';
 
 /* Wide pages (frontmatter `pageClass: wide-page`) — e.g. the advanced data
    table needs room. Break the prose out of the default ~688px column and use

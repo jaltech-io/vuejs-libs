@@ -56,20 +56,20 @@ export const TYPE_ICON: Record<IssuePanelType, any> = {
 
 export function statusBadgeClasses(status: IssuePanelStatus) {
   const map: Record<IssuePanelStatus, string> = {
-    open: 'bg-[var(--h-surface2)] text-[var(--h-text-2)]',
-    'in-progress': 'bg-[var(--h-blue-50)] text-[var(--h-blue-600)]',
-    'in-review': 'bg-[var(--h-purple-50)] text-[var(--h-purple-700)]',
-    done: 'bg-[var(--h-green-50,#f0fdf4)] text-[var(--h-green-700,#15803d)]',
-    closed: 'bg-[var(--h-surface2)] text-[var(--h-text-3)]',
+    open: 'bg-(--h-surface2) text-(--h-text-2)',
+    'in-progress': 'bg-(--h-blue-50) text-(--h-blue-600)',
+    'in-review': 'bg-(--h-purple-50) text-(--h-purple-700)',
+    done: 'bg-(--h-green-50,#f0fdf4) text-(--h-green-700,#15803d)',
+    closed: 'bg-(--h-surface2) text-(--h-text-3)',
   };
   return map[status];
 }
 export function typeBadgeClasses(type: IssuePanelType) {
   const map: Record<IssuePanelType, string> = {
     bug: 'bg-[#fef2f2] text-[#dc2626]',
-    feature: 'bg-[var(--h-blue-50)] text-[var(--h-blue-600)]',
-    task: 'bg-[var(--h-surface2)] text-[var(--h-text-2)]',
-    improvement: 'bg-[var(--h-purple-50)] text-[var(--h-purple-700)]',
+    feature: 'bg-(--h-blue-50) text-(--h-blue-600)',
+    task: 'bg-(--h-surface2) text-(--h-text-2)',
+    improvement: 'bg-(--h-purple-50) text-(--h-purple-700)',
   };
   return map[type];
 }
@@ -78,7 +78,7 @@ export function priorityColorClass(priority: IssuePanelPriority) {
     critical: 'text-[#dc2626]',
     high: 'text-[#ea580c]',
     medium: 'text-[#d97706]',
-    low: 'text-[var(--h-text-3)]',
+    low: 'text-(--h-text-3)',
   };
   return map[priority];
 }

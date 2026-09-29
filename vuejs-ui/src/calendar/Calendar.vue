@@ -64,7 +64,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 <template>
   <DefineMonthTemplate v-slot="{ date }">
-    <div class="**:data-[slot=native-select-icon]:right-1">
+    <div class="data-[slot=native-select-icon]:**:right-1">
       <div class="relative">
         <div class="absolute inset-0 flex h-full items-center text-sm pl-2 pointer-events-none">
           {{ formatter.custom(toDate(date), { month: 'short' }) }}
@@ -87,7 +87,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
   </DefineMonthTemplate>
 
   <DefineYearTemplate v-slot="{ date }">
-    <div class="**:data-[slot=native-select-icon]:right-1">
+    <div class="data-[slot=native-select-icon]:**:right-1">
       <div class="relative">
         <div class="absolute inset-0 flex h-full items-center text-sm pl-2 pointer-events-none">
           {{ formatter.custom(toDate(date), { year: 'numeric' }) }}

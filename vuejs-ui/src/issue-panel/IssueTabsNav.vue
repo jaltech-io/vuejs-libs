@@ -2,20 +2,20 @@
   <div>
     <button
       v-if="parent"
-      class="inline-flex items-center gap-1.5 self-start text-xs text-[var(--h-text-2)] bg-[var(--h-surface2)] border-[0.5px]
-             border-[var(--h-border)] rounded-[20px] py-1 px-3 mb-3 cursor-pointer max-w-full font-[inherit]
-             hover:border-[var(--h-border-strong)] hover:text-[var(--h-text)]"
+      class="inline-flex items-center gap-1.5 self-start text-xs text-(--h-text-2) bg-(--h-surface2) border-[0.5px]
+             border-(--h-border) rounded-[20px] py-1 px-3 mb-3 cursor-pointer max-w-full font-[inherit]
+             hover:border-(--h-border-strong) hover:text-(--h-text)"
       @click="emit('go-parent', parent.id)"
     >
-      <IconArrowUp :size="13" /> Parent&nbsp;: <code class="font-semibold text-[var(--h-blue-600)]">{{ parent.code }}</code> <span class="overflow-hidden text-ellipsis whitespace-nowrap">{{ parent.title }}</span>
+      <IconArrowUp :size="13" /> Parent&nbsp;: <code class="font-semibold text-(--h-blue-600)">{{ parent.code }}</code> <span class="overflow-hidden text-ellipsis whitespace-nowrap">{{ parent.title }}</span>
     </button>
 
-    <div class="flex gap-0.5 border-b border-[var(--h-border)] mb-5">
+    <div class="flex gap-0.5 border-b border-(--h-border) mb-5">
       <RouterLink
         v-for="tab in TABS" :key="tab.key" :to="`${basePath}/${tab.key}`"
-        class="inline-flex items-center gap-1.5 py-2 px-3.5 text-[13px] font-medium text-[var(--h-text-3)] bg-none border-0
+        class="inline-flex items-center gap-1.5 py-2 px-3.5 text-[13px] font-medium text-(--h-text-3) bg-none border-0
                border-b-2 border-b-transparent cursor-pointer font-[inherit] no-underline transition-[color,border-color]
-               duration-150 -mb-px whitespace-nowrap hover:text-[var(--h-text)]"
+               duration-150 -mb-px whitespace-nowrap hover:text-(--h-text)"
         active-class="h-issue-tab-active"
       >
         <component :is="tab.icon" :size="14" />
@@ -57,6 +57,7 @@ const TABS = [
 </script>
 
 <style scoped>
+@reference "../styles.css";
 /* active-class de RouterLink impose ce nom de classe litteral. Corps 100% Tailwind via @apply. */
-.h-issue-tab-active { @apply !text-[var(--h-blue-600)] border-b-[var(--h-blue-600)]; }
+.h-issue-tab-active { @apply text-(--h-blue-600)! border-b-[var(--h-blue-600)]; }
 </style>

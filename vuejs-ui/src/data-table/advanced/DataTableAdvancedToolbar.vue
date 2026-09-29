@@ -28,7 +28,7 @@
             <div
               v-if="addOpen"
               :style="addStyle"
-              class="fixed z-[400] w-44 overflow-hidden rounded-md border bg-popover shadow-md"
+              class="fixed z-400 w-44 overflow-hidden rounded-md border bg-popover shadow-md"
               @mousedown.stop
             >
               <div class="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -112,14 +112,14 @@
         <!-- Etat ouvert : saisie inline -->
         <div
           v-else
-          class="flex items-center gap-1.5 rounded-md border border-primary/30 bg-background px-2.5 py-1 shadow-sm"
+          class="flex items-center gap-1.5 rounded-md border border-primary/30 bg-background px-2.5 py-1 shadow-xs"
         >
           <BookmarkIcon class="size-3.5 shrink-0 text-primary" />
           <input
             ref="saveInputRef"
             v-model="newViewName"
             placeholder="Nom de la vue..."
-            class="w-32 bg-transparent text-xs outline-none placeholder:text-muted-foreground"
+            class="w-32 bg-transparent text-xs outline-hidden placeholder:text-muted-foreground"
             @keyup.enter="handleSaveView"
             @keyup.escape="openSaveView = false; newViewName = ''"
           />

@@ -4,12 +4,12 @@
       <div class="flex gap-1 flex-wrap">
         <RouterLink
           v-for="f in FILTER_TABS" :key="f.name" :to="tabPath(f.path)"
-          class="py-[5px] px-3 text-xs rounded-[20px] border-[0.5px] border-transparent bg-none cursor-pointer text-[var(--h-text-3)]
-                 font-[inherit] no-underline transition-[background,color] duration-100 hover:bg-[var(--h-surface2)] hover:text-[var(--h-text)]"
+          class="py-[5px] px-3 text-xs rounded-[20px] border-[0.5px] border-transparent bg-none cursor-pointer text-(--h-text-3)
+                 font-[inherit] no-underline transition-[background,color] duration-100 hover:bg-(--h-surface2) hover:text-(--h-text)"
           active-class="act-filter-active"
         >{{ f.label }}</RouterLink>
       </div>
-      <span class="text-xs text-[var(--h-text-3)]">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</span>
+      <span class="text-xs text-(--h-text-3)">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</span>
     </div>
 
     <div class="flex flex-col">
@@ -21,22 +21,22 @@
                 {{ getInitials(item.authorEmail) }}
               </AvatarFallback>
             </Avatar>
-            <div v-if="i < events.length - 1" class="flex-1 w-[1.5px] bg-[var(--h-border)] my-1 min-h-[24px]" />
+            <div v-if="i < events.length - 1" class="flex-1 w-[1.5px] bg-(--h-border) my-1 min-h-[24px]" />
           </div>
           <div class="pb-5 flex-1 min-w-0 pt-1.5">
             <div class="flex items-center gap-[5px] flex-wrap text-[13px]">
-              <span class="text-[var(--h-text-2)]">{{ item.summary }}</span>
+              <span class="text-(--h-text-2)">{{ item.summary }}</span>
             </div>
             <div v-if="item.fromValue || item.toValue" class="flex items-center gap-1.5 mt-1.5 flex-wrap">
-              <span v-if="item.fromValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-[var(--h-surface2)] text-[var(--h-text-3)] line-through">{{ item.fromValue }}</span>
-              <span v-if="item.fromValue && item.toValue" class="text-[var(--h-text-3)] text-[11px]">→</span>
-              <span v-if="item.toValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-[var(--h-blue-50)] text-[var(--h-blue-600)]">{{ item.toValue }}</span>
+              <span v-if="item.fromValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-surface2) text-(--h-text-3) line-through">{{ item.fromValue }}</span>
+              <span v-if="item.fromValue && item.toValue" class="text-(--h-text-3) text-[11px]">→</span>
+              <span v-if="item.toValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-blue-50) text-(--h-blue-600)">{{ item.toValue }}</span>
             </div>
-            <span class="block mt-1 text-[11.5px] text-[var(--h-text-3)]">{{ relativeTime(item.createdAt) }}</span>
+            <span class="block mt-1 text-[11.5px] text-(--h-text-3)">{{ relativeTime(item.createdAt) }}</span>
           </div>
         </div>
       </template>
-      <div v-else class="p-12 text-center text-[13px] text-[var(--h-text-3)]">Aucun événement dans cette catégorie.</div>
+      <div v-else class="p-12 text-center text-[13px] text-(--h-text-3)">Aucun événement dans cette catégorie.</div>
     </div>
   </div>
 </template>
@@ -90,6 +90,7 @@ function relativeTime(iso: string): string {
 </script>
 
 <style scoped>
+@reference "./styles.css";
 /* active-class de RouterLink impose ce nom de classe litteral. Corps 100% Tailwind via @apply. */
-.act-filter-active { @apply bg-[var(--h-blue-600)] text-white font-medium; }
+.act-filter-active { @apply bg-(--h-blue-600) text-white font-medium; }
 </style>

@@ -12,7 +12,7 @@ export { default as AttachmentTitle } from './AttachmentTitle.vue';
 export { default as AttachmentTrigger } from './AttachmentTrigger.vue';
 
 export const attachmentVariants = cva(
-  'rounded-xl w-fit focus-within:ring-1 focus-within:ring-ring/50 group/attachment relative flex max-w-full min-w-0 shrink-0 flex-wrap border bg-card text-card-foreground transition-colors has-[>a,>button]:hover:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed',
+  'rounded-xl w-fit focus-within:ring-1 focus-within:ring-ring/50 group/attachment relative flex max-w-full min-w-0 shrink-0 flex-wrap border bg-card text-card-foreground transition-colors hover:has-[>a,>button]:bg-muted/50 data-[state=error]:border-destructive/30 data-[state=idle]:border-dashed',
   {
     variants: {
       size: {
@@ -32,13 +32,13 @@ export const attachmentVariants = cva(
 export type AttachmentVariants = VariantProps<typeof attachmentVariants>;
 
 export const attachmentMediaVariants = cva(
-  "bg-muted text-foreground w-10 rounded-lg group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-md [&_svg:not([class*='size-'])]:size-4 group-data-[size=xs]/attachment:[&_svg:not([class*='size-'])]:size-3.5 group-data-[orientation=vertical]/attachment:w-full group-data-[orientation=vertical]/attachment:[&_svg:not([class*='size-'])]:size-6 group-data-[orientation=vertical]/attachment:*:data-[slot=spinner]:size-6! relative flex aspect-square shrink-0 items-center justify-center overflow-hidden group-data-[state=error]/attachment:bg-destructive/10 group-data-[state=error]/attachment:text-destructive [&_svg]:pointer-events-none",
+  "bg-muted text-foreground w-10 rounded-lg group-data-[size=sm]/attachment:w-8 group-data-[size=xs]/attachment:w-7 group-data-[size=xs]/attachment:rounded-md [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='size-'])]:group-data-[size=xs]/attachment:size-3.5 group-data-[orientation=vertical]/attachment:w-full [&_svg:not([class*='size-'])]:group-data-[orientation=vertical]/attachment:size-6 data-[slot=spinner]:*:group-data-[orientation=vertical]/attachment:size-6! relative flex aspect-square shrink-0 items-center justify-center overflow-hidden group-data-[state=error]/attachment:bg-destructive/10 group-data-[state=error]/attachment:text-destructive [&_svg]:pointer-events-none",
   {
     variants: {
       variant: {
         icon: '',
         image:
-          'opacity-60 group-data-[state=idle]/attachment:opacity-100 group-data-[state=done]/attachment:opacity-100 *:[img]:aspect-square *:[img]:w-full *:[img]:object-cover',
+          'opacity-60 group-data-[state=idle]/attachment:opacity-100 group-data-[state=done]/attachment:opacity-100 [img]:*:aspect-square [img]:*:w-full [img]:*:object-cover',
       },
     },
     defaultVariants: {

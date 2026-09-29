@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitepress';
 
 // This site documents ONLY the components @jaltech/vuejs-ui adds on top of
@@ -67,6 +68,7 @@ export default defineConfig({
   },
 
   vite: {
+    plugins: [tailwindcss()],
     // Force a single copy of vue / vue-router across the docs app and the
     // source-first library, so vue-router's inject symbols match and the
     // library's useRoute/useRouter resolve (otherwise: "reading 'query' of

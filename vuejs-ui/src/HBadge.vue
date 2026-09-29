@@ -11,11 +11,11 @@ const props = withDefaults(
 );
 
 const variantClass = {
-  green: 'bg-[var(--h-green-50)] text-[var(--h-green-700)]',
-  amber: 'bg-[var(--h-amber-50)] text-[var(--h-amber-700)]',
-  red: 'bg-[var(--h-red-50)] text-[var(--h-red-700)]',
-  blue: 'bg-[var(--h-blue-50)] text-[var(--h-blue-800)]',
-  purple: 'bg-[var(--h-purple-50)] text-[var(--h-purple-700)]',
-  gray: 'bg-[var(--h-surface2)] text-[var(--h-text-2)] border-[0.5px] border-[var(--h-border)]',
+  green: 'bg-(--h-green-50) text-(--h-green-700)',
+  amber: 'bg-(--h-amber-50) text-(--h-amber-700)',
+  red: 'bg-(--h-red-50) text-(--h-red-700)',
+  blue: 'bg-(--h-blue-50) text-(--h-blue-800)',
+  purple: 'bg-(--h-purple-50) text-(--h-purple-700)',
+  gray: 'bg-(--h-surface2) text-(--h-text-2) border-[0.5px] border-(--h-border)',
 }[props.variant];
 </script>

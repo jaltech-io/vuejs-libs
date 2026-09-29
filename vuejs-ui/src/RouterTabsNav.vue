@@ -5,10 +5,10 @@
       :key="tab.to"
       :to="tab.to"
       :class="[
-        'inline-flex items-center gap-1.5 rounded-[var(--h-radius)] border-[0.5px] px-3.5 py-1.5 text-[12.5px] font-medium font-[inherit] no-underline cursor-pointer',
+        'inline-flex items-center gap-1.5 rounded-(--h-radius) border-[0.5px] px-3.5 py-1.5 text-[12.5px] font-medium font-[inherit] no-underline cursor-pointer',
         isActive(tab)
-          ? 'border-[var(--h-border)] bg-[var(--h-surface2)] text-[var(--h-text)]'
-          : 'border-transparent bg-none text-[var(--h-text-3)] transition-[background,color] duration-100 hover:bg-[var(--h-surface2)] hover:text-[var(--h-text)]',
+          ? 'border-(--h-border) bg-(--h-surface2) text-(--h-text)'
+          : 'border-transparent bg-none text-(--h-text-3) transition-[background,color] duration-100 hover:bg-(--h-surface2) hover:text-(--h-text)',
       ]"
     >
       <component :is="tab.icon" v-if="tab.icon" :size="14" />

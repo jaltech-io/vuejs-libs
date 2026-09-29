@@ -32,7 +32,7 @@
       <div
         v-if="open"
         :style="panelStyle"
-        class="fixed z-[600] w-72 rounded-md border bg-popover shadow-xl"
+        class="fixed z-600 w-72 rounded-md border bg-popover shadow-xl"
         @mousedown.stop
         @click.stop
       >
@@ -50,7 +50,7 @@
             </button>
             <div
               v-if="opOpen"
-              class="absolute left-0 top-full z-[700] mt-1 min-w-[140px] rounded-md border bg-popover shadow-md"
+              class="absolute left-0 top-full z-700 mt-1 min-w-[140px] rounded-md border bg-popover shadow-md"
             >
               <div
                 v-for="op in operators"
@@ -76,7 +76,7 @@
               ref="inputRef"
               v-model="textValue"
               :placeholder="`Type to filter ${option.label.toLowerCase()}…`"
-              class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
+              class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-hidden placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
               @keyup.escape="open = false"
             />
           </template>
@@ -88,7 +88,7 @@
               <input
                 v-model="optionSearch"
                 placeholder="Search…"
-                class="w-full rounded-md border border-input bg-background py-1.5 pl-7 pr-3 text-xs outline-none placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
+                class="w-full rounded-md border border-input bg-background py-1.5 pl-7 pr-3 text-xs outline-hidden placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
               />
             </div>
             <div class="max-h-44 space-y-0.5 overflow-y-auto">

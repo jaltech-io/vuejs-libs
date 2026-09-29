@@ -1,11 +1,11 @@
 <template>
   <aside class="h-table-wrap w-52 shrink-0 self-start">
-    <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-[var(--h-surface2)] px-3.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--h-text-3)]">
+    <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-(--h-surface2) px-3.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-(--h-text-3)">
       <span>Vues</span>
       <HTooltip placement="top-end" text="Nouvelle vue">
         <button
           type="button"
-          class="flex size-7 shrink-0 items-center justify-center rounded-[var(--h-radius)] bg-[var(--h-blue-50)] text-[var(--h-blue-600)] transition-colors hover:brightness-95"
+          class="flex size-7 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-blue-50) text-(--h-blue-600) transition-colors hover:brightness-95"
           @click="emit('create')"
         >
           <PlusIcon class="size-4" />
@@ -16,27 +16,27 @@
     <nav class="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto p-1.5">
       <button
         type="button"
-        class="flex items-center gap-2 rounded-[var(--h-radius)] px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-[var(--h-surface2)]"
-        :class="!currentView ? 'bg-[var(--h-blue-50)] font-medium text-[var(--h-text)]' : 'text-[var(--h-text-2)]'"
+        class="flex items-center gap-2 rounded-(--h-radius) px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-(--h-surface2)"
+        :class="!currentView ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
         @click="selectView(null)"
       >
-        <ListIcon class="size-3.5 shrink-0" :class="!currentView ? 'text-[var(--h-blue-600)]' : 'opacity-60'" />
+        <ListIcon class="size-3.5 shrink-0" :class="!currentView ? 'text-(--h-blue-600)' : 'opacity-60'" />
         <span class="min-w-0 flex-1 truncate">{{ defaultLabel }}</span>
       </button>
 
       <div
         v-for="view in views"
         :key="view.id"
-        class="flex items-center gap-1 rounded-[var(--h-radius)] pr-1 pl-2 text-[13px] transition-colors hover:bg-[var(--h-surface2)]"
-        :class="currentView?.id === view.id ? 'bg-[var(--h-blue-50)] font-medium text-[var(--h-text)]' : 'text-[var(--h-text-2)]'"
+        class="flex items-center gap-1 rounded-(--h-radius) pr-1 pl-2 text-[13px] transition-colors hover:bg-(--h-surface2)"
+        :class="currentView?.id === view.id ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
       >
-        <BookmarkIcon class="size-3.5 shrink-0" :class="currentView?.id === view.id ? 'text-[var(--h-blue-600)]' : 'opacity-60'" />
+        <BookmarkIcon class="size-3.5 shrink-0" :class="currentView?.id === view.id ? 'text-(--h-blue-600)' : 'opacity-60'" />
 
         <input
           v-if="editingId === view.id"
           ref="editInputRef"
           v-model="editingName"
-          class="min-w-0 flex-1 rounded-[var(--h-radius)] border border-input bg-background px-1.5 py-1 text-[13px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="min-w-0 flex-1 rounded-(--h-radius) border border-input bg-background px-1.5 py-1 text-[13px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
           :disabled="savingId === view.id"
           @keyup.enter="saveEdit(view)"
           @keyup.esc="cancelEdit"
@@ -48,7 +48,7 @@
         <template v-if="editingId !== view.id">
           <button
             type="button"
-            class="flex size-6 shrink-0 items-center justify-center rounded-[var(--h-radius)] bg-[var(--h-surface)] text-[var(--h-blue-600)] shadow-sm transition-colors hover:brightness-95"
+            class="flex size-6 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-surface) text-(--h-blue-600) shadow-xs transition-colors hover:brightness-95"
             title="Modifier"
             @click.stop="startEdit(view)"
           >
@@ -56,7 +56,7 @@
           </button>
           <button
             type="button"
-            class="flex size-6 shrink-0 items-center justify-center rounded-[var(--h-radius)] bg-[var(--h-surface)] text-destructive shadow-sm transition-colors hover:brightness-95"
+            class="flex size-6 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-surface) text-destructive shadow-xs transition-colors hover:brightness-95"
             title="Supprimer"
             @click.stop="onDelete(view)"
           >

@@ -15,7 +15,7 @@
         ref="nameInputRef"
         v-model="name"
         placeholder="Nom de la vue"
-        class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
         @keyup.enter="onSubmit"
       />
       <p v-if="error" class="text-xs text-destructive">{{ error }}</p>

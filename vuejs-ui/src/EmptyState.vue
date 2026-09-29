@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 py-14 text-center text-[var(--h-text-3)] [&_p]:mt-3 [&_p]:text-[13px]">
+  <div class="px-6 py-14 text-center text-(--h-text-3) [&_p]:mt-3 [&_p]:text-[13px]">
     <slot />
   </div>
 </template>

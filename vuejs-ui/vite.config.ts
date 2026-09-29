@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 import vue from '@vitejs/plugin-vue';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 const source = fileURLToPath(new URL('./src', import.meta.url));
@@ -16,7 +17,7 @@ const externals = [
 ];
 
 export default defineConfig({
-  plugins: [vue({ isProduction: true })],
+  plugins: [vue({ isProduction: true }), tailwindcss()],
   resolve: {
     alias: {
       '@jaltech/vuejs-ui': source,

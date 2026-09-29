@@ -37,7 +37,7 @@
           <div
             v-if="addOpen"
             :style="addStyle"
-            class="fixed z-[300] w-44 rounded-md border bg-popover p-1 shadow-md"
+            class="fixed z-300 w-44 rounded-md border bg-popover p-1 shadow-md"
           >
             <button
               v-for="opt in addableOptions"

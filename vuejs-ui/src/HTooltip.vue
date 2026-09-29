@@ -4,8 +4,8 @@
     <Teleport to="body">
       <div
         v-if="show && text"
-        class="pointer-events-none bg-[var(--h-text)] text-[var(--h-bg,#fff)] text-[11.5px] font-medium px-2 py-1 rounded-md
-               whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.18)] tracking-[0.01em] font-[Inter,_sans-serif]
+        class="pointer-events-none bg-(--h-text) text-(--h-bg,#fff) text-[11.5px] font-medium px-2 py-1 rounded-md
+               whitespace-nowrap shadow-[0_2px_8px_rgba(0,0,0,0.18)] tracking-[0.01em] font-[Inter,sans-serif]
                animate-[h-tip-fade_0.12s_ease-out_both] dark:bg-[#e2e8f0] dark:text-[#0f172a]"
         :style="bubbleStyle"
       >{{ text }}</div>

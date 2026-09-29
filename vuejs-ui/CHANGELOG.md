@@ -1,3 +1,11 @@
+## 0.4.0 (2026-09-29)
+
+### ⚠️ Breaking / Migration
+
+- **tailwind:** migrated to **Tailwind CSS v4**. `styles.css` now uses `@import "tailwindcss/*"` + `@theme` + `@custom-variant` (no more `tailwind.config.cjs`); component `<style>` blocks that use `@apply` carry a `@reference`. Consumers must be on Tailwind v4 (use the `@tailwindcss/vite` plugin) and no longer need the JS preset/content globs. Preflight is still not shipped (source-first, non-clobbering). `tailwindcss-animate` → `tw-animate-css`.
+
+> Not yet published to npm — pending the Tailwind v4 migration of downstream consumers (projectflow).
+
 ## 0.3.14 (2026-09-29)
 
 ### 🏡 Chore

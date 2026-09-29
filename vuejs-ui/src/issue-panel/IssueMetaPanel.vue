@@ -1,10 +1,10 @@
 <template>
-  <aside class="bg-[var(--h-surface)] border-[0.5px] border-[var(--h-border)] rounded-[var(--h-radius-lg)] p-4 flex flex-col">
+  <aside class="bg-(--h-surface) border-[0.5px] border-(--h-border) rounded-(--h-radius-lg) p-4 flex flex-col">
     <div class="flex flex-col gap-0.5 py-1 px-0">
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Statut</span>
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Statut</span>
         <select
-          class="text-[11.5px] font-semibold py-[3px] px-2 rounded-[20px] border border-[var(--h-border)] cursor-pointer max-w-[160px] appearance-none text-right focus:outline-none"
+          class="text-[11.5px] font-semibold py-[3px] px-2 rounded-[20px] border border-(--h-border) cursor-pointer max-w-[160px] appearance-none text-right focus:outline-hidden"
           :value="issue.status"
           @change="emit('update-status', ($event.target as HTMLSelectElement).value as any)"
         >
@@ -12,24 +12,24 @@
         </select>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Priorité</span>
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Priorité</span>
         <span class="flex items-center gap-1.5 text-[12.5px] font-medium" :class="priorityColorClass(issue.priority)">
           <component :is="PRIO_ICON[issue.priority]" :size="13" />
           {{ PRIO_LABEL[issue.priority] }}
         </span>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Type</span>
-        <span class="flex items-center gap-1.5 text-[12.5px] text-[var(--h-text)] font-medium">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Type</span>
+        <span class="flex items-center gap-1.5 text-[12.5px] text-(--h-text) font-medium">
           <component :is="TYPE_ICON[issue.type]" :size="13" />
           {{ TYPE_LABEL[issue.type] }}
         </span>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Assigné à</span>
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Assigné à</span>
         <select
-          class="text-[12.5px] py-[5px] px-2 rounded-[var(--h-radius)] border border-[var(--h-border)] bg-[var(--h-surface)] text-[var(--h-text)]
-                 focus:outline-none focus:border-[var(--h-blue-400,#4a9eff)] w-auto max-w-[170px]"
+          class="text-[12.5px] py-[5px] px-2 rounded-(--h-radius) border border-(--h-border) bg-(--h-surface) text-(--h-text)
+                 focus:outline-hidden focus:border-(--h-blue-400,#4a9eff) w-auto max-w-[170px]"
           :value="issue.assigneeId ?? ''" @change="emit('update-assignee', ($event.target as HTMLSelectElement).value || null)"
         >
           <option value="">Non assigné</option>
@@ -37,53 +37,53 @@
         </select>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Sprint</span>
-        <span class="flex items-center gap-1.5 text-[12.5px] text-[var(--h-text)] font-medium">
-          <span v-if="issue.sprintId" class="inline-flex items-center gap-[5px] text-xs text-[var(--h-purple-700)]">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Sprint</span>
+        <span class="flex items-center gap-1.5 text-[12.5px] text-(--h-text) font-medium">
+          <span v-if="issue.sprintId" class="inline-flex items-center gap-[5px] text-xs text-(--h-purple-700)">
             <IconTable :size="11" /> Sprint lié
           </span>
-          <span v-else class="text-xs text-[var(--h-text-3)] italic">Aucun sprint</span>
+          <span v-else class="text-xs text-(--h-text-3) italic">Aucun sprint</span>
         </span>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Points</span>
-        <span class="flex items-center gap-1.5 text-[12.5px] text-[var(--h-text)] font-medium">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Points</span>
+        <span class="flex items-center gap-1.5 text-[12.5px] text-(--h-text) font-medium">
           <input
             type="number" min="0" step="1" :value="issue.storyPoints ?? ''" placeholder="—"
-            class="w-14 text-right text-[12.5px] py-[5px] px-2 rounded-[var(--h-radius)] border border-[var(--h-border)] bg-[var(--h-surface)]
-                   text-[var(--h-text)] focus:outline-none focus:border-[var(--h-blue-400,#4a9eff)]"
+            class="w-14 text-right text-[12.5px] py-[5px] px-2 rounded-(--h-radius) border border-(--h-border) bg-(--h-surface)
+                   text-(--h-text) focus:outline-hidden focus:border-(--h-blue-400,#4a9eff)"
             @change="onStoryPoints(($event.target as HTMLInputElement).value)"
           />
         </span>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Échéance</span>
-        <span class="flex items-center gap-1.5 text-[12.5px] font-medium text-[var(--h-text)]">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Échéance</span>
+        <span class="flex items-center gap-1.5 text-[12.5px] font-medium text-(--h-text)">
           <IconCalendar :size="13" />
           {{ issue.dueDate ? fmtIssueDate(issue.dueDate) : '—' }}
         </span>
       </div>
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Parent</span>
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Parent</span>
         <span class="inline-flex items-center gap-1.5">
           <template v-if="parent">
-            <button class="bg-none border-0 cursor-pointer p-0 font-[inherit]" @click="emit('go-issue', parent.id)"><code class="text-xs font-semibold text-[var(--h-blue-600)]">{{ parent.code }}</code></button>
+            <button class="bg-none border-0 cursor-pointer p-0 font-[inherit]" @click="emit('go-issue', parent.id)"><code class="text-xs font-semibold text-(--h-blue-600)">{{ parent.code }}</code></button>
             <button
-              class="bg-none border-0 cursor-pointer font-[inherit] text-[var(--h-text-3)] text-[11.5px] inline-flex items-center hover:text-[var(--h-danger)]"
+              class="bg-none border-0 cursor-pointer font-[inherit] text-(--h-text-3) text-[11.5px] inline-flex items-center hover:text-(--h-danger)"
               title="Détacher" @click="emit('detach-parent')"
             ><IconX :size="12" /></button>
           </template>
           <button
             v-else
-            class="bg-none border-0 cursor-pointer font-[inherit] text-[var(--h-text-3)] text-[11.5px] inline-flex items-center hover:text-[var(--h-blue-600)] hover:underline"
+            class="bg-none border-0 cursor-pointer font-[inherit] text-(--h-text-3) text-[11.5px] inline-flex items-center hover:text-(--h-blue-600) hover:underline"
             @click="attachOpen = !attachOpen"
           >Rattacher…</button>
         </span>
       </div>
       <div v-if="attachOpen && !parent" class="flex items-center justify-between py-[7px] px-0 gap-2">
         <select
-          class="w-full text-[12.5px] py-[5px] px-2 rounded-[var(--h-radius)] border border-[var(--h-border)] bg-[var(--h-surface)] text-[var(--h-text)]
-                 focus:outline-none focus:border-[var(--h-blue-400,#4a9eff)]"
+          class="w-full text-[12.5px] py-[5px] px-2 rounded-(--h-radius) border border-(--h-border) bg-(--h-surface) text-(--h-text)
+                 focus:outline-hidden focus:border-(--h-blue-400,#4a9eff)"
           @change="onSetParent(($event.target as HTMLSelectElement).value)"
         >
           <option value="">— Choisir un parent —</option>
@@ -92,30 +92,30 @@
       </div>
     </div>
 
-    <div class="h-[0.5px] bg-[var(--h-border)] my-2" />
+    <div class="h-[0.5px] bg-(--h-border) my-2" />
 
     <div class="flex flex-col gap-0.5 py-1 px-0">
       <div class="flex items-center justify-between py-[7px] px-0 gap-2">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Labels</span>
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Labels</span>
         <div class="flex flex-wrap gap-1 justify-end">
           <template v-if="issue.labels?.length">
-            <span v-for="l in issue.labels" :key="l" class="text-[11px] py-0.5 px-[7px] rounded-[10px] bg-[var(--h-surface2)] text-[var(--h-text-2)] font-medium">{{ l }}</span>
+            <span v-for="l in issue.labels" :key="l" class="text-[11px] py-0.5 px-[7px] rounded-[10px] bg-(--h-surface2) text-(--h-text-2) font-medium">{{ l }}</span>
           </template>
-          <span v-else class="text-xs text-[var(--h-text-3)] italic">Aucun</span>
+          <span v-else class="text-xs text-(--h-text-3) italic">Aucun</span>
         </div>
       </div>
     </div>
 
-    <div class="h-[0.5px] bg-[var(--h-border)] my-2" />
+    <div class="h-[0.5px] bg-(--h-border) my-2" />
 
     <div class="flex flex-col gap-0 py-1 px-0">
-      <div class="flex justify-between items-center py-1.5 px-0 text-xs text-[var(--h-text-2)]">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Créé le</span>
-        <span class="text-[12.5px] text-[var(--h-text)] font-medium">{{ fmtIssueDate(issue.createdAt) }}</span>
+      <div class="flex justify-between items-center py-1.5 px-0 text-xs text-(--h-text-2)">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Créé le</span>
+        <span class="text-[12.5px] text-(--h-text) font-medium">{{ fmtIssueDate(issue.createdAt) }}</span>
       </div>
-      <div class="flex justify-between items-center py-1.5 px-0 text-xs text-[var(--h-text-2)]">
-        <span class="text-[11.5px] text-[var(--h-text-3)] font-medium whitespace-nowrap shrink-0">Modifié le</span>
-        <span class="text-[12.5px] text-[var(--h-text)] font-medium">{{ fmtIssueDate(issue.updatedAt) }}</span>
+      <div class="flex justify-between items-center py-1.5 px-0 text-xs text-(--h-text-2)">
+        <span class="text-[11.5px] text-(--h-text-3) font-medium whitespace-nowrap shrink-0">Modifié le</span>
+        <span class="text-[12.5px] text-(--h-text) font-medium">{{ fmtIssueDate(issue.updatedAt) }}</span>
       </div>
     </div>
   </aside>

@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
     data-slot="attachment-trigger"
     :as="as"
     :as-child="asChild"
-    :class="cn('absolute inset-0 z-10 outline-none', props.class)"
+    :class="cn('absolute inset-0 z-10 outline-hidden', props.class)"
   >
     <slot />
   </Primitive>
