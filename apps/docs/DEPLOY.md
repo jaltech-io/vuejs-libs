@@ -22,8 +22,16 @@ aws s3 sync .vitepress/dist \
 
 # 3. On the VM (via SSM AWS-RunShellScript), pull it into the served volume:
 #    aws s3 sync s3://platform-prod-backups-687407229979/vuejs-ui-docs/site/ \
-#      /opt/vuejs-ui-docs/site --region eu-west-1 --delete
+#      /opt/vuejs-ui-docs/site --region eu-west-1 --delete --exact-timestamps
 ```
+
+> **Always pass `--exact-timestamps` on the VM pull (step 3).** Without it,
+> `aws s3 sync` (S3 → local) skips a re-uploaded file whose local copy is the
+> same size and not older — which happens to `index.html` across VitePress
+> rebuilds. The result is a **stale `index.html` referencing a hashed
+> `style.<hash>.css` that no longer exists → the whole site loads unstyled
+> (CSS 404)** while the assets themselves are up to date. `--exact-timestamps`
+> forces the HTML to refresh so it matches the deployed assets.
 
 No container restart is needed for a content update — the site directory is a
 read-only bind mount, so the new files are served immediately.
