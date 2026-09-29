@@ -1,8 +1,8 @@
 # TableSelectionBar
 
 <script setup>
-import TableSelectionBar from '@jaltech/vuejs-ui/TableSelectionBar.vue'
-import TableSelectionBarButton from '@jaltech/vuejs-ui/TableSelectionBarButton.vue'
+import TableSelectionBar from '@jaltech/vuejs-ui/table-selection-bar'
+import TableSelectionBarButton from '@jaltech/vuejs-ui/table-selection-bar-button'
 import { CheckIcon, Trash2Icon } from 'lucide-vue-next'
 </script>
 
@@ -25,8 +25,8 @@ A bulk-selection bar that appears when rows are selected: it shows the count wit
 
 ```vue
 <script setup lang="ts">
-import TableSelectionBar from '@jaltech/vuejs-ui/TableSelectionBar.vue'
-import TableSelectionBarButton from '@jaltech/vuejs-ui/TableSelectionBarButton.vue'
+import TableSelectionBar from '@jaltech/vuejs-ui/table-selection-bar'
+import TableSelectionBarButton from '@jaltech/vuejs-ui/table-selection-bar-button'
 import { CheckIcon, Trash2Icon } from 'lucide-vue-next'
 </script>
 

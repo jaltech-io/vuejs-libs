@@ -1,7 +1,7 @@
 # MetricCard
 
 <script setup>
-import HMetricCard from '@jaltech/vuejs-ui/HMetricCard.vue'
+import HMetricCard from '@jaltech/vuejs-ui/h-metric-card'
 </script>
 
 A compact metric card in the ProjectFlow design-system style, with an uppercase label, a large value, and an optional sub-line.
@@ -14,7 +14,7 @@ A compact metric card in the ProjectFlow design-system style, with an uppercase 
 
 ```vue
 <script setup lang="ts">
-import HMetricCard from '@jaltech/vuejs-ui/HMetricCard.vue'
+import HMetricCard from '@jaltech/vuejs-ui/h-metric-card'
 </script>
 
 <template>

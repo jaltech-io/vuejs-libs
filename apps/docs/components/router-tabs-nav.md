@@ -1,7 +1,7 @@
 # RouterTabsNav
 
 <script setup>
-import RouterTabsNav from '@jaltech/vuejs-ui/RouterTabsNav.vue'
+import RouterTabsNav from '@jaltech/vuejs-ui/router-tabs-nav'
 import { LayoutDashboardIcon, ListIcon, GaugeIcon } from 'lucide-vue-next'
 
 const tabs = [
@@ -23,7 +23,7 @@ A generic router-driven tab bar built on `RouterLink`; the active tab is derived
 
 ```vue
 <script setup lang="ts">
-import RouterTabsNav from '@jaltech/vuejs-ui/RouterTabsNav.vue'
+import RouterTabsNav from '@jaltech/vuejs-ui/router-tabs-nav'
 import { LayoutDashboardIcon, ListIcon, GaugeIcon } from 'lucide-vue-next'
 
 const tabs = [

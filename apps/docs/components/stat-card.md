@@ -1,7 +1,7 @@
 # StatCard
 
 <script setup>
-import StatCard from '@jaltech/vuejs-ui/StatCard.vue'
+import StatCard from '@jaltech/vuejs-ui/stat-card'
 import { UsersIcon } from 'lucide-vue-next'
 </script>
 
@@ -15,7 +15,7 @@ A KPI card showing a label, a value, an optional icon, and an optional up/down d
 
 ```vue
 <script setup lang="ts">
-import StatCard from '@jaltech/vuejs-ui/StatCard.vue'
+import StatCard from '@jaltech/vuejs-ui/stat-card'
 import { UsersIcon } from 'lucide-vue-next'
 </script>
 

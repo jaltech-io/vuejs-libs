@@ -1,7 +1,7 @@
 # ActivityFeed
 
 <script setup>
-import ActivityFeed from '@jaltech/vuejs-ui/ActivityFeed.vue'
+import ActivityFeed from '@jaltech/vuejs-ui/activity-feed'
 
 const events = [
   { id: '1', projectId: 'p1', issueId: 'i1', type: 'issue_created', authorEmail: 'ada@example.com', fromValue: null, toValue: null, summary: 'Ada a créé la tâche « Configurer le CI »', createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString() },
@@ -24,7 +24,7 @@ A timeline of project activity events, with author avatars, from/to value change
 
 ```vue
 <script setup lang="ts">
-import ActivityFeed from '@jaltech/vuejs-ui/ActivityFeed.vue'
+import ActivityFeed from '@jaltech/vuejs-ui/activity-feed'
 import type { ActivityEventItem } from '@jaltech/vuejs-ui/types'
 
 const events: ActivityEventItem[] = [

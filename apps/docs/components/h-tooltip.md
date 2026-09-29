@@ -1,7 +1,7 @@
 # HTooltip
 
 <script setup>
-import HTooltip from '@jaltech/vuejs-ui/HTooltip.vue'
+import HTooltip from '@jaltech/vuejs-ui/h-tooltip'
 import { Button } from '@jaltech/vuejs-ui/button'
 </script>
 
@@ -19,7 +19,7 @@ A lightweight convenience tooltip: wrap any trigger in its default slot and pass
 
 ```vue
 <script setup lang="ts">
-import HTooltip from '@jaltech/vuejs-ui/HTooltip.vue'
+import HTooltip from '@jaltech/vuejs-ui/h-tooltip'
 import { Button } from '@jaltech/vuejs-ui/button'
 </script>
 

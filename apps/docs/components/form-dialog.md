@@ -2,7 +2,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import FormDialog from '@jaltech/vuejs-ui/FormDialog.vue'
+import FormDialog from '@jaltech/vuejs-ui/form-dialog'
 import { Input } from '@jaltech/vuejs-ui/input'
 
 const open = ref(false)
@@ -33,7 +33,7 @@ A dialog that wraps a form, with a built-in trigger button, header, submit/cance
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import FormDialog from '@jaltech/vuejs-ui/FormDialog.vue'
+import FormDialog from '@jaltech/vuejs-ui/form-dialog'
 import { Input } from '@jaltech/vuejs-ui/input'
 
 const open = ref(false)

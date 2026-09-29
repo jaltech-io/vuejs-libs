@@ -30,12 +30,10 @@ The advanced table is a composition around a standard TanStack `useVueTable` ins
 import { useVueTable, getCoreRowModel, getFilteredRowModel,
   getSortedRowModel, getPaginationRowModel, getFacetedRowModel,
   getFacetedUniqueValues } from '@tanstack/vue-table'
-import { provideTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance'
-import DataTableAdvancedToolbar from '@jaltech/vuejs-ui/data-table/advanced/DataTableAdvancedToolbar.vue'
-import ViewsSidebar from '@jaltech/vuejs-ui/data-table/advanced/views/ViewsSidebar.vue'
-import DataTable from '@jaltech/vuejs-ui/data-table/DataTable.vue'
-import DataTablePagination from '@jaltech/vuejs-ui/data-table/DataTablePagination.vue'
-import TableSelectionBar from '@jaltech/vuejs-ui/TableSelectionBar.vue'
+import { provideTableInstance } from '@jaltech/vuejs-ui/composables'
+import { DataTable, DataTablePagination, DataTableAdvancedToolbar } from '@jaltech/vuejs-ui/data-table'
+import { ViewsSidebar } from '@jaltech/vuejs-ui/data-table/advanced/views'
+import { TableSelectionBar } from '@jaltech/vuejs-ui'
 
 const table = useVueTable({
   get data() { return rows.value },

@@ -79,17 +79,21 @@ import {
 } from '@tanstack/vue-table';
 import { computed, h, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { provideTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
-import DataTableAdvancedToolbar from '@jaltech/vuejs-ui/data-table/advanced/DataTableAdvancedToolbar.vue';
-import ViewFormModal from '@jaltech/vuejs-ui/data-table/advanced/views/ViewFormModal.vue';
-import ViewsSidebar from '@jaltech/vuejs-ui/data-table/advanced/views/ViewsSidebar.vue';
-import { buildFilterOptionsFromQuery, calcFilterParams } from '@jaltech/vuejs-ui/data-table/advanced/views/utils';
-import DataTable from '@jaltech/vuejs-ui/data-table/DataTable.vue';
-import DataTableColumnHeader from '@jaltech/vuejs-ui/data-table/DataTableColumnHeader.vue';
-import DataTablePagination from '@jaltech/vuejs-ui/data-table/DataTablePagination.vue';
+import { provideTableInstance } from '@jaltech/vuejs-ui/composables';
+import {
+  DataTable,
+  DataTableAdvancedToolbar,
+  DataTableColumnHeader,
+  DataTablePagination,
+} from '@jaltech/vuejs-ui/data-table';
+import {
+  buildFilterOptionsFromQuery,
+  calcFilterParams,
+  ViewFormModal,
+  ViewsSidebar,
+} from '@jaltech/vuejs-ui/data-table/advanced/views';
 import { Badge } from '@jaltech/vuejs-ui/badge';
-import TableSelectionBar from '@jaltech/vuejs-ui/TableSelectionBar.vue';
-import TableSelectionBarButton from '@jaltech/vuejs-ui/TableSelectionBarButton.vue';
+import { TableSelectionBar, TableSelectionBarButton } from '@jaltech/vuejs-ui';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { BuildingIcon, DownloadIcon, GlobeIcon, LockIcon, TrashIcon } from 'lucide-vue-next';
 

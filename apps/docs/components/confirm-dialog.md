@@ -1,8 +1,8 @@
 # ConfirmDialog
 
 <script setup>
-import ConfirmDialog from '@jaltech/vuejs-ui/ConfirmDialog.vue'
-import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm'
+import ConfirmDialog from '@jaltech/vuejs-ui/confirm-dialog'
+import { showConfirm } from '@jaltech/vuejs-ui/composables'
 import { Button } from '@jaltech/vuejs-ui/button'
 
 async function remove() {
@@ -31,8 +31,8 @@ An imperative confirmation dialog: mount `<ConfirmDialog />` once, then call `sh
 
 ```vue
 <script setup lang="ts">
-import ConfirmDialog from '@jaltech/vuejs-ui/ConfirmDialog.vue'
-import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm'
+import ConfirmDialog from '@jaltech/vuejs-ui/confirm-dialog'
+import { showConfirm } from '@jaltech/vuejs-ui/composables'
 import { Button } from '@jaltech/vuejs-ui/button'
 
 async function remove() {

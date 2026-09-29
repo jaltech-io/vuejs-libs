@@ -1,7 +1,7 @@
 # EmptyState
 
 <script setup>
-import EmptyState from '@jaltech/vuejs-ui/EmptyState.vue'
+import EmptyState from '@jaltech/vuejs-ui/empty-state'
 </script>
 
 A centered, muted empty/loading placeholder in the ProjectFlow design-system style. Put your message (typically a `<p>`, optionally an icon) in the default slot.
@@ -16,7 +16,7 @@ A centered, muted empty/loading placeholder in the ProjectFlow design-system sty
 
 ```vue
 <script setup lang="ts">
-import EmptyState from '@jaltech/vuejs-ui/EmptyState.vue'
+import EmptyState from '@jaltech/vuejs-ui/empty-state'
 </script>
 
 <template>

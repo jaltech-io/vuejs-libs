@@ -2,7 +2,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import HDialog from '@jaltech/vuejs-ui/HDialog.vue'
+import HDialog from '@jaltech/vuejs-ui/h-dialog'
 import { Button } from '@jaltech/vuejs-ui/button'
 
 const open = ref(false)
@@ -28,7 +28,7 @@ A self-contained modal dialog (ProjectFlow design-system style) with a built-in 
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import HDialog from '@jaltech/vuejs-ui/HDialog.vue'
+import HDialog from '@jaltech/vuejs-ui/h-dialog'
 import { Button } from '@jaltech/vuejs-ui/button'
 
 const open = ref(false)
