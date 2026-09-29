@@ -93,11 +93,11 @@ importers:
         specifier: ^2.0.0
         version: 2.2.12(typescript@6.0.3)
 
-  apps/docs:
+  docs:
     dependencies:
       '@jaltech/vuejs-ui':
         specifier: workspace:*
-        version: link:../../libs/vuejs-ui
+        version: link:../vuejs-ui
       '@tanstack/vue-table':
         specifier: ^8.0.0
         version: 8.21.3(vue@3.5.41(typescript@6.0.3))
@@ -124,7 +124,7 @@ importers:
         specifier: ^1.6.3
         version: 1.6.4(@algolia/client-search@5.59.0)(@types/node@25.9.5)(lightningcss@1.33.0)(postcss@8.5.26)(search-insights@2.17.3)(typescript@6.0.3)
 
-  libs/vuejs-ui:
+  vuejs-ui:
     dependencies:
       '@internationalized/date':
         specifier: ^3.12.3

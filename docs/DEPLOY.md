@@ -13,7 +13,7 @@ that has AWS access to the platform account (account `687407229979`, region
 
 ```bash
 # 1. Build
-cd apps/docs && pnpm build
+cd docs && pnpm build
 
 # 2. Upload the static output to S3 (transfer channel to the VM)
 aws s3 sync .vitepress/dist \

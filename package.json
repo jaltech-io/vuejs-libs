@@ -2,15 +2,15 @@
   "name": "vuejs-libs",
   "version": "1.0.0",
   "private": true,
-  "description": "Bibliothèques Vue @jaltech/* (vuejs-ui) — repo standalone, ex platform-apps/libs/vuejs-ui",
+  "description": "Vue libraries published under the @jaltech npm scope (vuejs-ui).",
   "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "typecheck": "vue-tsc --noEmit -p libs/vuejs-ui/tsconfig.json",
-    "build": "node libs/vuejs-ui/scripts/build.mjs",
-    "verify": "node tools/verify-library-packages.mjs",
+    "typecheck": "vue-tsc --noEmit -p vuejs-ui/tsconfig.json",
+    "build": "node vuejs-ui/scripts/build.mjs",
+    "verify": "node verify-library-packages.mjs",
     "check": "pnpm typecheck && pnpm build && pnpm verify"
   },
   "devDependencies": {

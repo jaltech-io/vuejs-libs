@@ -17,7 +17,7 @@ function resolveAmbientTypeRoot(typesPackage, fromPackage) {
 }
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = resolve(scriptDirectory, '..');
+const workspaceRoot = scriptDirectory;
 const npmCache = resolve(workspaceRoot, '.npm-cache');
 
 const npmInvocation = (() => {
@@ -68,7 +68,7 @@ function walk(directory) {
 }
 
 for (const project of libraries) {
-  const directory = resolve(workspaceRoot, 'dist', 'libs', project);
+  const directory = resolve(workspaceRoot, 'dist', project);
   const manifestPath = resolve(directory, 'package.json');
 
   if (!existsSync(manifestPath)) fail(`${project}: missing built package.json`);
@@ -165,8 +165,8 @@ try {
           ],
           types: ['web-bluetooth'],
           paths: {
-            '@jaltech/vuejs-ui': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/index.d.ts')],
-            '@jaltech/vuejs-ui/*': [resolve(workspaceRoot, 'dist/libs/vuejs-ui/*')],
+            '@jaltech/vuejs-ui': [resolve(workspaceRoot, 'dist/vuejs-ui/index.d.ts')],
+            '@jaltech/vuejs-ui/*': [resolve(workspaceRoot, 'dist/vuejs-ui/*')],
           },
         },
         files: [consumerEntry],

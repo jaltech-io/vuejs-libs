@@ -425,9 +425,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaltech-io/vuejs-libs.git",
-    "directory": "libs/vuejs-ui"
+    "directory": "vuejs-ui"
   },
-  "homepage": "https://github.com/jaltech-io/vuejs-libs/tree/main/libs/vuejs-ui#readme",
+  "homepage": "https://github.com/jaltech-io/vuejs-libs/tree/main/vuejs-ui#readme",
   "bugs": {
     "url": "https://github.com/jaltech-io/vuejs-libs/issues"
   },

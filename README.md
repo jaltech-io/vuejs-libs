@@ -9,7 +9,7 @@ Vue 3 libraries published under the `@jaltech` npm scope. This is a [pnpm](https
 
 | Package | Version | Description | Docs |
 |---|---|---|---|
-| [`@jaltech/vuejs-ui`](libs/vuejs-ui) | [![npm](https://img.shields.io/npm/v/@jaltech/vuejs-ui)](https://www.npmjs.com/package/@jaltech/vuejs-ui) | Vue 3 component library and design system (~65 component families, composables, advanced data table, dark mode). | [README](libs/vuejs-ui/README.md) |
+| [`@jaltech/vuejs-ui`](vuejs-ui) | [![npm](https://img.shields.io/npm/v/@jaltech/vuejs-ui)](https://www.npmjs.com/package/@jaltech/vuejs-ui) | Vue 3 component library and design system (~65 component families, composables, advanced data table, dark mode). | [README](vuejs-ui/README.md) |
 
 ## Using these packages
 
@@ -19,7 +19,7 @@ Install a package as a normal npm dependency, for example:
 pnpm add @jaltech/vuejs-ui
 ```
 
-`@jaltech/vuejs-ui` is distributed **source-first**, so consumers need a bundler that compiles Vue SFCs and TypeScript (Vite is recommended) plus a small amount of setup — see the [package README](libs/vuejs-ui/README.md#installation) for the exact `optimizeDeps` and Tailwind configuration.
+`@jaltech/vuejs-ui` is distributed **source-first**, so consumers need a bundler that compiles Vue SFCs and TypeScript (Vite is recommended) plus a small amount of setup — see the [package README](vuejs-ui/README.md#installation) for the exact `optimizeDeps` and Tailwind configuration.
 
 ## Development
 

@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const libraryRoot = resolve(scriptDirectory, '..');
-const workspaceRoot = resolve(libraryRoot, '../..');
-const outputDirectory = resolve(workspaceRoot, 'dist/libs/vuejs-ui');
-const expectedOutputDirectory = resolve(workspaceRoot, 'dist', 'libs', 'vuejs-ui');
+const workspaceRoot = resolve(libraryRoot, '..');
+const outputDirectory = resolve(workspaceRoot, 'dist/vuejs-ui');
+const expectedOutputDirectory = resolve(workspaceRoot, 'dist', 'vuejs-ui');
 
 if (outputDirectory !== expectedOutputDirectory) {
   throw new Error(`Refusing to clean unexpected output directory: ${outputDirectory}`);
@@ -56,8 +56,8 @@ run(process.execPath, [
 ]);
 
 // Depuis le fix 0.3.1 (tarball sans dist), vite et vue-tsc ecrivent dans
-// libs/vuejs-ui/dist (outDir local, voir vite.config.ts / tsconfig.lib.json) :
-// on recopie vers la sortie standard du workspace (dist/libs/vuejs-ui) que
+// vuejs-ui/dist (outDir local, voir vite.config.ts / tsconfig.lib.json) :
+// on recopie vers la sortie standard du workspace (dist/vuejs-ui) que
 // verify-library-packages et la CI publient.
 cpSync(resolve(libraryRoot, 'dist'), outputDirectory, { recursive: true });
 
