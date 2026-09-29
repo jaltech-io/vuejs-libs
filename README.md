@@ -3,7 +3,7 @@
 > [!WARNING]
 > **Pre-release — not production-ready.** These packages are under active development (pre-`1.0.0`) and have **not yet been through a human stabilization and review pass**. Their APIs may change at any time, without a deprecation cycle. They are published for early experimentation and feedback only — **do not use them in production**. This notice will be removed at the `1.0.0` release.
 
-Vue 3 libraries published under the `@jaltech` npm scope. This is an [Nx](https://nx.dev/) monorepo; each library is released as an independent npm package.
+Vue 3 libraries published under the `@jaltech` npm scope. This is a [pnpm](https://pnpm.io/) workspace monorepo; each library is released as an independent npm package.
 
 ## Packages
 
