@@ -70,7 +70,12 @@ jobs:
           test -f "$DIST_DIR/$(node -p "require('./$DIST_DIR/package.json').main")" || { echo "❌ Entree 'main' manquante"; exit 1; }
           test -f "$DIST_DIR/$(node -p "require('./$DIST_DIR/package.json').types")" || { echo "❌ Entree 'types' manquante"; exit 1; }
 
-          npm pack "$DIST_DIR" --dry-run
+          # `./` prefix is REQUIRED: a single-slash path like `dist/vuejs-ui`
+          # is parsed by npm as a GitHub `owner/repo` shorthand (→ git ls-remote
+          # ssh://git@github.com/dist/vuejs-ui.git). `./dist/vuejs-ui` forces npm
+          # to treat it as a local folder. (Regression when the repo was
+          # flattened from dist/libs/vuejs-ui — two slashes — to dist/vuejs-ui.)
+          npm pack "./$DIST_DIR" --dry-run
 
           case "$VERSION" in
             *-*) NPM_DIST_TAG="next" ;;
@@ -78,5 +83,5 @@ jobs:
           esac
 
           npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
-          npm publish "$DIST_DIR" --access public --tag "$NPM_DIST_TAG"
+          npm publish "./$DIST_DIR" --access public --tag "$NPM_DIST_TAG"
           echo "✅ Publie $PACKAGE_NAME@$VERSION sur npm (dist-tag: $NPM_DIST_TAG)"
