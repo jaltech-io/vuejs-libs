@@ -1,3 +1,9 @@
+## 0.3.14 (2026-09-29)
+
+### 🏡 Chore
+
+- **repo:** flattened the monorepo (`libs/vuejs-ui` → `vuejs-ui`, `apps/docs` → `docs`); fixed `repository.directory` and `homepage` metadata accordingly. No package content change.
+
 ## 0.3.13 (2026-09-29)
 
 ### 🚀 Features
