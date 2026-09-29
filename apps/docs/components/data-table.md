@@ -1,3 +1,8 @@
+---
+aside: false
+pageClass: wide-page
+---
+
 # DataTable (advanced)
 
 <script setup>

@@ -4,6 +4,17 @@
    content globs (which include the library source). */
 @import '@jaltech/vuejs-ui/styles.css';
 
+/* Wide pages (frontmatter `pageClass: wide-page`) — e.g. the advanced data
+   table needs room. Break the prose out of the default ~688px column and use
+   the full content width. */
+.wide-page .content-container,
+.VPDoc.wide-page .content-container {
+  max-width: 1200px !important;
+}
+.wide-page .vp-doc .content {
+  max-width: 100% !important;
+}
+
 /* Give live component demos a consistent frame inside the docs. */
 .demo {
   border: 1px solid hsl(var(--border));
