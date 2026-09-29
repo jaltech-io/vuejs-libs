@@ -67,6 +67,11 @@ export default defineConfig({
   },
 
   vite: {
+    // Force a single copy of vue / vue-router across the docs app and the
+    // source-first library, so vue-router's inject symbols match and the
+    // library's useRoute/useRouter resolve (otherwise: "reading 'query' of
+    // undefined" in the advanced data-table toolbar).
+    resolve: { dedupe: ['vue', 'vue-router'] },
     optimizeDeps: { exclude: ['@jaltech/vuejs-ui'] },
     ssr: { noExternal: ['@jaltech/vuejs-ui'] },
   },

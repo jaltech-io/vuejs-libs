@@ -1,111 +1,71 @@
 # DataTable (advanced)
 
-<script setup lang="ts">
-import { h } from 'vue'
-import {
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
-} from '@tanstack/vue-table'
-import DataTable from '@jaltech/vuejs-ui/data-table/DataTable.vue'
-import DataTablePagination from '@jaltech/vuejs-ui/data-table/DataTablePagination.vue'
-import DataTableColumnHeader from '@jaltech/vuejs-ui/data-table/DataTableColumnHeader.vue'
-import { Badge } from '@jaltech/vuejs-ui/badge'
-
-const data = [
-  { name: 'Ada Lovelace', role: 'Owner', status: 'Active' },
-  { name: 'Alan Turing', role: 'Maintainer', status: 'Active' },
-  { name: 'Grace Hopper', role: 'Developer', status: 'Invited' },
-  { name: 'Linus Torvalds', role: 'Developer', status: 'Active' },
-  { name: 'Margaret Hamilton', role: 'Maintainer', status: 'Suspended' },
-  { name: 'Ken Thompson', role: 'Developer', status: 'Active' },
-  { name: 'Barbara Liskov', role: 'Owner', status: 'Invited' },
-]
-
-const columns = [
-  {
-    accessorKey: 'name',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Name' }),
-  },
-  {
-    accessorKey: 'role',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Role' }),
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const s = row.original.status
-      const variant = s === 'Active' ? 'default' : s === 'Invited' ? 'secondary' : 'outline'
-      return h(Badge, { variant }, () => s)
-    },
-  },
-]
-
-const table = useVueTable({
-  data,
-  columns,
-  getCoreRowModel: getCoreRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  initialState: { pagination: { pageSize: 5 } },
-})
+<script setup>
+import DataTableDemo from '../.vitepress/theme/components/DataTableDemo.vue'
 </script>
 
-The data table layer on top of [TanStack Table](https://tanstack.com/table) — sortable column headers, custom cell rendering, and pagination, with the styling packaged into the components (no per-app CSS). The `advanced/` toolbar (faceted filters, saved views, bulk selection) builds on this same table instance.
+The full data-table experience from the real application, on top of [TanStack Table](https://tanstack.com/table): a filter toolbar with faceted filters, a **saved-views** sidebar, row **selection** with a floating bulk-action bar, sortable column headers, and **pagination** — all driven by one table instance, with the styling packaged into the components.
 
-**Built on:** TanStack Table + shadcn-vue's Table/Badge/DropdownMenu primitives.
+**Built on:** TanStack Table + shadcn-vue's Table / Badge / Popover / Command primitives.
 
 <ClientOnly>
-<div style="border:1px solid hsl(var(--border));border-radius:var(--radius);overflow:hidden;margin:1rem 0">
-  <DataTable :table="table" :columns="columns" />
-  <div style="padding:0.75rem 1rem;border-top:1px solid hsl(var(--border))">
-    <DataTablePagination :table="table" />
-  </div>
+<div style="margin:1.5rem 0">
+  <DataTableDemo />
 </div>
 </ClientOnly>
 
-Click a sortable header (**Name**, **Role**) to sort; use the pager to move between pages.
+Try it: sort with the **Project / Status / Priority** headers, open **Filter** to filter by status/visibility/health/priority, tick rows to reveal the bulk-action bar, add a **saved view** with the **+** in the sidebar, and page through with the pager.
 
-## Code
+## How it is assembled
+
+The advanced table is a composition around a standard TanStack `useVueTable` instance shared with the toolbar and the views sidebar via `provideTableInstance`:
 
 ```vue
 <script setup lang="ts">
-import { h } from 'vue'
-import { getCoreRowModel, getPaginationRowModel, getSortedRowModel, useVueTable } from '@tanstack/vue-table'
+import { useVueTable, getCoreRowModel, getFilteredRowModel,
+  getSortedRowModel, getPaginationRowModel, getFacetedRowModel,
+  getFacetedUniqueValues } from '@tanstack/vue-table'
+import { provideTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance'
+import DataTableAdvancedToolbar from '@jaltech/vuejs-ui/data-table/advanced/DataTableAdvancedToolbar.vue'
+import ViewsSidebar from '@jaltech/vuejs-ui/data-table/advanced/views/ViewsSidebar.vue'
 import DataTable from '@jaltech/vuejs-ui/data-table/DataTable.vue'
 import DataTablePagination from '@jaltech/vuejs-ui/data-table/DataTablePagination.vue'
-import DataTableColumnHeader from '@jaltech/vuejs-ui/data-table/DataTableColumnHeader.vue'
-import { Badge } from '@jaltech/vuejs-ui/badge'
-
-const data = [
-  { name: 'Ada Lovelace', role: 'Owner', status: 'Active' },
-  // …
-]
-
-const columns = [
-  { accessorKey: 'name', header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Name' }) },
-  { accessorKey: 'role', header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Role' }) },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => h(Badge, { variant: 'secondary' }, () => row.original.status),
-  },
-]
+import TableSelectionBar from '@jaltech/vuejs-ui/TableSelectionBar.vue'
 
 const table = useVueTable({
-  data,
+  get data() { return rows.value },
   columns,
+  state: { /* columnFilters, sorting, columnVisibility, rowSelection, pagination */ },
+  enableRowSelection: true,
   getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
   getSortedRowModel: getSortedRowModel(),
   getPaginationRowModel: getPaginationRowModel(),
-  initialState: { pagination: { pageSize: 5 } },
+  getFacetedRowModel: getFacetedRowModel(),
+  getFacetedUniqueValues: getFacetedUniqueValues(),
+  /* on…Change handlers */
 })
+provideTableInstance(table, columnVisibility)
 </script>
 
 <template>
-  <DataTable :table="table" :columns="columns" />
-  <DataTablePagination :table="table" />
+  <DataTableAdvancedToolbar :filter-fields="filterFields" :views="views"
+    :on-create-view="createView" :on-update-view="updateView" :on-delete-view="deleteView"
+    default-label="All projects">
+    <template #selection>
+      <TableSelectionBar :selected-count="selectedCount" @clear="table.toggleAllRowsSelected(false)">…</TableSelectionBar>
+    </template>
+  </DataTableAdvancedToolbar>
+
+  <div class="flex items-start gap-4">
+    <ViewsSidebar :views="views" default-label="All projects"
+      :on-update-view="updateView" :on-delete-view="deleteView" @create="openCreate" />
+    <div class="flex-1">
+      <DataTable :table="table" :columns="columns" />
+      <DataTablePagination :table="table" />
+    </div>
+  </div>
 </template>
 ```
+
+In the real app the views and rows come from the API; here they are in-memory so the whole flow is live.
