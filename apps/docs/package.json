@@ -1,0 +1,25 @@
+{
+  "name": "@jaltech/vuejs-ui-docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Live showcase of every @jaltech/vuejs-ui component.",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "@jaltech/vuejs-ui": "workspace:*",
+    "@tanstack/vue-table": "^8.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.19",
+    "tailwindcss-animate": "^1.0.7",
+    "vitepress": "^1.6.3"
+  }
+}

@@ -1,0 +1,18 @@
+/* Pull in the library's design tokens + Tailwind layers. The imported file
+   carries `@tailwind base/components/utilities` and the :root / .dark token
+   sets; the demo's PostCSS/Tailwind pipeline expands the utilities from the
+   content globs (which include the library source). */
+@import '@jaltech/vuejs-ui/styles.css';
+
+/* Give live component demos a consistent frame inside the docs. */
+.demo {
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  background: hsl(var(--card));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
