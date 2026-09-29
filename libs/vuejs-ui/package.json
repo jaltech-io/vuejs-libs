@@ -1,7 +1,7 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.3.11",
-  "description": "Composants Vue 3 accessibles et réutilisables pour les applications ProfesSkills.",
+  "version": "0.3.12",
+  "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
     "**/*.css"
@@ -373,15 +373,18 @@
   },
   "keywords": [
     "vue",
+    "vue3",
     "ui",
     "components",
+    "design-system",
     "tailwindcss",
-    "profeskills"
+    "typescript"
   ],
   "license": "MIT",
   "peerDependenciesMeta": {
     "vee-validate": {
       "optional": true
     }
-  }
+  },
+  "author": "Jaltech"
 }

@@ -1,20 +1,33 @@
+## 0.3.12 (2026-09-29)
+
+### 📝 Documentation
+
+- Rewrote the README as standalone, English, OSS-standard documentation (badges, features, requirements, quick start, usage, contributing, license); removed all origin-project references.
+- Added a pre-release "not production-ready" notice (to be removed at 1.0.0).
+- Cleaned package metadata (`description`, `keywords`, `author`); added a repository-root MIT LICENSE.
+
+## 0.3.11 (2026-09-29)
+
+### 🩹 Fixes
+
+- **data-table:** the DataTable/ViewsSidebar styling now lives inside the components (scoped `<style>` / inline classes) instead of relying on the consuming app global CSS, so the table renders correctly regardless of the host app stylesheet.
+
 ## 0.3.2 (2026-08-24)
 
 ### 🩹 Fixes
 
-- **build:** build.mjs recopie la sortie locale (libs/vuejs-ui/dist, outDir du fix 0.3.1) vers dist/libs/vuejs-ui — pnpm check/verify de nouveau fonctionnels ; première publication pilotée par la CI de la FORGE de ProjectFlow
+- **build:** build.mjs copies the local output (`libs/vuejs-ui/dist`) to `dist/libs/vuejs-ui` so `pnpm check`/`verify` work again; first CI-driven publish
 
 ## 0.3.0 (2026-08-22)
 
 ### 🚀 Features
 
-- **exports:** API publique complétée — chaque dossier de composant, `types`, `utils`, chaque composable, et le wildcard `./*` vers les sources (`src/` désormais publié dans le package). Couvre tous les sous-chemins réellement consommés par les applications (imports profonds de `.vue` inclus)
-- **deps:** déclaration des dépendances jusqu'ici implicites (`@vueuse/core`, `class-variance-authority`, `@lucide/vue`, `vue-sonner`) ; `vee-validate` en peer optionnel
+- **exports:** completed the public API — every component folder, `types`, `utils`, each composable, and the `./*` wildcard to the sources (`src/` is now published in the package). Covers all consumed subpaths, including deep `.vue` imports
+- **deps:** declared previously implicit dependencies (`@vueuse/core`, `class-variance-authority`, `@lucide/vue`, `vue-sonner`); `vee-validate` as an optional peer
 
 ### ⚠️ Notes
 
-- Le package expose désormais ses sources (`.vue`/`.ts`) : le consommateur doit avoir un bundler qui les compile (Vite + @vitejs/plugin-vue). Ajouter `@jaltech/vuejs-ui` à `optimizeDeps.exclude`
-- Repo déplacé : gitlab.com/jalil.mestaoui/vuejs-libs (ex platform-apps/libs/vuejs-ui)
+- The package now exposes its sources (`.vue`/`.ts`): consumers need a bundler that compiles them (Vite + @vitejs/plugin-vue), and must add `@jaltech/vuejs-ui` to `optimizeDeps.exclude`
 
 ## 0.2.3 (2026-07-19)
 
@@ -24,7 +37,7 @@
 
 ### ❤️ Thank You
 
-- Your Name
+- Jaltech
 
 ## 0.2.2 (2026-07-19)
 
@@ -34,7 +47,7 @@
 
 ### ❤️ Thank You
 
-- Your Name
+- Jaltech
 
 ## 0.2.1 (2026-07-19)
 
@@ -45,7 +58,7 @@
 
 ### ❤️ Thank You
 
-- Your Name
+- Jaltech
 
 ## 0.2.0 (2026-07-19)
 

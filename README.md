@@ -1,43 +1,54 @@
-# vuejs-libs — packages npm `@jaltech/*` Vue
+# vuejs-libs
 
-Bibliothèques UI Vue de la plateforme (repo standalone, anciennement `platform-apps/libs/vuejs-ui`). Publiées sur [npmjs.org](https://www.npmjs.com/org/profeskills), consommées comme n'importe quelle dépendance npm par les projets (projectflow et autres).
+> [!WARNING]
+> **Pre-release — not production-ready.** These packages are under active development (pre-`1.0.0`) and have **not yet been through a human stabilization and review pass**. Their APIs may change at any time, without a deprecation cycle. They are published for early experimentation and feedback only — **do not use them in production**. This notice will be removed at the `1.0.0` release.
 
-| Package | Contenu |
-|---|---|
-| [`@jaltech/vuejs-ui`](libs/vuejs-ui) | Design system Vue 3 : ~65 familles de composants (button, dialog, data-table avancée, select, sheet, sidebar…), composables (`useConfirm`, `useTableInstance`), `types`, `utils` |
+Vue 3 libraries published under the `@jaltech` npm scope. This is an [Nx](https://nx.dev/) monorepo; each library is released as an independent npm package.
 
-## Nature du package : source-first
+## Packages
 
-Depuis la **0.3.0**, le package expose ses **sources** (`src/*.vue`, `src/*.ts`) via son champ `exports` — chaque dossier de composant a son entrée (`@jaltech/vuejs-ui/dialog`), les fichiers profonds passent par le wildcard (`@jaltech/vuejs-ui/data-table/DataTable.vue`). Le `dist/` compilé est aussi livré (`./styles.css` + typings pour le gate de vérification).
+| Package | Version | Description | Docs |
+|---|---|---|---|
+| [`@jaltech/vuejs-ui`](libs/vuejs-ui) | [![npm](https://img.shields.io/npm/v/@jaltech/vuejs-ui)](https://www.npmjs.com/package/@jaltech/vuejs-ui) | Vue 3 component library and design system (~65 component families, composables, advanced data table, dark mode). | [README](libs/vuejs-ui/README.md) |
 
-**Prérequis consommateur** : un bundler qui compile Vue SFC + TypeScript (Vite + `@vitejs/plugin-vue`), et :
+## Using these packages
 
-```js
-// vite.config — le prébundling esbuild ne sait pas traiter les .vue
-optimizeDeps: { exclude: ['@jaltech/vuejs-ui'] }
+Install a package as a normal npm dependency, for example:
+
+```bash
+pnpm add @jaltech/vuejs-ui
 ```
 
-Pour Tailwind, ajouter les sources de la lib au `content` :
+`@jaltech/vuejs-ui` is distributed **source-first**, so consumers need a bundler that compiles Vue SFCs and TypeScript (Vite is recommended) plus a small amount of setup — see the [package README](libs/vuejs-ui/README.md#installation) for the exact `optimizeDeps` and Tailwind configuration.
 
-```js
-content: ['./node_modules/@jaltech/vuejs-ui/src/**/*.{vue,js,ts}']
-```
-
-## Développement
+## Development
 
 ```bash
 pnpm install
-pnpm check        # typecheck (vue-tsc) + build (vite lib + vue-tsc d.ts) + verify
+pnpm check   # typecheck + build + package verification
 ```
 
-## Publier une version
+## Releasing
 
-1. Bump `version` dans `libs/vuejs-ui/package.json` + entrée `CHANGELOG.md`, merger sur `main`
-2. Tagger : `git tag vuejs-ui@0.3.0 && git push origin vuejs-ui@0.3.0`
-3. Le job `deploy:vuejs-ui` du pipeline du tag valide puis publie sur npm
+Releases are automated with GitHub Actions ([`.github/workflows/release.yml`](.github/workflows/release.yml)):
 
-## Variables CI/CD requises (Forgejo > Settings > Actions > Secrets)
+1. Bump `version` in the package's `package.json` and add a `CHANGELOG.md` entry, then merge to `main`.
+2. Push a tag of the form `<package>@<version>`, e.g. `vuejs-ui@0.3.11`:
 
-| Variable | Rôle |
-|---|---|
-| `NPM_TOKEN` | Token npm "Automation" (masqué, à scoper aux tags protégés) — publication |
+   ```bash
+   git tag vuejs-ui@0.3.11
+   git push origin vuejs-ui@0.3.11
+   ```
+
+3. The workflow validates the package (name, version, license, access), builds and verifies it, then publishes to npm. A pre-release version (containing `-`) is published under the `next` dist-tag; otherwise `latest`.
+
+Publishing requires an `NPM_TOKEN` secret configured in the repository's GitHub Actions secrets.
+
+## Contributing
+
+Issues and pull requests are welcome at
+[github.com/jaltech-io/vuejs-libs](https://github.com/jaltech-io/vuejs-libs).
+
+## License
+
+[MIT](LICENSE) © 2026 Jaltech.
