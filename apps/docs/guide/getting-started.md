@@ -2,7 +2,15 @@
 
 > ⚠️ **Pre-release — not production-ready.** `@jaltech/vuejs-ui` is under active development (pre-`1.0.0`) and has not yet been through a human review pass. APIs may change without notice.
 
-`@jaltech/vuejs-ui` is a standalone Vue 3 component library and design system. This site shows every component live; the snippets are the exact code that renders each demo.
+`@jaltech/vuejs-ui` is a Vue 3 component library **built on [shadcn-vue](https://www.shadcn-vue.com/)** (which is itself built on [Reka UI](https://reka-ui.com/) + [Tailwind CSS](https://tailwindcss.com/)). This site shows every component live; the snippets are the exact code that renders each demo.
+
+## Built on shadcn-vue — and why we build on top
+
+We love how shadcn-vue models components, and we keep that model. Full credit for the underlying primitives goes to the shadcn-vue and Reka UI authors — we do not reinvent them and we do not claim them as ours.
+
+Our reason for existing is one thing we ran into using shadcn-vue in a real application: its components are close to **atomic**. A dialog is a `Dialog` + `DialogTrigger` + `DialogContent` + `DialogHeader` + `DialogTitle` + `DialogFooter` + buttons — assembled by hand, every time. Across a real app that same composition gets repeated in every feature, so the boilerplate piles up.
+
+`@jaltech/vuejs-ui` is the layer that packages those recurring compositions into **complete components**, so you write the feature once instead of re-assembling the primitives on every screen.
 
 ## Installation
 
