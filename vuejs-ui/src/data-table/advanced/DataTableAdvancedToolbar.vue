@@ -2,8 +2,8 @@
   <div class="flex w-full flex-col overflow-x-auto">
 
     <!-- ── Row 1 : Filtre · Views (gauche) · Actions (droite) ── -->
-    <div class="flex items-center justify-between gap-3 pb-0">
-      <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center justify-between gap-2 pb-0">
+      <div class="flex flex-wrap items-center gap-2 min-w-0">
         <DataTableViewsDropdown
           v-if="!hideViewsDropdown"
           :views="views"
@@ -48,7 +48,7 @@
           </Teleport>
         </div>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2 min-w-0">
         <slot name="selection" />
         <slot />
         <DataTableColumnsVisibility />

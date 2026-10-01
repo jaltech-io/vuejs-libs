@@ -6,7 +6,7 @@
       @click.self="$emit('update:modelValue', false)"
     >
       <div
-        class="bg-(--h-surface) border-[0.5px] border-(--h-border-strong) rounded-(--h-radius-lg) w-full max-w-[480px]
+        class="bg-(--h-surface) border-[0.5px] border-(--h-border-strong) rounded-(--h-radius-lg) w-full max-w-[480px] max-h-[calc(100dvh-2rem)] overflow-y-auto
                shadow-[0_24px_70px_rgba(0,0,0,0.25),0_4px_16px_rgba(0,0,0,0.1)] animate-[panel-in_0.18s_ease]"
         :style="{ maxWidth: width }"
       >

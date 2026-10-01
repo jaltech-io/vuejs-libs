@@ -5,7 +5,7 @@
       :key="tab.to"
       :to="tab.to"
       :class="[
-        'inline-flex items-center gap-1.5 rounded-(--h-radius) border-[0.5px] px-3.5 py-1.5 text-[12.5px] font-medium font-[inherit] no-underline cursor-pointer',
+        'inline-flex shrink-0 whitespace-nowrap items-center gap-1.5 rounded-(--h-radius) border-[0.5px] px-3.5 py-1.5 max-sm:px-2.5 text-[12.5px] font-medium font-[inherit] no-underline cursor-pointer',
         isActive(tab)
           ? 'border-(--h-border) bg-(--h-surface2) text-(--h-text)'
           : 'border-transparent bg-none text-(--h-text-3) transition-[background,color] duration-100 hover:bg-(--h-surface2) hover:text-(--h-text)',

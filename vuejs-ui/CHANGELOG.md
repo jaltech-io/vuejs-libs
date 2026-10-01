@@ -1,10 +1,16 @@
+## 0.4.1 (2026-10-01)
+
+### 🩹 Fixes
+
+- **responsive:** `DialogContent` et `HDialog` ne dépassent plus l'écran (hauteur max + défilement) ; `DialogScrollContent` resserré sur téléphone.
+- **responsive:** la barre d'outils `DataTableAdvancedToolbar` passe à la ligne ; `ViewsSidebar` prend toute la largeur sous `md`.
+- **responsive:** `NativeSelect` ne dépasse plus son conteneur (`max-w-full`) ; les onglets de `RouterTabsNav` ne se tassent plus (ils défilent dans leur conteneur).
+
 ## 0.4.0 (2026-09-29)
 
 ### ⚠️ Breaking / Migration
 
 - **tailwind:** migrated to **Tailwind CSS v4**. `styles.css` now uses `@import "tailwindcss/*"` + `@theme` + `@custom-variant` (no more `tailwind.config.cjs`); component `<style>` blocks that use `@apply` carry a `@reference`. Consumers must be on Tailwind v4 (use the `@tailwindcss/vite` plugin) and no longer need the JS preset/content globs. Preflight is still not shipped (source-first, non-clobbering). `tailwindcss-animate` → `tw-animate-css`.
-
-> Not yet published to npm — pending the Tailwind v4 migration of downstream consumers (projectflow).
 
 ## 0.3.14 (2026-09-29)
 
