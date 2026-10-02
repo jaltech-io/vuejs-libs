@@ -1,6 +1,6 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
@@ -81,6 +81,10 @@
     "./collapsible": {
       "types": "./src/collapsible/index.ts",
       "import": "./src/collapsible/index.ts"
+    },
+    "./color-picker": {
+      "types": "./src/color-picker/index.ts",
+      "import": "./src/color-picker/index.ts"
     },
     "./combobox": {
       "types": "./src/combobox/index.ts",

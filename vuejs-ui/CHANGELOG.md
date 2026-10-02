@@ -1,3 +1,9 @@
+## 0.4.4 (2026-10-02)
+
+### 🚀 Features
+
+- **color-picker:** nouveau composant `ColorPicker` (Popover : pastilles + saisie hexadécimale) qui remplace `<input type="color">` ; valeur `#rrggbb`, pastilles personnalisables (`presets`), tailles `default`/`sm`.
+
 ## 0.4.3 (2026-10-02)
 
 ### 🩹 Fixes
