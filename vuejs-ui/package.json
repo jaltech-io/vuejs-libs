@@ -1,6 +1,6 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
@@ -97,6 +97,10 @@
     "./data-table": {
       "types": "./src/data-table/index.ts",
       "import": "./src/data-table/index.ts"
+    },
+    "./date-picker": {
+      "types": "./src/date-picker/index.ts",
+      "import": "./src/date-picker/index.ts"
     },
     "./dialog": {
       "types": "./src/dialog/index.ts",

@@ -1,3 +1,9 @@
+## 0.4.2 (2026-10-02)
+
+### 🚀 Features
+
+- **date-picker:** nouveau composant `DatePicker` (Popover + Calendar) qui remplace `<input type="date">` ; valeur ISO `AAAA-MM-JJ` ou `null`, croix pour effacer, tailles `default`/`sm`, locale `fr-FR` par défaut.
+
 ## 0.4.1 (2026-10-01)
 
 ### 🩹 Fixes
