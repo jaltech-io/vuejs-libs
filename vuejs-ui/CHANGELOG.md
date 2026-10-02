@@ -1,3 +1,9 @@
+## 0.4.6 (2026-10-02)
+
+### 🚀 Features
+
+- **combobox:** `Combobox` devient la liste de choix de référence, toujours avec recherche : choix multiple (`multiple`, `modelValue` tableau, liste qui reste ouverte, « Tout désélectionner »), option « aucun » (`noneLabel`, émet `null` / `[]`), groupes (`groupKey`), taille `sm`, options désactivables (`disabled`), slots `option` et `value` pour un rendu personnalisé. Rétrocompatible.
+
 ## 0.4.5 (2026-10-02)
 
 ### 🩹 Fixes
