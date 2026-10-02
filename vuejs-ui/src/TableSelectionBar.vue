@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { XIcon } from 'lucide-vue-next';
+import { IconX } from '@tabler/icons-vue';
+import { Button } from './button';
 
 defineProps<{
   selectedCount: number;
@@ -19,12 +20,16 @@ const emit = defineEmits<(e: 'clear') => void>();
       <span class="h-4 w-px bg-border" />
       <div class="flex h-7 items-center gap-1 rounded-md border border-dashed px-2 text-xs text-muted-foreground">
         {{ selectedCount }} {{ selectedCount > 1 ? (pluralLabel ?? label ?? 'sélectionnés') : (label ?? 'sélectionné') }}
-        <button
-          type="button" @click="emit('clear')"
-          class="ml-1 flex size-4 items-center justify-center rounded hover:bg-muted"
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-xs"
+          class="ml-1 size-4"
+          aria-label="Effacer la sélection"
+          @click="emit('clear')"
         >
-          <XIcon class="size-3" />
-        </button>
+          <IconX />
+        </Button>
       </div>
       <slot />
     </div>

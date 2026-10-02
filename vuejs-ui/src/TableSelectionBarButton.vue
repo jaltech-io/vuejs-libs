@@ -1,28 +1,40 @@
 <script setup lang="ts">
-import { Loader2Icon } from 'lucide-vue-next';
+import { IconLoader2 } from '@tabler/icons-vue';
+import { Button } from './button';
 import HTooltip from './HTooltip.vue';
+import { cn } from './utils';
 
-defineProps<{
+/** Bouton icône d'une barre de sélection de tableau ; `title` sert d'infobulle et de nom accessible. */
+const props = defineProps<{
   title: string;
   pending?: boolean;
   disabled?: boolean;
   destructive?: boolean;
+  /** Action favorable (valider, approuver) : icône verte. */
+  success?: boolean;
 }>();
 
 defineEmits<(e: 'click') => void>();
 </script>
 
 <template>
-  <HTooltip placement="top-end" :text="title">
-    <button
+  <HTooltip placement="top-end" :text="props.title">
+    <Button
       type="button"
-      :disabled="disabled || pending"
+      variant="hicon"
+      size="hicon"
+      :aria-label="props.title"
+      :disabled="props.disabled || props.pending"
+      :class="
+        cn(
+          props.destructive && 'text-destructive hover:text-destructive',
+          props.success && 'text-(--h-green-700) hover:text-(--h-green-700)',
+        )
+      "
       @click="$emit('click')"
-      class="flex size-7 items-center justify-center rounded-md border bg-secondary hover:bg-accent disabled:opacity-50"
-      :class="destructive ? 'text-destructive' : ''"
     >
-      <Loader2Icon v-if="pending" class="size-3.5 animate-spin" />
+      <IconLoader2 v-if="props.pending" class="animate-spin" />
       <slot v-else />
-    </button>
+    </Button>
   </HTooltip>
 </template>

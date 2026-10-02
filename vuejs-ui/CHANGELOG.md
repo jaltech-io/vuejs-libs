@@ -1,3 +1,19 @@
+## 0.4.7 (2026-10-02)
+
+### 🚀 Features
+
+- **data-table:** `createSelectColumn()` — colonne de sélection prête à l'emploi (Checkbox de la lib, état intermédiaire, noms accessibles).
+- **button:** variante `hicon-danger` (bouton icône de suppression, survol rouge) à utiliser avec la taille `hicon`.
+- **TableSelectionBarButton:** prop `success` (action favorable en vert).
+
+### 🩹 Fixes
+
+- **FormDialog:** boutons de la lib (`Button`) au lieu de `<button>` bruts, icônes tabler, déclencheur `iconOnly` avec `aria-label`, formulaire qui défile dans une `ScrollArea` bornée à l'écran (en-tête et pied fixes), prop `submitDisabled`.
+- **ConfirmDialog:** boutons de la lib (`outline` + `default`/`destructive`).
+- **TableSelectionBar / TableSelectionBarButton:** boutons de la lib avec nom accessible (« Effacer la sélection », `title` du bouton).
+- **HDialog:** construit sur le `Dialog` de la lib (piège du focus, Échap) au lieu d'un overlay fait main ; contenu en `ScrollArea`.
+- **HTooltip:** s'affiche aussi au focus clavier (`focusin`/`focusout`).
+
 ## 0.4.6 (2026-10-02)
 
 ### 🚀 Features

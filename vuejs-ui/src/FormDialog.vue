@@ -1,7 +1,14 @@
 <script setup lang="ts">
-import { Loader2Icon, PlusIcon } from 'lucide-vue-next';
+import { IconLoader2, IconPlus } from '@tabler/icons-vue';
+import { Button } from './button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog';
+import { ScrollArea } from './scroll-area';
+import { cn } from './utils';
 
+/**
+ * Modale de formulaire (création / modification) : en-tête et pied fixes, formulaire qui défile
+ * dans une ScrollArea bornée à l'écran. Déclencheur « Nouveau … » optionnel.
+ */
 const props = withDefaults(
   defineProps<{
     open: boolean;
@@ -12,6 +19,8 @@ const props = withDefaults(
     submitLabel?: string;
     pendingLabel?: string;
     pending?: boolean;
+    /** Désactive le bouton de validation (formulaire incomplet). */
+    submitDisabled?: boolean;
     contentClass?: string;
     cancelLabel?: string;
   }>(),
@@ -27,12 +36,9 @@ const emit = defineEmits<{
   (e: 'cancel'): void;
 }>();
 
-function close() {
-  emit('update:open', false);
-}
 function onCancel() {
   emit('cancel');
-  close();
+  emit('update:open', false);
 }
 </script>
 
@@ -40,30 +46,33 @@ function onCancel() {
   <Dialog :open="props.open" @update:open="emit('update:open', $event)">
     <DialogTrigger v-if="!hideTrigger" as-child>
       <slot name="trigger">
-        <button
-          class="inline-flex h-7 items-center justify-center rounded-md bg-primary px-2.5 text-primary-foreground hover:bg-primary/90"
-          :class="iconOnly ? 'w-7' : 'gap-1.5 text-sm font-medium px-3'"
+        <Button
+          type="button"
+          :size="iconOnly ? 'icon-sm' : 'sm'"
+          :class="iconOnly ? 'size-7' : ''"
+          :aria-label="iconOnly ? (triggerLabel ?? title) : undefined"
         >
-          <PlusIcon class="size-3.5 shrink-0" /><span v-if="!iconOnly">{{ triggerLabel ?? title }}</span>
-        </button>
+          <IconPlus /><span v-if="!iconOnly">{{ triggerLabel ?? title }}</span>
+        </Button>
       </slot>
     </DialogTrigger>
-    <DialogContent :class="contentClass ?? 'sm:max-w-sm'">
-      <DialogHeader><DialogTitle>{{ title }}</DialogTitle></DialogHeader>
-      <form @submit.prevent="emit('submit')" class="flex flex-col gap-4 py-2">
-        <slot />
-      </form>
-      <DialogFooter>
-        <button type="button" class="inline-flex h-9 items-center rounded-md border px-4 text-sm hover:bg-accent" @click="onCancel">
-          {{ cancelLabel }}
-        </button>
-        <button
-          type="button" :disabled="pending" @click="emit('submit')"
-          class="inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
-        >
-          <Loader2Icon v-if="pending" class="size-4 animate-spin" />
+    <DialogContent
+      :class="cn('flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 max-sm:p-0', contentClass ?? 'sm:max-w-md')"
+    >
+      <DialogHeader class="px-6 pt-6 pb-3 max-sm:px-4">
+        <DialogTitle>{{ title }}</DialogTitle>
+      </DialogHeader>
+      <ScrollArea class="min-h-0 flex-1 [&>[data-slot=scroll-area-viewport]]:max-h-[calc(100dvh-11rem)]">
+        <form class="flex flex-col gap-4 px-6 py-2 max-sm:px-4" @submit.prevent="emit('submit')">
+          <slot />
+        </form>
+      </ScrollArea>
+      <DialogFooter class="border-t px-6 py-3 max-sm:px-4">
+        <Button type="button" variant="outline" @click="onCancel">{{ cancelLabel }}</Button>
+        <Button type="button" :disabled="pending || submitDisabled" @click="emit('submit')">
+          <IconLoader2 v-if="pending" class="animate-spin" />
           {{ pending ? (pendingLabel ?? submitLabel) : submitLabel }}
-        </button>
+        </Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

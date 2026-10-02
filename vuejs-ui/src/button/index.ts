@@ -26,6 +26,8 @@ export const buttonVariants = cva(
         hdanger:
           'border-(--h-danger) bg-(--h-danger) text-white hover:border-(--h-danger-hover) hover:bg-(--h-danger-hover)',
         hpurple: 'border-(--h-purple-600) bg-(--h-purple-600) text-white hover:bg-(--h-purple-700)',
+        'hicon-danger':
+          'border-(--h-border-strong) bg-(--h-surface) text-(--h-text-3) hover:border-(--h-danger-soft-brd) hover:bg-(--h-danger-soft-bg) hover:text-(--h-danger-soft-fg)',
         hicon:
           'border-(--h-border-strong) bg-(--h-surface) text-(--h-text-3) hover:bg-(--h-surface2) hover:text-(--h-text)',
       },

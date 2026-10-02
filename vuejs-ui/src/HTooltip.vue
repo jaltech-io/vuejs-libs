@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-flex" ref="wrapRef" @mouseenter="show = true" @mouseleave="show = false" @focus="show = true" @blur="show = false">
+  <div class="relative inline-flex" ref="wrapRef" @mouseenter="show = true" @mouseleave="show = false" @focusin="show = true" @focusout="show = false">
     <slot />
     <Teleport to="body">
       <div
