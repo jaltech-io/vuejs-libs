@@ -75,6 +75,7 @@ function select(date: DateValue | undefined) {
       <PopoverContent class="w-auto p-0" align="start">
         <Calendar
           :model-value="value"
+          :default-placeholder="value"
           :locale="props.locale"
           :week-starts-on="1"
           initial-focus

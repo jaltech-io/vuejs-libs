@@ -1,3 +1,9 @@
+## 0.4.3 (2026-10-02)
+
+### 🩹 Fixes
+
+- **date-picker:** le calendrier s'ouvre sur le mois de la date choisie, et non sur le mois courant.
+
 ## 0.4.2 (2026-10-02)
 
 ### 🚀 Features
