@@ -5,17 +5,12 @@ import { Button } from '../button';
 import { Input } from '../input';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { cn } from '../utils';
+import { DEFAULT_COLOR_PRESETS } from './presets';
 
 /**
  * Sélecteur de couleur (Popover : pastilles + saisie hexadécimale) — remplace `<input type="color">`.
  * La valeur est une couleur hexadécimale `#rrggbb`, comme celle d'un champ couleur natif.
  */
-const DEFAULT_PRESETS = [
-  '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16', '#22c55e',
-  '#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6', '#6366f1',
-  '#8b5cf6', '#a855f7', '#d946ef', '#ec4899', '#f43f5e', '#64748b',
-];
-
 const props = withDefaults(
   defineProps<{
     modelValue?: string | null;
@@ -25,7 +20,7 @@ const props = withDefaults(
     size?: 'default' | 'sm';
     class?: string;
   }>(),
-  { presets: () => DEFAULT_PRESETS, size: 'default' },
+  { presets: () => DEFAULT_COLOR_PRESETS, size: 'default' },
 );
 
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>();

@@ -1,3 +1,9 @@
+## 0.4.5 (2026-10-02)
+
+### 🩹 Fixes
+
+- **color-picker:** les pastilles par défaut sortent du `<script setup>` (`presets.ts`) : `defineProps` ne peut pas référencer une constante locale, ce qui cassait la compilation chez le consommateur.
+
 ## 0.4.4 (2026-10-02)
 
 ### 🚀 Features
