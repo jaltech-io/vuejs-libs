@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Check, ChevronsUpDown, X } from '@lucide/vue';
 import type { AcceptableValue } from 'reka-ui';
-import { computed, ref } from 'vue';
+import { computed, inject, ref, toValue } from 'vue';
 import { Button } from '../button';
 import {
   Command,
@@ -14,6 +14,7 @@ import {
 } from '../command';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { cn } from '../utils';
+import { COMBOBOX_TEXTS_KEY, defaultComboboxTexts } from './texts';
 
 /**
  * Liste de choix AVEC RECHERCHE — simple (`modelValue` = une valeur) ou multiple (`multiple`,
@@ -33,9 +34,14 @@ const props = withDefaults(
     multiple?: boolean;
     /** Ajoute en tête une option « aucun » qui émet `null` (ou `[]` en multiple). */
     noneLabel?: string;
+    /** Textes : prop > `provideComboboxTexts` / `COMBOBOX_TEXTS_KEY` > défauts français. */
     placeholder?: string;
     searchPlaceholder?: string;
     emptyText?: string;
+    /** Bouton qui vide la sélection (choix multiple). Défaut : « Tout désélectionner ». */
+    clearAllLabel?: string;
+    /** Déclencheur au-delà de deux valeurs choisies (choix multiple). Défaut : « N sélectionnés ». */
+    selectedCountLabel?: (count: number) => string;
     disabled?: boolean;
     size?: 'default' | 'sm';
     class?: string;
@@ -54,6 +60,19 @@ defineSlots<{
 
 const valueField = computed(() => props.valueKey ?? 'id');
 const labelField = computed(() => props.labelKey ?? 'name');
+
+const providedTexts = inject(COMBOBOX_TEXTS_KEY, undefined);
+const texts = computed(() => {
+  const provided = toValue(providedTexts) ?? {};
+  return {
+    placeholder: props.placeholder ?? provided.placeholder ?? defaultComboboxTexts.placeholder,
+    searchPlaceholder: props.searchPlaceholder ?? provided.searchPlaceholder ?? defaultComboboxTexts.searchPlaceholder,
+    emptyText: props.emptyText ?? provided.emptyText ?? defaultComboboxTexts.emptyText,
+    clearAllLabel: props.clearAllLabel ?? provided.clearAllLabel ?? defaultComboboxTexts.clearAllLabel,
+    selectedCountLabel:
+      props.selectedCountLabel ?? provided.selectedCountLabel ?? defaultComboboxTexts.selectedCountLabel,
+  };
+});
 
 const open = ref(false);
 
@@ -80,7 +99,7 @@ const triggerLabel = computed(() => {
   if (!selectedValues.value.length) return null;
   if (!props.multiple) return labelOf(selectedValues.value[0]);
   if (selectedValues.value.length <= 2) return selectedValues.value.map(labelOf).join(', ');
-  return `${selectedValues.value.length} sélectionnés`;
+  return texts.value.selectedCountLabel(selectedValues.value.length);
 });
 
 function select(value: AcceptableValue) {
@@ -126,7 +145,7 @@ function selectNone() {
             name="value"
             :option="optionOf(selectedValues[0])!"
           />
-          <template v-else>{{ triggerLabel ?? props.placeholder ?? 'Sélectionner…' }}</template>
+          <template v-else>{{ triggerLabel ?? texts.placeholder }}</template>
         </span>
         <ChevronsUpDown class="size-4 shrink-0 opacity-50" />
       </Button>
@@ -134,9 +153,9 @@ function selectNone() {
 
     <PopoverContent class="w-(--reka-popover-trigger-width) min-w-56 p-0" align="start">
       <Command>
-        <CommandInput :placeholder="props.searchPlaceholder ?? 'Rechercher…'" />
+        <CommandInput :placeholder="texts.searchPlaceholder" />
         <CommandList>
-          <CommandEmpty>{{ props.emptyText ?? 'Aucun résultat' }}</CommandEmpty>
+          <CommandEmpty>{{ texts.emptyText }}</CommandEmpty>
           <template v-if="props.noneLabel">
             <CommandGroup>
               <CommandItem value="__combobox_none__" @select="selectNone">
@@ -163,7 +182,7 @@ function selectNone() {
         </CommandList>
         <div v-if="props.multiple && selectedValues.length" class="border-t p-1">
           <Button variant="ghost" size="sm" type="button" class="h-7 w-full justify-center gap-1.5 text-xs" @click="selectNone">
-            <X class="size-3.5" /> Tout désélectionner
+            <X class="size-3.5" /> {{ texts.clearAllLabel }}
           </Button>
         </div>
       </Command>

@@ -29,6 +29,7 @@ export default defineConfig({
           items: [
             { text: 'FormDialog', link: '/components/form-dialog' },
             { text: 'ConfirmDialog', link: '/components/confirm-dialog' },
+            { text: 'Combobox', link: '/components/combobox' },
             { text: 'ActivityFeed', link: '/components/activity-feed' },
             { text: 'StatCard', link: '/components/stat-card' },
             { text: 'MetricCard', link: '/components/metric-card' },

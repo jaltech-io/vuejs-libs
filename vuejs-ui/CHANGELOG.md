@@ -1,3 +1,9 @@
+## 0.4.8 (2026-10-03)
+
+### 🚀 Features
+
+- **combobox:** plus aucun texte figé en français — nouvelles props `clearAllLabel` (bouton « Tout désélectionner ») et `selectedCountLabel(count)` (« N sélectionnés »), en plus de `placeholder` / `searchPlaceholder` / `emptyText`. Les textes peuvent aussi être fournis une seule fois pour toute l'application ou un sous-arbre (`installComboboxTexts(app, textes)`, `provideComboboxTexts(textes)`, `COMBOBOX_TEXTS_KEY`), y compris sous forme de getter réactif (changement de langue). Priorité : prop > textes fournis > défauts français actuels (`defaultComboboxTexts`). Rétrocompatible.
+
 ## 0.4.7 (2026-10-02)
 
 ### 🚀 Features
