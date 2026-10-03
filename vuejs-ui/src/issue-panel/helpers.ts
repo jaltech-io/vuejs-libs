@@ -13,15 +13,11 @@ import {
   IconStars,
   IconTrendingUp,
 } from '@tabler/icons-vue';
+import { defaultLibraryTexts } from '../texts';
 import type { IssuePanelPriority, IssuePanelStatus, IssuePanelType } from './types';
 
-export const STATUS_LABEL: Record<IssuePanelStatus, string> = {
-  open: 'Ouvert',
-  'in-progress': 'En cours',
-  'in-review': 'En revue',
-  done: 'Terminé',
-  closed: 'Fermé',
-};
+/** Libellés par défaut (français). Les composants lisent les textes fournis (`issuePanel.*`). */
+export const STATUS_LABEL: Record<IssuePanelStatus, string> = defaultLibraryTexts.issuePanel.statuses;
 export const STATUS_ICON: Record<IssuePanelStatus, any> = {
   open: IconCircle,
   'in-progress': IconCircleDot,
@@ -29,24 +25,14 @@ export const STATUS_ICON: Record<IssuePanelStatus, any> = {
   done: IconCircleCheck,
   closed: IconCircleX,
 };
-export const PRIO_LABEL: Record<IssuePanelPriority, string> = {
-  critical: 'Critique',
-  high: 'Haute',
-  medium: 'Moyenne',
-  low: 'Basse',
-};
+export const PRIO_LABEL: Record<IssuePanelPriority, string> = defaultLibraryTexts.issuePanel.priorities;
 export const PRIO_ICON: Record<IssuePanelPriority, any> = {
   critical: IconAlertTriangle,
   high: IconArrowUp,
   medium: IconArrowRight,
   low: IconArrowDown,
 };
-export const TYPE_LABEL: Record<IssuePanelType, string> = {
-  bug: 'Bug',
-  feature: 'Feature',
-  task: 'Tâche',
-  improvement: 'Amélioration',
-};
+export const TYPE_LABEL: Record<IssuePanelType, string> = defaultLibraryTexts.issuePanel.types;
 export const TYPE_ICON: Record<IssuePanelType, any> = {
   bug: IconBug,
   feature: IconStars,
@@ -83,6 +69,6 @@ export function priorityColorClass(priority: IssuePanelPriority) {
   return map[priority];
 }
 
-export function fmtIssueDate(d: string) {
-  return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+export function fmtIssueDate(d: string, locale: string = defaultLibraryTexts.locale) {
+  return new Date(d).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
 }

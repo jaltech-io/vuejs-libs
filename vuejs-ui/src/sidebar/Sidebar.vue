@@ -6,6 +6,7 @@ import SheetTitle from '../sheet/SheetTitle.vue';
 import { cn } from '../utils';
 import type { SidebarProps } from '.';
 import { SIDEBAR_WIDTH_MOBILE, useSidebar } from './utils';
+import { useLibraryTexts } from '../texts';
 
 defineOptions({
   inheritAttrs: false,
@@ -18,6 +19,8 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 });
 
 const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -42,8 +45,8 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
       }"
     >
       <SheetHeader class="sr-only">
-        <SheetTitle>Sidebar</SheetTitle>
-        <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+        <SheetTitle>{{ texts.sidebar.title }}</SheetTitle>
+        <SheetDescription>{{ texts.sidebar.description }}</SheetDescription>
       </SheetHeader>
       <div class="flex h-full w-full flex-col">
         <slot />

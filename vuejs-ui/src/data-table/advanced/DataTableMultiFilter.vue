@@ -31,7 +31,7 @@
           class="inline-flex h-6 items-center gap-1 rounded-full border border-dashed px-2 text-xs hover:bg-accent"
         >
           <PlusIcon class="size-3" />
-          Add
+          {{ texts.dataTableFilters.addInGroup }}
         </button>
         <Teleport to="body">
           <div
@@ -58,6 +58,7 @@
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
 import { PlusIcon, XIcon } from 'lucide-vue-next';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useLibraryTexts } from '../../texts';
 
 const props = defineProps<{
   options: DataTableFilterOption[];
@@ -70,6 +71,8 @@ const emit = defineEmits<{
   (e: 'update:operator', v: string): void;
   (e: 'update:selectedOptions', v: DataTableFilterOption[]): void;
 }>();
+
+const texts = useLibraryTexts();
 
 const addOpen = ref(false);
 const addRef = ref<HTMLElement | null>(null);

@@ -28,6 +28,8 @@ A dialog that wraps a form, with a built-in trigger button, header, submit/cance
 </div>
 </ClientOnly>
 
+Built-in texts are translatable once for the whole application (`formDialog` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
+
 ## Code
 
 ```vue

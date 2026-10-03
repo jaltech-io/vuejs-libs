@@ -15,17 +15,20 @@
 
 <script setup lang="ts">
 import { IconRobot, IconRobotFace, IconRocket } from '@tabler/icons-vue';
+import { computed } from 'vue';
+import { useLibraryTexts } from '../texts';
 
 // Icônes theme IA (robot) + labels qui gardent un ancrage technique — routeName
 // inchangé, seule la présentation change (2026-08-09). "Déployer" (IconRocket) n'a pas de
 // persona IA derrière (voir DeployService, aucun appel LLM) — reste dans ce même bandeau
 // d'onglets car c'est la même famille d'outils développeur/plateforme, pas parce que c'est
 // un agent.
-const TABS = [
-  { routeName: 'fullstack-developer', label: 'Dev', icon: IconRobot },
-  { routeName: 'lead-dev', label: 'Merge', icon: IconRobotFace },
-  { routeName: 'deploy', label: 'Déployer', icon: IconRocket },
-];
+const texts = useLibraryTexts();
+const TABS = computed(() => [
+  { routeName: 'fullstack-developer', label: texts.value.aiDevPanel.tabDev, icon: IconRobot },
+  { routeName: 'lead-dev', label: texts.value.aiDevPanel.tabMerge, icon: IconRobotFace },
+  { routeName: 'deploy', label: texts.value.aiDevPanel.tabDeploy, icon: IconRocket },
+]);
 </script>
 
 <style scoped>

@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import HBadge from '../HBadge.vue';
+import { useLibraryTexts } from '../texts';
 import type { TenantPanelTenant } from './types';
 
 const props = defineProps<{ tenant: TenantPanelTenant }>();
@@ -19,7 +20,7 @@ const props = defineProps<{ tenant: TenantPanelTenant }>();
 const initials = computed(() => (props.tenant.label ?? '').slice(0, 2).toUpperCase());
 
 const STATUS_VARIANT: Record<string, 'green' | 'amber' | 'red'> = { active: 'green', trial: 'amber', suspended: 'red' };
-const STATUS_LABEL: Record<string, string> = { active: 'Actif', trial: 'Essai', suspended: 'Suspendu' };
+const texts = useLibraryTexts();
 const statusVariant = computed(() => STATUS_VARIANT[props.tenant.status ?? ''] ?? 'green');
-const statusLabel = computed(() => STATUS_LABEL[props.tenant.status ?? ''] ?? props.tenant.status);
+const statusLabel = computed(() => texts.value.tenantPanel.statuses[props.tenant.status ?? ''] ?? props.tenant.status);
 </script>

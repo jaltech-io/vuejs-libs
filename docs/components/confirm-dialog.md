@@ -27,6 +27,8 @@ An imperative confirmation dialog: mount `<ConfirmDialog />` once, then call `sh
 </div>
 </ClientOnly>
 
+Built-in texts are translatable once for the whole application (`confirmDialog` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
+
 ## Code
 
 ```vue

@@ -2,8 +2,9 @@ import { type App, type InjectionKey, type MaybeRefOrGetter, provide } from 'vue
 
 /**
  * Textes affichés par `Combobox`. Chacun se règle par prop sur un composant, ou une seule fois
- * pour toute l'application (ou un sous-arbre) avec `provideComboboxTexts` / `COMBOBOX_TEXTS_KEY`.
- * Ordre de priorité : prop > textes fournis > textes par défaut (français).
+ * pour toute l'application : de préférence via `installLibraryTexts` (section `combobox`, voir
+ * `@jaltech/vuejs-ui/texts`), ou via `installComboboxTexts` / `provideComboboxTexts` (conservés).
+ * Priorité : prop > textes du Combobox fournis > textes de la lib fournis > défauts (français).
  */
 export interface ComboboxTexts {
   /** Déclencheur sans valeur choisie. */

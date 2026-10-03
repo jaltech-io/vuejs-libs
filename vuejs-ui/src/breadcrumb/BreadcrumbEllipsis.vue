@@ -2,10 +2,13 @@
 import { MoreHorizontal } from '@lucide/vue';
 import type { HTMLAttributes } from 'vue';
 import { cn } from '../utils';
+import { useLibraryTexts } from '../texts';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];
 }>();
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -18,6 +21,6 @@ const props = defineProps<{
     <slot>
       <MoreHorizontal class="size-4" />
     </slot>
-    <span class="sr-only">More</span>
+    <span class="sr-only">{{ texts.breadcrumb.more }}</span>
   </span>
 </template>

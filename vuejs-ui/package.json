@@ -1,6 +1,6 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
@@ -269,6 +269,10 @@
     "./tags-input": {
       "types": "./src/tags-input/index.ts",
       "import": "./src/tags-input/index.ts"
+    },
+    "./texts": {
+      "types": "./src/texts/index.ts",
+      "import": "./src/texts/index.ts"
     },
     "./textarea": {
       "types": "./src/textarea/index.ts",

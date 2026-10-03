@@ -21,6 +21,8 @@ A bulk-selection bar that appears when rows are selected: it shows the count wit
 </div>
 </ClientOnly>
 
+Built-in texts are translatable once for the whole application (`selectionBar` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
+
 ## Code
 
 ```vue

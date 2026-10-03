@@ -1,34 +1,34 @@
 <script setup lang="ts">
 import { IconLoader2, IconPlus } from '@tabler/icons-vue';
+import { computed } from 'vue';
 import { Button } from './button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog';
 import { ScrollArea } from './scroll-area';
+import { useLibraryTexts } from './texts';
 import { cn } from './utils';
 
 /**
  * Modale de formulaire (création / modification) : en-tête et pied fixes, formulaire qui défile
  * dans une ScrollArea bornée à l'écran. Déclencheur « Nouveau … » optionnel.
  */
-const props = withDefaults(
-  defineProps<{
-    open: boolean;
-    title: string;
-    triggerLabel?: string;
-    iconOnly?: boolean;
-    hideTrigger?: boolean;
-    submitLabel?: string;
-    pendingLabel?: string;
-    pending?: boolean;
-    /** Désactive le bouton de validation (formulaire incomplet). */
-    submitDisabled?: boolean;
-    contentClass?: string;
-    cancelLabel?: string;
-  }>(),
-  {
-    submitLabel: 'Créer',
-    cancelLabel: 'Annuler',
-  },
-);
+const props = defineProps<{
+  open: boolean;
+  title: string;
+  triggerLabel?: string;
+  iconOnly?: boolean;
+  hideTrigger?: boolean;
+  submitLabel?: string;
+  pendingLabel?: string;
+  pending?: boolean;
+  /** Désactive le bouton de validation (formulaire incomplet). */
+  submitDisabled?: boolean;
+  contentClass?: string;
+  cancelLabel?: string;
+}>();
+
+const texts = useLibraryTexts();
+const submitText = computed(() => props.submitLabel ?? texts.value.formDialog.submit);
+const cancelText = computed(() => props.cancelLabel ?? texts.value.formDialog.cancel);
 
 const emit = defineEmits<{
   (e: 'update:open', v: boolean): void;
@@ -68,10 +68,10 @@ function onCancel() {
         </form>
       </ScrollArea>
       <DialogFooter class="border-t px-6 py-3 max-sm:px-4">
-        <Button type="button" variant="outline" @click="onCancel">{{ cancelLabel }}</Button>
+        <Button type="button" variant="outline" @click="onCancel">{{ cancelText }}</Button>
         <Button type="button" :disabled="pending || submitDisabled" @click="emit('submit')">
           <IconLoader2 v-if="pending" class="animate-spin" />
-          {{ pending ? (pendingLabel ?? submitLabel) : submitLabel }}
+          {{ pending ? (pendingLabel ?? submitText) : submitText }}
         </Button>
       </DialogFooter>
     </DialogContent>

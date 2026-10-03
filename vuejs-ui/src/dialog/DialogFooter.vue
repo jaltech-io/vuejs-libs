@@ -3,6 +3,7 @@ import { DialogClose } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
 import { Button } from '../button';
 import { cn } from '../utils';
+import { useLibraryTexts } from '../texts';
 
 const props = withDefaults(
   defineProps<{
@@ -13,6 +14,8 @@ const props = withDefaults(
     showCloseButton: false,
   },
 );
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -23,7 +26,7 @@ const props = withDefaults(
     <slot />
     <DialogClose v-if="showCloseButton" as-child>
       <Button variant="outline">
-        Close
+        {{ texts.dialog.close }}
       </Button>
     </DialogClose>
   </div>

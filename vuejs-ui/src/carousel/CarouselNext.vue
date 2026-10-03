@@ -5,6 +5,7 @@ import { Button } from '../button';
 import { cn } from '../utils';
 import type { WithClassAsProps } from './interface';
 import { useCarousel } from './useCarousel';
+import { useLibraryTexts } from '../texts';
 
 const props = withDefaults(
   defineProps<
@@ -20,6 +21,8 @@ const props = withDefaults(
 );
 
 const { orientation, canScrollNext, scrollNext } = useCarousel();
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -39,7 +42,7 @@ const { orientation, canScrollNext, scrollNext } = useCarousel();
   >
     <slot>
       <ArrowRight />
-      <span class="sr-only">Next Slide</span>
+      <span class="sr-only">{{ texts.carousel.next }}</span>
     </slot>
   </Button>
 </template>

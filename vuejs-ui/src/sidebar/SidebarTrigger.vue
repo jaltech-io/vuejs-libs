@@ -4,12 +4,15 @@ import type { HTMLAttributes } from 'vue';
 import { Button } from '../button';
 import { cn } from '../utils';
 import { useSidebar } from './utils';
+import { useLibraryTexts } from '../texts';
 
 const props = defineProps<{
   class?: HTMLAttributes['class'];
 }>();
 
 const { toggleSidebar } = useSidebar();
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -22,6 +25,6 @@ const { toggleSidebar } = useSidebar();
     @click="toggleSidebar"
   >
     <PanelLeft />
-    <span class="sr-only">Toggle Sidebar</span>
+    <span class="sr-only">{{ texts.sidebar.toggle }}</span>
   </Button>
 </template>

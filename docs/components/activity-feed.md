@@ -20,6 +20,8 @@ A timeline of project activity events, with author avatars, from/to value change
 </div>
 </ClientOnly>
 
+Built-in texts are translatable once for the whole application (`activityFeed` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
+
 ## Code
 
 ```vue

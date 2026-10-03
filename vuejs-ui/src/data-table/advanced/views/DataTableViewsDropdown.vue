@@ -4,9 +4,9 @@
       type="button"
       @click="toggleOpen"
       class="flex h-7 w-36 shrink-0 items-center justify-between rounded-md border border-input bg-background px-2.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-hidden"
-      :title="`Open views (${isMac ? '⌘' : 'Ctrl'}+V)`"
+      :title="texts.dataTableViews.openViewsHint(`${isMac ? '⌘' : 'Ctrl'}+V`)"
     >
-      <span class="truncate">{{ currentView?.name || props.defaultLabel || 'Tout' }}</span>
+      <span class="truncate">{{ currentView?.name || props.defaultLabel || texts.dataTableViews.all }}</span>
       <ChevronDownIcon class="ml-1 size-4 shrink-0 opacity-50" />
     </button>
 
@@ -25,20 +25,20 @@
             <button type="button" @click="mode = 'list'" class="mr-2 rounded p-0.5 hover:bg-accent">
               <ChevronLeftIcon class="size-4" />
             </button>
-            <span class="text-sm font-medium">New view</span>
+            <span class="text-sm font-medium">{{ texts.dataTableViews.newView }}</span>
           </div>
           <div class="p-3 space-y-2">
             <input
               ref="createInputRef"
               v-model="createName"
-              placeholder="View name"
+              :placeholder="texts.dataTableViews.namePlaceholder"
               class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-hidden focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
               @keyup.enter="handleCreate"
               @keyup.escape="mode = 'list'"
             />
             <label class="flex items-center gap-2 text-xs text-muted-foreground">
               <input type="checkbox" v-model="createIsPublic" />
-              Rendre publique (visible par tous)
+              {{ texts.dataTableViews.makePublic }}
             </label>
             <p v-if="createError" class="text-xs text-destructive">{{ createError }}</p>
             <button
@@ -47,7 +47,7 @@
               :disabled="creating"
               class="w-full rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
             >
-              {{ creating ? 'Saving…' : 'Save view' }}
+              {{ creating ? texts.dataTableViews.saving : texts.dataTableViews.save }}
             </button>
           </div>
         </template>
@@ -58,20 +58,20 @@
             <button type="button" @click="mode = 'list'" class="mr-2 rounded p-0.5 hover:bg-accent">
               <ChevronLeftIcon class="size-4" />
             </button>
-            <span class="text-sm font-medium">Edit view</span>
+            <span class="text-sm font-medium">{{ texts.dataTableViews.editView }}</span>
           </div>
           <div class="p-3 space-y-2">
             <input
               ref="editInputRef"
               v-model="editName"
-              placeholder="View name"
+              :placeholder="texts.dataTableViews.namePlaceholder"
               class="w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm outline-hidden focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
               @keyup.enter="handleEdit"
               @keyup.escape="mode = 'list'"
             />
             <label class="flex items-center gap-2 text-xs text-muted-foreground">
               <input type="checkbox" v-model="editIsPublic" />
-              Rendre publique (visible par tous)
+              {{ texts.dataTableViews.makePublic }}
             </label>
             <p v-if="editError" class="text-xs text-destructive">{{ editError }}</p>
             <div class="flex gap-2">
@@ -81,7 +81,7 @@
                 :disabled="editing"
                 class="flex-1 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
               >
-                {{ editing ? 'Saving…' : 'Update' }}
+                {{ editing ? texts.dataTableViews.saving : texts.dataTableViews.update }}
               </button>
               <button
                 type="button"
@@ -89,7 +89,7 @@
                 :disabled="deleting"
                 class="rounded-md border border-destructive px-3 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50"
               >
-                {{ deleting ? '…' : 'Delete' }}
+                {{ deleting ? '…' : texts.dataTableViews.delete }}
               </button>
             </div>
           </div>
@@ -101,7 +101,7 @@
             <SearchIcon class="mr-2 size-4 shrink-0 opacity-50" />
             <input
               v-model="search"
-              placeholder="Search views…"
+              :placeholder="texts.dataTableViews.searchViews"
               class="h-8 w-full bg-transparent py-1 text-sm outline-hidden placeholder:text-muted-foreground"
             />
           </div>
@@ -113,7 +113,7 @@
               :class="{ 'bg-accent text-accent-foreground': !currentView }"
               @click="selectView(null)"
             >
-              {{ props.defaultLabel || 'Tout' }}
+              {{ props.defaultLabel || texts.dataTableViews.all }}
             </button>
 
             <!-- Saved views -->
@@ -125,7 +125,7 @@
               @click="selectView(view)"
             >
               <span class="truncate">{{ view.name }}</span>
-              <span v-if="view.isPublic" class="ml-1 shrink-0 rounded bg-accent px-1 text-[10px] uppercase text-muted-foreground">Public</span>
+              <span v-if="view.isPublic" class="ml-1 shrink-0 rounded bg-accent px-1 text-[10px] uppercase text-muted-foreground">{{ texts.dataTableViews.public }}</span>
               <span
                 class="invisible ml-auto flex size-5 shrink-0 items-center justify-center rounded p-0.5 hover:bg-neutral-200 group-hover:visible dark:hover:bg-neutral-700"
                 @click.stop="openEdit(view)"
@@ -137,7 +137,7 @@
             <p
               v-if="filteredViews.length === 0 && search"
               class="py-4 text-center text-xs text-muted-foreground"
-            >No view found.</p>
+            >{{ texts.dataTableViews.noViewFound }}</p>
           </div>
 
           <div class="border-t p-1">
@@ -147,7 +147,7 @@
               @click="mode = 'create'; nextTick(() => createInputRef?.focus())"
             >
               <PlusIcon class="mr-2 size-4" />
-              Add view
+              {{ texts.dataTableViews.addView }}
             </button>
           </div>
         </template>
@@ -165,6 +165,7 @@ import { getIsMacOS } from '@jaltech/vuejs-ui/utils';
 import { ChevronDownIcon, ChevronLeftIcon, PencilIcon, PlusIcon, SearchIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useLibraryTexts } from '../../../texts';
 import { COLUMNS, calcViewSearchParams } from './utils';
 
 const props = defineProps<{
@@ -188,6 +189,7 @@ const router = useRouter();
 const route = useRoute();
 const { table } = useTableInstance();
 const isMac = getIsMacOS();
+const texts = useLibraryTexts();
 
 const rootRef = ref<HTMLElement | null>(null);
 const createInputRef = ref<HTMLInputElement | null>(null);
@@ -265,7 +267,7 @@ function openEdit(view: ViewItem) {
 async function handleCreate() {
   createError.value = '';
   if (!createName.value.trim()) {
-    createError.value = 'Name is required';
+    createError.value = texts.value.dataTableViews.dropdownNameRequired;
     return;
   }
   creating.value = true;
@@ -298,7 +300,7 @@ async function handleCreate() {
 async function handleEdit() {
   editError.value = '';
   if (!editName.value.trim() || !editingView.value) {
-    editError.value = 'Name is required';
+    editError.value = texts.value.dataTableViews.dropdownNameRequired;
     return;
   }
   editing.value = true;
@@ -319,9 +321,9 @@ async function handleEdit() {
 async function handleDelete() {
   if (!editingView.value) return;
   const ok = await showConfirm({
-    title: 'Supprimer la vue',
-    description: `Supprimer définitivement la vue "${editingView.value.name}" ?`,
-    confirmLabel: 'Supprimer',
+    title: texts.value.dataTableViews.deleteTitle,
+    description: texts.value.dataTableViews.deleteDescription(editingView.value.name),
+    confirmLabel: texts.value.dataTableViews.deleteConfirm,
     variant: 'destructive',
   });
   if (!ok) return;

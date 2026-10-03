@@ -46,7 +46,7 @@ Every built-in text can be set per component through a prop:
 | `clearAllLabel` | `Tout désélectionner` |
 | `selectedCountLabel` | `` (count) => `${count} sélectionnés` `` |
 
-Or once for the whole application (or a subtree with `provideComboboxTexts`). A getter keeps the texts in sync with the current language. Priority: prop > provided texts > defaults.
+Or once for the whole application, together with every other text of the library, through the `combobox` section of [`installLibraryTexts`](/guide/texts). `installComboboxTexts` (or `provideComboboxTexts` for a subtree) still works and wins over that section. A getter keeps the texts in sync with the current language. Priority: prop > Combobox texts > library texts > defaults.
 
 ```ts
 import { installComboboxTexts } from '@jaltech/vuejs-ui/combobox'

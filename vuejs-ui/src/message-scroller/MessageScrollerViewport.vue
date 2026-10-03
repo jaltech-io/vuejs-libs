@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'vue';
 import { onBeforeUnmount, onMounted, useTemplateRef, watch } from 'vue';
 import { cn } from '../utils';
 import { SCROLL_KEYS, useMessageScrollerContext } from './useMessageScroller';
+import { useLibraryTexts } from '../texts';
 
 const props = withDefaults(
   defineProps<{
@@ -52,6 +53,8 @@ onBeforeUnmount(() => {
   resizeObserver = null;
   setViewportElement(null);
 });
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -59,7 +62,7 @@ onBeforeUnmount(() => {
     ref="viewport"
     data-slot="message-scroller-viewport"
     role="region"
-    aria-label="Messages"
+    :aria-label="texts.messageScroller.label"
     :tabindex="0"
     :data-scrollable="scrollableAttr"
     :data-autoscrolling="autoscrolling ? '' : undefined"

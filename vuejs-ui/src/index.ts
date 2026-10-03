@@ -24,6 +24,7 @@ export * from './sheet';
 export { default as TableSelectionBar } from './TableSelectionBar.vue';
 export { default as TableSelectionBarButton } from './TableSelectionBarButton.vue';
 export * from './tabs';
+export * from './texts';
 export * from './tooltip';
 export * from './types';
 export * from './utils';

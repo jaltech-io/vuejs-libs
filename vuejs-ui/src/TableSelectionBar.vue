@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { IconX } from '@tabler/icons-vue';
+import { computed } from 'vue';
 import { Button } from './button';
+import { useLibraryTexts } from './texts';
 
-defineProps<{
+const props = defineProps<{
   selectedCount: number;
+  /** Mot après le nombre (singulier ; aussi pluriel si `pluralLabel` absent). Défaut : textes de la lib. */
   label?: string;
   pluralLabel?: string;
 }>();
 
 const emit = defineEmits<(e: 'clear') => void>();
+
+const texts = useLibraryTexts();
+
+const countLabel = computed(() => {
+  const word = props.selectedCount > 1 ? (props.pluralLabel ?? props.label) : props.label;
+  return word ? `${props.selectedCount} ${word}` : texts.value.selectionBar.selectedCount(props.selectedCount);
+});
 </script>
 
 <template>
@@ -19,13 +29,13 @@ const emit = defineEmits<(e: 'clear') => void>();
     <div v-if="selectedCount > 0" class="flex items-center gap-1.5">
       <span class="h-4 w-px bg-border" />
       <div class="flex h-7 items-center gap-1 rounded-md border border-dashed px-2 text-xs text-muted-foreground">
-        {{ selectedCount }} {{ selectedCount > 1 ? (pluralLabel ?? label ?? 'sélectionnés') : (label ?? 'sélectionné') }}
+        {{ countLabel }}
         <Button
           type="button"
           variant="ghost"
           size="icon-xs"
           class="ml-1 size-4"
-          aria-label="Effacer la sélection"
+          :aria-label="texts.selectionBar.clearSelection"
           @click="emit('clear')"
         >
           <IconX />

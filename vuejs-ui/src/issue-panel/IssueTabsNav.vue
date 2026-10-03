@@ -7,7 +7,7 @@
              hover:border-(--h-border-strong) hover:text-(--h-text)"
       @click="emit('go-parent', parent.id)"
     >
-      <IconArrowUp :size="13" /> Parent&nbsp;: <code class="font-semibold text-(--h-blue-600)">{{ parent.code }}</code> <span class="overflow-hidden text-ellipsis whitespace-nowrap">{{ parent.title }}</span>
+      <IconArrowUp :size="13" /> {{ texts.issuePanel.parent }}&nbsp;: <code class="font-semibold text-(--h-blue-600)">{{ parent.code }}</code> <span class="overflow-hidden text-ellipsis whitespace-nowrap">{{ parent.title }}</span>
     </button>
 
     <div class="flex gap-0.5 border-b border-(--h-border) mb-5">
@@ -36,6 +36,8 @@ import {
   IconSubtask,
   IconTimeline,
 } from '@tabler/icons-vue';
+import { computed } from 'vue';
+import { useLibraryTexts } from '../texts';
 import type { IssuePanelSibling } from './types';
 
 defineProps<{
@@ -45,15 +47,20 @@ defineProps<{
 }>();
 const emit = defineEmits<{ 'go-parent': [id: string] }>();
 
-const TABS = [
-  { key: 'description', label: 'Description', icon: IconFileDescription },
-  { key: 'subtasks', label: 'Sous-tâches', icon: IconSubtask },
-  { key: 'comments', label: 'Commentaires', icon: IconMessage },
-  { key: 'attachments', label: 'Pièces jointes', icon: IconPaperclip },
-  { key: 'time', label: 'Temps', icon: IconClock },
-  { key: 'activity', label: 'Activité', icon: IconTimeline },
-  { key: 'relations', label: 'Relations', icon: IconGitBranch },
-];
+const texts = useLibraryTexts();
+
+const TABS = computed(() => {
+  const labels = texts.value.issuePanel;
+  return [
+    { key: 'description', label: labels.tabDescription, icon: IconFileDescription },
+    { key: 'subtasks', label: labels.tabSubtasks, icon: IconSubtask },
+    { key: 'comments', label: labels.tabComments, icon: IconMessage },
+    { key: 'attachments', label: labels.tabAttachments, icon: IconPaperclip },
+    { key: 'time', label: labels.tabTime, icon: IconClock },
+    { key: 'activity', label: labels.tabActivity, icon: IconTimeline },
+    { key: 'relations', label: labels.tabRelations, icon: IconGitBranch },
+  ];
+});
 </script>
 
 <style scoped>

@@ -9,7 +9,7 @@
           active-class="act-filter-active"
         >{{ f.label }}</RouterLink>
       </div>
-      <span class="text-xs text-(--h-text-3)">{{ events.length }} événement{{ events.length > 1 ? 's' : '' }}</span>
+      <span class="text-xs text-(--h-text-3)">{{ texts.activityFeed.eventCount(events.length) }}</span>
     </div>
 
     <div class="flex flex-col">
@@ -36,7 +36,7 @@
           </div>
         </div>
       </template>
-      <div v-else class="p-12 text-center text-[13px] text-(--h-text-3)">Aucun événement dans cette catégorie.</div>
+      <div v-else class="p-12 text-center text-[13px] text-(--h-text-3)">{{ texts.activityFeed.empty }}</div>
     </div>
   </div>
 </template>
@@ -45,19 +45,25 @@
 import { Avatar, AvatarFallback } from '@jaltech/vuejs-ui/avatar';
 import type { ActivityEventItem, ActivityEventKind } from '@jaltech/vuejs-ui/types';
 import { getInitials } from '@jaltech/vuejs-ui/utils';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useLibraryTexts } from './texts';
 
 defineProps<{ events: ActivityEventItem[] }>();
 
 const route = useRoute();
+const texts = useLibraryTexts();
 
-const FILTER_TABS = [
-  { name: 'org-project-activity', path: 'activity', label: 'Tout' },
-  { name: 'project-activity-creations', path: 'activity-creations', label: 'Créations' },
-  { name: 'project-activity-status', path: 'activity-status', label: 'Changements de statut' },
-  { name: 'project-activity-comments', path: 'activity-comments', label: 'Commentaires' },
-  { name: 'project-activity-assignments', path: 'activity-assignments', label: 'Assignations' },
-];
+const FILTER_TABS = computed(() => {
+  const labels = texts.value.activityFeed;
+  return [
+    { name: 'org-project-activity', path: 'activity', label: labels.filterAll },
+    { name: 'project-activity-creations', path: 'activity-creations', label: labels.filterCreations },
+    { name: 'project-activity-status', path: 'activity-status', label: labels.filterStatusChanges },
+    { name: 'project-activity-comments', path: 'activity-comments', label: labels.filterComments },
+    { name: 'project-activity-assignments', path: 'activity-assignments', label: labels.filterAssignments },
+  ];
+});
 
 function tabPath(seg: string) {
   const { tenantId, orgId, projectId } = route.params as Record<string, string>;
@@ -76,16 +82,17 @@ function avatarColor(t: ActivityEventKind) {
 }
 
 function relativeTime(iso: string): string {
+  const { locale, activityFeed: labels } = texts.value;
   const diff = Date.now() - new Date(iso).getTime();
   const s = Math.floor(diff / 1000);
-  if (s < 60) return "à l'instant";
+  if (s < 60) return labels.justNow;
   const m = Math.floor(s / 60);
-  if (m < 60) return `il y a ${m} min`;
+  if (m < 60) return labels.minutesAgo(m);
   const h = Math.floor(m / 60);
-  if (h < 24) return `il y a ${h}h`;
+  if (h < 24) return labels.hoursAgo(h);
   const d = Math.floor(h / 24);
-  if (d < 7) return `il y a ${d}j`;
-  return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  if (d < 7) return labels.daysAgo(d);
+  return new Date(iso).toLocaleDateString(locale, { day: 'numeric', month: 'short' });
 }
 </script>
 

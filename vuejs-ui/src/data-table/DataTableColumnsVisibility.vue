@@ -1,6 +1,6 @@
 <template>
   <div class="relative" ref="rootRef">
-    <HTooltip text="Colonnes visibles" placement="top-end">
+    <HTooltip :text="texts.dataTable.columnsTooltip" placement="top-end">
       <button
         type="button"
         @click="toggleOpen"
@@ -17,7 +17,7 @@
         class="fixed z-400 w-48 rounded-md border bg-popover shadow-md"
         @mousedown.stop
       >
-        <p class="border-b px-3 py-2 text-xs font-semibold text-muted-foreground">Toggle columns</p>
+        <p class="border-b px-3 py-2 text-xs font-semibold text-muted-foreground">{{ texts.dataTable.columnsTitle }}</p>
         <div class="p-1">
           <div
             v-for="col in toggleableColumns"
@@ -48,8 +48,10 @@ import { SlidersHorizontalIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import HTooltip from '../HTooltip.vue';
+import { useLibraryTexts } from '../texts';
 
 const { table } = useTableInstance();
+const texts = useLibraryTexts();
 const router = useRouter();
 const route = useRoute();
 

@@ -1,8 +1,8 @@
 <template>
   <aside class="h-table-wrap w-full md:w-52 shrink-0 self-start">
     <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-(--h-surface2) px-3.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-(--h-text-3)">
-      <span>Vues</span>
-      <HTooltip placement="top-end" text="Nouvelle vue">
+      <span>{{ texts.dataTableViews.sidebarTitle }}</span>
+      <HTooltip placement="top-end" :text="texts.dataTableViews.sidebarNewView">
         <button
           type="button"
           class="flex size-7 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-blue-50) text-(--h-blue-600) transition-colors hover:brightness-95"
@@ -49,7 +49,7 @@
           <button
             type="button"
             class="flex size-6 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-surface) text-(--h-blue-600) shadow-xs transition-colors hover:brightness-95"
-            title="Modifier"
+            :title="texts.dataTableViews.sidebarEdit"
             @click.stop="startEdit(view)"
           >
             <PencilIcon class="size-3.5" />
@@ -57,7 +57,7 @@
           <button
             type="button"
             class="flex size-6 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-surface) text-destructive shadow-xs transition-colors hover:brightness-95"
-            title="Supprimer"
+            :title="texts.dataTableViews.sidebarDelete"
             @click.stop="onDelete(view)"
           >
             <TrashIcon class="size-3.5" />
@@ -81,6 +81,7 @@ import { computed, nextTick, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTableInstance } from '../../../composables/useTableInstance';
 import HTooltip from '../../../HTooltip.vue';
+import { useLibraryTexts } from '../../../texts';
 import type { FilterParams, ViewItem } from '../../../types';
 import { BookmarkIcon, ListIcon, Loader2Icon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-vue-next';
 import { COLUMNS, calcViewSearchParams } from './utils';
@@ -99,6 +100,7 @@ const emit = defineEmits<(e: 'create') => void>();
 const router = useRouter();
 const route = useRoute();
 const { table } = useTableInstance();
+const texts = useLibraryTexts();
 
 // Colonnes réellement masquables de CE tableau (dérivées de tanstack), pas un jeu figé.
 // Repli sur COLUMNS (issues) si la table n'expose encore aucune colonne masquable.

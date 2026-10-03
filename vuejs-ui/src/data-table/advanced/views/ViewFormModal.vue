@@ -1,20 +1,20 @@
 <template>
   <FormDialog
     v-model:open="openModel"
-    :title="mode === 'create' ? 'Nouvelle vue' : 'Modifier la vue'"
+    :title="mode === 'create' ? texts.dataTableViews.formNewTitle : texts.dataTableViews.formEditTitle"
     hide-trigger
     content-class="sm:max-w-sm"
-    :submit-label="mode === 'create' ? 'Créer' : 'Mettre à jour'"
-    :pending-label="mode === 'create' ? 'Création…' : 'Mise à jour…'"
+    :submit-label="mode === 'create' ? texts.dataTableViews.formCreate : texts.dataTableViews.formUpdate"
+    :pending-label="mode === 'create' ? texts.dataTableViews.formCreating : texts.dataTableViews.formUpdating"
     :pending="pending"
     @submit="onSubmit"
   >
     <div class="space-y-1.5">
-      <label class="text-sm font-medium">Nom <span class="text-destructive">*</span></label>
+      <label class="text-sm font-medium">{{ texts.dataTableViews.formNameLabel }} <span class="text-destructive">*</span></label>
       <input
         ref="nameInputRef"
         v-model="name"
-        placeholder="Nom de la vue"
+        :placeholder="texts.dataTableViews.formNamePlaceholder"
         class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
         @keyup.enter="onSubmit"
       />
@@ -29,7 +29,7 @@
       @click="onDelete"
     >
       <TrashIcon class="size-3.5" />
-      {{ deleting ? 'Suppression…' : 'Supprimer la vue' }}
+      {{ deleting ? texts.dataTableViews.formDeleting : texts.dataTableViews.formDelete }}
     </button>
   </FormDialog>
 </template>
@@ -40,6 +40,7 @@ import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { TrashIcon } from 'lucide-vue-next';
 import { computed, nextTick, ref, watch } from 'vue';
 import FormDialog from '../../../FormDialog.vue';
+import { useLibraryTexts } from '../../../texts';
 
 const props = defineProps<{
   open: boolean;
@@ -52,6 +53,8 @@ const props = defineProps<{
   onDeleteView: (id: string) => Promise<any>;
 }>();
 const emit = defineEmits<(e: 'update:open', v: boolean) => void>();
+
+const texts = useLibraryTexts();
 
 const openModel = computed({ get: () => props.open, set: (v) => emit('update:open', v) });
 
@@ -75,7 +78,7 @@ watch(
 async function onSubmit() {
   error.value = '';
   if (!name.value.trim()) {
-    error.value = 'Le nom est requis';
+    error.value = texts.value.dataTableViews.formNameRequired;
     return;
   }
   pending.value = true;
@@ -105,9 +108,9 @@ async function onSubmit() {
 async function onDelete() {
   if (!props.view) return;
   const ok = await showConfirm({
-    title: 'Supprimer la vue',
-    description: `Supprimer définitivement la vue "${props.view.name}" ?`,
-    confirmLabel: 'Supprimer',
+    title: texts.value.dataTableViews.deleteTitle,
+    description: texts.value.dataTableViews.deleteDescription(props.view.name),
+    confirmLabel: texts.value.dataTableViews.deleteConfirm,
     variant: 'destructive',
   });
   if (!ok) return;

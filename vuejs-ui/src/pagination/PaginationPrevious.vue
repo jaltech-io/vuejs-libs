@@ -7,6 +7,7 @@ import type { HTMLAttributes } from 'vue';
 import type { ButtonVariants } from '../button';
 import { buttonVariants } from '../button';
 import { cn } from '../utils';
+import { useLibraryTexts } from '../texts';
 
 const props = withDefaults(
   defineProps<
@@ -22,6 +23,8 @@ const props = withDefaults(
 
 const delegatedProps = reactiveOmit(props, 'class', 'size');
 const forwarded = useForwardProps(delegatedProps);
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -32,7 +35,7 @@ const forwarded = useForwardProps(delegatedProps);
   >
     <slot>
       <ChevronLeftIcon />
-      <span class="hidden sm:block">Previous</span>
+      <span class="hidden sm:block">{{ texts.pagination.previous }}</span>
     </slot>
   </PaginationPrev>
 </template>

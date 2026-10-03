@@ -41,7 +41,7 @@
         </template>
         <tr v-else>
           <td :colSpan="columns.length" class="h-dt-empty">
-            Aucun résultat.
+            {{ texts.dataTable.noResults }}
           </td>
         </tr>
       </tbody>
@@ -52,11 +52,14 @@
 <script setup lang="ts" generic="TData">
 import type { ColumnDef, Table } from '@tanstack/vue-table';
 import { FlexRender } from '@tanstack/vue-table';
+import { useLibraryTexts } from '../texts';
 
 defineProps<{
   table: Table<TData>;
   columns: ColumnDef<TData, any>[];
 }>();
+
+const texts = useLibraryTexts();
 </script>
 
 <style scoped>

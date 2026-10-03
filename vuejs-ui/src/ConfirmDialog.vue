@@ -9,14 +9,14 @@
       </DialogHeader>
       <DialogFooter class="pt-2">
         <Button type="button" variant="outline" @click="resolveConfirm(false)">
-          {{ _confirmOpts.cancelLabel ?? 'Annuler' }}
+          {{ _confirmOpts.cancelLabel ?? texts.confirmDialog.cancel }}
         </Button>
         <Button
           type="button"
           :variant="_confirmOpts.variant === 'destructive' ? 'destructive' : 'default'"
           @click="resolveConfirm(true)"
         >
-          {{ _confirmOpts.confirmLabel ?? 'Confirmer' }}
+          {{ _confirmOpts.confirmLabel ?? texts.confirmDialog.confirm }}
         </Button>
       </DialogFooter>
     </DialogContent>
@@ -34,4 +34,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from './dialog';
+import { useLibraryTexts } from './texts';
+
+const texts = useLibraryTexts();
 </script>

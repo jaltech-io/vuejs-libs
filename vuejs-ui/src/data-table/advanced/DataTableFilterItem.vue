@@ -67,7 +67,7 @@
         <div class="p-2">
           <!-- "is empty" / "is not empty" — no value needed -->
           <template v-if="localOperator === 'empty' || localOperator === 'not_empty'">
-            <p class="px-2 py-3 text-center text-xs text-muted-foreground italic">No value needed for this operator</p>
+            <p class="px-2 py-3 text-center text-xs text-muted-foreground italic">{{ texts.dataTableFilters.noValueNeeded }}</p>
           </template>
 
           <!-- Text input for title-like fields -->
@@ -75,7 +75,7 @@
             <input
               ref="inputRef"
               v-model="textValue"
-              :placeholder="`Type to filter ${option.label.toLowerCase()}…`"
+              :placeholder="texts.dataTableFilters.textPlaceholder(option.label)"
               class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm outline-hidden placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
               @keyup.escape="open = false"
             />
@@ -87,7 +87,7 @@
               <SearchIcon class="absolute left-2 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <input
                 v-model="optionSearch"
-                placeholder="Search…"
+                :placeholder="texts.dataTableFilters.searchPlaceholder"
                 class="w-full rounded-md border border-input bg-background py-1.5 pl-7 pr-3 text-xs outline-hidden placeholder:text-muted-foreground focus:ring-2 focus:ring-ring"
               />
             </div>
@@ -108,7 +108,7 @@
                 </div>
                 <span class="capitalize">{{ opt.label }}</span>
               </div>
-              <p v-if="filteredOptions.length === 0" class="py-2 text-center text-xs text-muted-foreground">No option found</p>
+              <p v-if="filteredOptions.length === 0" class="py-2 text-center text-xs text-muted-foreground">{{ texts.dataTableFilters.noOption }}</p>
             </div>
           </template>
         </div>
@@ -121,6 +121,7 @@
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
 import { ChevronDownIcon, ListIcon, SearchIcon, TypeIcon, XIcon } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useLibraryTexts } from '../../texts';
 
 const props = defineProps<{
   option: DataTableFilterOption;
@@ -140,24 +141,32 @@ const opOpen = ref(false);
 const panelStyle = ref<Record<string, string>>({});
 const optionSearch = ref('');
 
-const textOperators = [
-  { label: 'contains', value: 'ilike' },
-  { label: 'does not contain', value: 'not ilike' },
-  { label: 'equals', value: 'eq' },
-  { label: 'does not equal', value: 'ne' },
-  { label: 'starts with', value: 'startswith' },
-  { label: 'ends with', value: 'endswith' },
-  { label: 'is empty', value: 'empty' },
-  { label: 'is not empty', value: 'not_empty' },
-];
-const enumOperators = [
-  { label: 'is', value: 'eq' },
-  { label: 'is not', value: 'ne' },
-  { label: 'is empty', value: 'empty' },
-  { label: 'is not empty', value: 'not_empty' },
-];
+const texts = useLibraryTexts();
 
-const operators = computed(() => (props.option.options?.length ? enumOperators : textOperators));
+const textOperators = computed(() => {
+  const labels = texts.value.dataTableFilters;
+  return [
+    { label: labels.contains, value: 'ilike' },
+    { label: labels.notContains, value: 'not ilike' },
+    { label: labels.equals, value: 'eq' },
+    { label: labels.notEquals, value: 'ne' },
+    { label: labels.startsWith, value: 'startswith' },
+    { label: labels.endsWith, value: 'endswith' },
+    { label: labels.isEmpty, value: 'empty' },
+    { label: labels.isNotEmpty, value: 'not_empty' },
+  ];
+});
+const enumOperators = computed(() => {
+  const labels = texts.value.dataTableFilters;
+  return [
+    { label: labels.is, value: 'eq' },
+    { label: labels.isNot, value: 'ne' },
+    { label: labels.isEmpty, value: 'empty' },
+    { label: labels.isNotEmpty, value: 'not_empty' },
+  ];
+});
+
+const operators = computed(() => (props.option.options?.length ? enumOperators.value : textOperators.value));
 
 const localOperator = ref(props.option.filterOperator ?? (props.option.options?.length ? 'eq' : 'ilike'));
 const textValue = ref(props.option.filterValues?.[0] ?? '');

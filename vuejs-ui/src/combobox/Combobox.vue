@@ -14,7 +14,8 @@ import {
 } from '../command';
 import { Popover, PopoverContent, PopoverTrigger } from '../popover';
 import { cn } from '../utils';
-import { COMBOBOX_TEXTS_KEY, defaultComboboxTexts } from './texts';
+import { useLibraryTexts } from '../texts';
+import { COMBOBOX_TEXTS_KEY } from './texts';
 
 /**
  * Liste de choix AVEC RECHERCHE — simple (`modelValue` = une valeur) ou multiple (`multiple`,
@@ -34,7 +35,7 @@ const props = withDefaults(
     multiple?: boolean;
     /** Ajoute en tête une option « aucun » qui émet `null` (ou `[]` en multiple). */
     noneLabel?: string;
-    /** Textes : prop > `provideComboboxTexts` / `COMBOBOX_TEXTS_KEY` > défauts français. */
+    /** Textes : prop > `installComboboxTexts` > `installLibraryTexts` (section `combobox`) > défauts français. */
     placeholder?: string;
     searchPlaceholder?: string;
     emptyText?: string;
@@ -62,15 +63,16 @@ const valueField = computed(() => props.valueKey ?? 'id');
 const labelField = computed(() => props.labelKey ?? 'name');
 
 const providedTexts = inject(COMBOBOX_TEXTS_KEY, undefined);
+const libraryTexts = useLibraryTexts();
 const texts = computed(() => {
   const provided = toValue(providedTexts) ?? {};
+  const fallback = libraryTexts.value.combobox;
   return {
-    placeholder: props.placeholder ?? provided.placeholder ?? defaultComboboxTexts.placeholder,
-    searchPlaceholder: props.searchPlaceholder ?? provided.searchPlaceholder ?? defaultComboboxTexts.searchPlaceholder,
-    emptyText: props.emptyText ?? provided.emptyText ?? defaultComboboxTexts.emptyText,
-    clearAllLabel: props.clearAllLabel ?? provided.clearAllLabel ?? defaultComboboxTexts.clearAllLabel,
-    selectedCountLabel:
-      props.selectedCountLabel ?? provided.selectedCountLabel ?? defaultComboboxTexts.selectedCountLabel,
+    placeholder: props.placeholder ?? provided.placeholder ?? fallback.placeholder,
+    searchPlaceholder: props.searchPlaceholder ?? provided.searchPlaceholder ?? fallback.searchPlaceholder,
+    emptyText: props.emptyText ?? provided.emptyText ?? fallback.emptyText,
+    clearAllLabel: props.clearAllLabel ?? provided.clearAllLabel ?? fallback.clearAllLabel,
+    selectedCountLabel: props.selectedCountLabel ?? provided.selectedCountLabel ?? fallback.selectedCountLabel,
   };
 });
 

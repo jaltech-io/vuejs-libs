@@ -21,6 +21,8 @@ The full data-table experience from the real application, on top of [TanStack Ta
 
 Try it: sort with the **Project / Status / Priority** headers, open **Filter** to filter by status/visibility/health/priority, tick rows to reveal the bulk-action bar, add a **saved view** with the **+** in the sidebar, and page through with the pager.
 
+Built-in texts are translatable once for the whole application (`dataTable`, `dataTableFilters` and `dataTableViews` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
+
 ## How it is assembled
 
 The advanced table is a composition around a standard TanStack `useVueTable` instance shared with the toolbar and the views sidebar via `provideTableInstance`:

@@ -14,16 +14,16 @@
       <DropdownMenuContent align="start">
         <DropdownMenuItem @click="column.toggleSorting(false)">
           <ArrowUpIcon class="mr-2 size-3.5 text-muted-foreground/70" />
-          Asc
+          {{ texts.dataTable.sortAscending }}
         </DropdownMenuItem>
         <DropdownMenuItem @click="column.toggleSorting(true)">
           <ArrowDownIcon class="mr-2 size-3.5 text-muted-foreground/70" />
-          Desc
+          {{ texts.dataTable.sortDescending }}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem @click="column.toggleVisibility(false)">
           <EyeOffIcon class="mr-2 size-3.5 text-muted-foreground/70" />
-          Hide
+          {{ texts.dataTable.hideColumn }}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -41,6 +41,9 @@ import {
 } from '@jaltech/vuejs-ui/dropdown-menu';
 import type { Column } from '@tanstack/vue-table';
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, EyeOffIcon } from 'lucide-vue-next';
+import { useLibraryTexts } from '../texts';
 
 defineProps<{ column: Column<any, any>; title: string }>();
+
+const texts = useLibraryTexts();
 </script>

@@ -15,13 +15,16 @@
 
 <script setup lang="ts">
 import { IconInfoCircle, IconPuzzle } from '@tabler/icons-vue';
+import { computed } from 'vue';
+import { useLibraryTexts } from '../texts';
 
 defineProps<{ params: Record<string, string> }>();
 
-const TABS = [
-  { routeName: 'tenant-informations', label: 'Informations générales', icon: IconInfoCircle },
-  { routeName: 'tenant-programs', label: 'Programmes', icon: IconPuzzle },
-];
+const texts = useLibraryTexts();
+const TABS = computed(() => [
+  { routeName: 'tenant-informations', label: texts.value.tenantPanel.tabInformations, icon: IconInfoCircle },
+  { routeName: 'tenant-programs', label: texts.value.tenantPanel.tabPrograms, icon: IconPuzzle },
+]);
 </script>
 
 <style scoped>

@@ -1,3 +1,11 @@
+## 0.4.9 (2026-10-03)
+
+### 🚀 Features
+
+- **texts:** tous les textes de la bibliothèque deviennent traduisibles par un seul mécanisme, sur le modèle du Combobox (0.4.8) : `installLibraryTexts(app, textes)` (une fois pour l'application, getter réactif possible pour suivre la langue), `provideLibraryTexts(textes)` pour un sous-arbre, `defaultLibraryTexts`, `useLibraryTexts()`, `LIBRARY_TEXTS_KEY` (nouveau point d'entrée `@jaltech/vuejs-ui/texts`). Textes partiels par section : `locale`, `combobox`, `selectionBar`, `confirmDialog`, `formDialog`, `datePicker`, `dataTable`, `dataTableFilters`, `dataTableViews`, `activityFeed`, `issuePanel`, `aiDevPanel`, `tenantPanel` et les noms accessibles des primitives (`dialog`, `sheet`, `pagination`, `carousel`, `breadcrumb`, `sidebar`, `spinner`, `messageScroller`, `command`). Pluriels en fonctions `(count) => string`. Priorité : prop > textes fournis > défauts (textes actuels, inchangés). `installComboboxTexts` reste fonctionnel et prime sur la section `combobox`.
+- **locale:** la langue des dates n'est plus figée en `fr-FR` : `DatePicker` (calendrier et date affichée), `ActivityFeed` et le panneau de ticket lisent `locale` des textes fournis (la prop `locale` du DatePicker reste prioritaire). `fmtIssueDate(date, locale?)`.
+- **data-table:** `createSelectColumn({ selectAllLabel, selectRowLabel })` ; sans option, les noms accessibles suivent les textes fournis (lus au rendu).
+
 ## 0.4.8 (2026-10-03)
 
 ### 🚀 Features

@@ -7,6 +7,7 @@ import { Button } from '../button';
 import { cn } from '../utils';
 import type { MessageScrollerButtonDirection } from './useMessageScroller';
 import { useMessageScroller, useMessageScrollerScrollable } from './useMessageScroller';
+import { useLibraryTexts } from '../texts';
 
 const props = withDefaults(
   defineProps<{
@@ -37,6 +38,8 @@ function onClick(event: MouseEvent) {
   if (props.direction === 'start') scrollToStart({ behavior: props.behavior });
   else scrollToEnd({ behavior: props.behavior });
 }
+
+const texts = useLibraryTexts();
 </script>
 
 <template>
@@ -56,7 +59,7 @@ function onClick(event: MouseEvent) {
   >
     <slot>
       <ArrowDownIcon />
-      <span class="sr-only">{{ direction === "end" ? "Scroll to end" : "Scroll to start" }}</span>
+      <span class="sr-only">{{ direction === "end" ? texts.messageScroller.scrollToEnd : texts.messageScroller.scrollToStart }}</span>
     </slot>
   </Button>
 </template>

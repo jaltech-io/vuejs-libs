@@ -22,7 +22,7 @@
             class="inline-flex h-7 items-center gap-1.5 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <ListFilterIcon class="size-3.5" />
-            {{ selectedOptions.length === 0 ? 'Filtrer' : 'Ajouter' }}
+            {{ selectedOptions.length === 0 ? texts.dataTableFilters.filter : texts.dataTableFilters.add }}
           </button>
           <Teleport to="body">
             <div
@@ -32,7 +32,7 @@
               @mousedown.stop
             >
               <div class="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                Filtrer par
+                {{ texts.dataTableFilters.filterBy }}
               </div>
               <div
                 v-for="opt in selectableOptions"
@@ -93,7 +93,7 @@
         class="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
       >
         <RotateCcwIcon class="size-3" />
-        Reinitialiser
+        {{ texts.dataTableViews.reset }}
       </button>
 
       <!-- Bouton Sauvegarder la vue -->
@@ -106,7 +106,7 @@
           class="inline-flex h-7 items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2.5 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50"
         >
           <BookmarkPlusIcon class="size-3.5" />
-          Sauvegarder la vue
+          {{ texts.dataTableViews.saveView }}
         </button>
 
         <!-- Etat ouvert : saisie inline -->
@@ -118,7 +118,7 @@
           <input
             ref="saveInputRef"
             v-model="newViewName"
-            placeholder="Nom de la vue..."
+            :placeholder="texts.dataTableViews.saveNamePlaceholder"
             class="w-32 bg-transparent text-xs outline-hidden placeholder:text-muted-foreground"
             @keyup.enter="handleSaveView"
             @keyup.escape="openSaveView = false; newViewName = ''"
@@ -129,7 +129,7 @@
               type="button"
               @click="handleSaveView"
               :disabled="saving"
-              title="Sauvegarder (Entree)"
+              :title="texts.dataTableViews.saveHint"
               class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-[10px] font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
               <Loader2Icon v-if="saving" class="size-3 animate-spin" />
@@ -138,7 +138,7 @@
             <button
               type="button"
               @click="openSaveView = false; newViewName = ''"
-              title="Annuler (Echap)"
+              :title="texts.dataTableViews.cancelHint"
               class="flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
             >
               <XIcon class="size-3" />
@@ -157,7 +157,7 @@
       >
         <Loader2Icon v-if="saving" class="size-3.5 animate-spin" />
         <SaveIcon v-else class="size-3.5" />
-        Mettre a jour
+        {{ texts.dataTableViews.updateView }}
       </button>
 
     </div>
@@ -181,6 +181,7 @@ import {
 } from 'lucide-vue-next';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useLibraryTexts } from '../../texts';
 import DataTableColumnsVisibility from '../DataTableColumnsVisibility.vue';
 import DataTableFilterItem from './DataTableFilterItem.vue';
 import DataTableMultiFilter from './DataTableMultiFilter.vue';
@@ -208,6 +209,7 @@ const props = defineProps<{
 const router = useRouter();
 const route = useRoute();
 const { table, columnVisibility } = useTableInstance();
+const texts = useLibraryTexts();
 
 const addOpen = ref(false);
 const openSaveView = ref(false);
@@ -411,7 +413,7 @@ function resetToCurrentView() {
 
 async function handleSaveView() {
   if (!newViewName.value.trim()) {
-    saveViewError.value = 'Nom requis';
+    saveViewError.value = texts.value.dataTableViews.nameRequired;
     return;
   }
   saving.value = true;
