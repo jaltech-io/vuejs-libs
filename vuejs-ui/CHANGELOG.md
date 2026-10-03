@@ -1,3 +1,17 @@
+## 0.4.10 (2026-10-03)
+
+### 🩹 Fixes
+
+- **data-table (vues sauvegardées):** « vue modifiée » n'est plus toujours vraie — comparaison SÉMANTIQUE des filtres (`normalizeFilterParams`, `filterParamsEqual` : ordre des clés, valeurs vides, ordre des filtres et opérateur à moins de deux filtres sans effet) et des colonnes (`columnsEqual`, colonnes masquables de la table uniquement). « Réinitialiser » / « Mettre à jour » n'apparaissent qu'en cas de vraie différence.
+- **data-table:** une vue applique TOUS ses filtres, quel que soit le tableau (`calcViewSearchParams` ne filtre plus sur une liste figée de champs de tickets) ; `FilterItem.field` devient `string`.
+- **data-table:** colonnes d'une vue restaurées à la sélection, à la réinitialisation ET après un rechargement de page : `DataTableColumnsVisibility` relit `cols` dans l'URL (source de vérité, absent = tout visible). Plus aucun `COLUMNS` figé (dépréciés : `COLUMNS`, `FILTERABLE_FIELDS`) ; nouveaux utilitaires `getHideableColumnIds`, `visibilityFromColumns`, `columnsFromQuery`, `COLUMNS_QUERY_KEY`.
+- **ViewFormModal:** la vue créée devient la vue active (`viewId` dans l'URL) ; Entrée ne crée plus deux vues (une seule soumission, protégée par `pending`) ; supprimer la vue active ramène à « Tous ».
+- **ViewsSidebar:** un renommage refusé (`{ status: 'error', message }`) n'est plus avalé — le champ reste ouvert avec le message (quitter le champ sans changer le nom abandonne) ; supprimer la vue active ramène à « Tous ».
+- **DataTableAdvancedToolbar:** l'échec de « Mettre à jour la vue » est affiché ; plus de double création à l'Entrée.
+- **DataTableViewsDropdown:** reste sur la route courante (naviguait vers `/`), colonnes dérivées de la table.
+
+Contrat des callbacks de vues (documenté) : résoudre après avoir rafraîchi `views` ; `{ status: 'error', message }` en cas d'échec, `message` affiché tel quel (au consommateur de le traduire) ; la création renvoie `{ view: { id } }`.
+
 ## 0.4.9 (2026-10-03)
 
 ### 🚀 Features

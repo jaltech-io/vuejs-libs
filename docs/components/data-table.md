@@ -74,3 +74,9 @@ provideTableInstance(table, columnVisibility)
 ```
 
 In the real app the views and rows come from the API; here they are in-memory so the whole flow is live.
+
+### Saved views contract
+
+- The URL is the source of truth: a view's filters (all of them, whatever the table), operator, sort and visible columns (`cols`, dot-separated ids, absent = all visible) are written to the query with `viewId`. Selecting a view, resetting it or reloading the page restores both filters and columns.
+- `onCreateView` / `onUpdateView` / `onDeleteView` resolve **after** `views` is refreshed. On failure they return `{ status: 'error', message }`: the message is displayed as is (translate it before returning). Creation returns `{ view: { id } }` and the new view becomes the active one; deleting the active view goes back to the default view.
+- "Reset" / "Update view" only show up when the current filters or columns really differ from the active view (semantic comparison: key order, empty values and filter order do not count).

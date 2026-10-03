@@ -261,18 +261,25 @@ const selectedCount = computed(() => table.getFilteredSelectedRowModel().rows.le
 // ── In-memory saved views ────────────────────────────────────────────────
 const views = ref<ViewItem[]>([]);
 let vid = 0;
+// Contract: resolve once `views` is refreshed; `{ status: 'error', message }` on failure (the
+// message is shown as is); creation returns `{ view }` so the new view becomes the active one.
+function nameTaken(name: string, exceptId?: string) {
+  return views.value.some((v) => v.name === name && v.id !== exceptId);
+}
 function createView(p: { name: string; columns?: string[]; filterParams?: FilterParams }) {
+  if (nameTaken(p.name)) return Promise.resolve({ status: 'error', message: `"${p.name}" already exists` });
   const v: ViewItem = { id: `v${++vid}`, name: p.name, columns: p.columns ?? null, filterParams: p.filterParams ?? null };
   views.value = [...views.value, v];
-  return Promise.resolve(v);
+  return Promise.resolve({ status: 'success', view: v });
 }
 function updateView(id: string, p: { name: string; columns?: string[]; filterParams?: FilterParams }) {
+  if (nameTaken(p.name, id)) return Promise.resolve({ status: 'error', message: `"${p.name}" already exists` });
   views.value = views.value.map((v) => (v.id === id ? { ...v, ...p } : v));
-  return Promise.resolve(views.value.find((v) => v.id === id));
+  return Promise.resolve({ status: 'success', view: views.value.find((v) => v.id === id) });
 }
 function deleteView(view: ViewItem) {
   views.value = views.value.filter((v) => v.id !== view.id);
-  return Promise.resolve();
+  return Promise.resolve({ status: 'success' });
 }
 function deleteViewById(id: string) {
   const v = views.value.find((x) => x.id === id);

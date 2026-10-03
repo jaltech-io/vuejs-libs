@@ -1,5 +1,6 @@
 export interface FilterItem {
-  field: 'title' | 'status' | 'priority';
+  /** Champ filtré : la `value` d'un des `filterFields` du tableau. */
+  field: string;
   value: string;
   isMulti: boolean;
 }

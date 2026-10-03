@@ -166,7 +166,7 @@ import { ChevronDownIcon, ChevronLeftIcon, PencilIcon, PlusIcon, SearchIcon } fr
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLibraryTexts } from '../../../texts';
-import { COLUMNS, calcViewSearchParams } from './utils';
+import { calcViewSearchParams, getHideableColumnIds } from './utils';
 
 const props = defineProps<{
   views: ViewItem[];
@@ -236,22 +236,13 @@ function close() {
   search.value = '';
 }
 
+// Reste sur la route courante ; la query de la vue porte ses filtres ET ses colonnes (`cols`,
+// relu par DataTableColumnsVisibility).
 function selectView(view: ViewItem | null) {
-  if (!view) {
-    router.replace({ path: '/', query: {} });
-  } else {
-    const params = calcViewSearchParams(view);
-    router.replace({ path: '/', query: params });
-    if (view.columns) {
-      const vis: Record<string, boolean> = {};
-      COLUMNS.forEach((c) => {
-        vis[c] = (view.columns ?? []).includes(c);
-      });
-      table.setColumnVisibility(vis);
-    } else {
-      table.setColumnVisibility({});
-    }
-  }
+  router.replace({
+    path: route.path,
+    query: view ? calcViewSearchParams(view, getHideableColumnIds(table)) : {},
+  });
   close();
 }
 
@@ -270,20 +261,22 @@ async function handleCreate() {
     createError.value = texts.value.dataTableViews.dropdownNameRequired;
     return;
   }
+  if (creating.value) return;
   creating.value = true;
-  const cols = table
-    .getVisibleFlatColumns()
-    .filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide())
-    .map((c) => c.id);
-  const res = await props.onCreateView({
-    name: createName.value.trim(),
-    columns: cols,
-    filterParams: props.filterParams,
-    isPublic: createIsPublic.value,
-  });
-  creating.value = false;
+  const visible = new Set(table.getVisibleFlatColumns().map((c) => c.id));
+  let res: any;
+  try {
+    res = await props.onCreateView({
+      name: createName.value.trim(),
+      columns: getHideableColumnIds(table).filter((id) => visible.has(id)),
+      filterParams: props.filterParams,
+      isPublic: createIsPublic.value,
+    });
+  } finally {
+    creating.value = false;
+  }
   if (res?.status === 'error') {
-    createError.value = res.message;
+    createError.value = res.message ?? '';
     return;
   }
 
@@ -303,16 +296,21 @@ async function handleEdit() {
     editError.value = texts.value.dataTableViews.dropdownNameRequired;
     return;
   }
+  if (editing.value) return;
   editing.value = true;
-  const res = await props.onUpdateView(editingView.value.id, {
-    name: editName.value.trim(),
-    columns: editingView.value.columns ?? undefined,
-    filterParams: editingView.value.filterParams ?? undefined,
-    isPublic: editIsPublic.value,
-  });
-  editing.value = false;
+  let res: any;
+  try {
+    res = await props.onUpdateView(editingView.value.id, {
+      name: editName.value.trim(),
+      columns: editingView.value.columns ?? undefined,
+      filterParams: editingView.value.filterParams ?? undefined,
+      isPublic: editIsPublic.value,
+    });
+  } finally {
+    editing.value = false;
+  }
   if (res?.status === 'error') {
-    editError.value = res.message;
+    editError.value = res.message ?? '';
     return;
   }
   mode.value = 'list';
@@ -320,18 +318,28 @@ async function handleEdit() {
 
 async function handleDelete() {
   if (!editingView.value) return;
+  const view = editingView.value;
   const ok = await showConfirm({
     title: texts.value.dataTableViews.deleteTitle,
-    description: texts.value.dataTableViews.deleteDescription(editingView.value.name),
+    description: texts.value.dataTableViews.deleteDescription(view.name),
     confirmLabel: texts.value.dataTableViews.deleteConfirm,
     variant: 'destructive',
   });
   if (!ok) return;
   deleting.value = true;
-  await props.onDeleteView(editingView.value.id);
-  deleting.value = false;
-  if (currentView.value?.id === editingView.value.id) {
-    router.replace({ path: '/', query: {} });
+  let res: any;
+  try {
+    res = await props.onDeleteView(view.id);
+  } finally {
+    deleting.value = false;
+  }
+  if (res?.status === 'error') {
+    editError.value = res.message ?? '';
+    return;
+  }
+  // Supprimer la vue active ramène à « Tous », sur la route courante.
+  if (route.query.viewId === view.id) {
+    router.replace({ path: route.path, query: {} });
   }
   mode.value = 'list';
 }

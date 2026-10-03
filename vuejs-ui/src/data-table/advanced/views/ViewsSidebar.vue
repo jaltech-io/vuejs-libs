@@ -24,9 +24,8 @@
         <span class="min-w-0 flex-1 truncate">{{ defaultLabel }}</span>
       </button>
 
+      <template v-for="view in views" :key="view.id">
       <div
-        v-for="view in views"
-        :key="view.id"
         class="flex items-center gap-1 rounded-(--h-radius) pr-1 pl-2 text-[13px] transition-colors hover:bg-(--h-surface2)"
         :class="currentView?.id === view.id ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
       >
@@ -40,7 +39,7 @@
           :disabled="savingId === view.id"
           @keyup.enter="saveEdit(view)"
           @keyup.esc="cancelEdit"
-          @blur="saveEdit(view)"
+          @blur="saveEdit(view, true)"
           @click.stop
         />
         <button v-else type="button" class="min-w-0 flex-1 truncate py-2 text-left" @click="selectView(view)">{{ view.name }}</button>
@@ -65,6 +64,8 @@
         </template>
         <Loader2Icon v-else-if="savingId === view.id" class="size-3.5 shrink-0 animate-spin text-muted-foreground" />
       </div>
+      <p v-if="editingId === view.id && editError" class="px-2 pb-1 text-xs text-destructive">{{ editError }}</p>
+      </template>
     </nav>
   </aside>
 </template>
@@ -84,7 +85,12 @@ import HTooltip from '../../../HTooltip.vue';
 import { useLibraryTexts } from '../../../texts';
 import type { FilterParams, ViewItem } from '../../../types';
 import { BookmarkIcon, ListIcon, Loader2Icon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-vue-next';
-import { COLUMNS, calcViewSearchParams } from './utils';
+import { calcViewSearchParams, getHideableColumnIds } from './utils';
+
+// Contrat des callbacks : résoudre APRÈS avoir rafraîchi `views` ; en cas d'échec, renvoyer
+// `{ status: 'error', message }` — le message est affiché tel quel sous le champ de renommage
+// (au consommateur de le traduire, et libre à lui d'afficher aussi un toast).
+type ViewCallbackResult = { status?: string; message?: string } | undefined | void;
 
 const props = defineProps<{
   views: ViewItem[];
@@ -102,34 +108,16 @@ const route = useRoute();
 const { table } = useTableInstance();
 const texts = useLibraryTexts();
 
-// Colonnes réellement masquables de CE tableau (dérivées de tanstack), pas un jeu figé.
-// Repli sur COLUMNS (issues) si la table n'expose encore aucune colonne masquable.
-const columnIds = computed<readonly string[]>(() => {
-  const ids = table
-    .getAllColumns()
-    .filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide())
-    .map((c) => c.id);
-  return ids.length ? ids : COLUMNS;
-});
-
 const currentView = computed(() => props.views.find((v) => v.id === (route.query.viewId as string)) ?? null);
 
+// La query de la vue porte ses filtres ET ses colonnes (`cols`, relu par
+// DataTableColumnsVisibility) : sélectionner une vue = remplacer la query.
 function selectView(view: ViewItem | null) {
   if (!view) {
     router.replace({ path: route.path, query: {} });
-    table.setColumnVisibility({});
     return;
   }
-  router.replace({ path: route.path, query: calcViewSearchParams(view, columnIds.value) });
-  if (view.columns) {
-    const vis: Record<string, boolean> = {};
-    columnIds.value.forEach((c) => {
-      vis[c] = (view.columns ?? []).includes(c);
-    });
-    table.setColumnVisibility(vis);
-  } else {
-    table.setColumnVisibility({});
-  }
+  router.replace({ path: route.path, query: calcViewSearchParams(view, getHideableColumnIds(table)) });
 }
 
 // ── Édition inline — le seul champ modifiable étant le nom, pas de modal :
@@ -154,29 +142,51 @@ function startEdit(view: ViewItem) {
 function cancelEdit() {
   editingId.value = null;
   editingName.value = '';
+  editError.value = '';
+  failedName.value = '';
 }
 
-async function saveEdit(view: ViewItem) {
-  if (editingId.value !== view.id) return;
+// Échec du renommage : le champ reste ouvert avec le message ; quitter le champ sans changer
+// le nom refusé (clic ailleurs, Échap) abandonne le renommage.
+const editError = ref('');
+const failedName = ref('');
+
+async function saveEdit(view: ViewItem, fromBlur = false) {
+  if (editingId.value !== view.id || savingId.value) return;
   const trimmed = editingName.value.trim();
-  if (!trimmed || trimmed === view.name) {
+  if (!trimmed || trimmed === view.name || (fromBlur && trimmed === failedName.value)) {
     cancelEdit();
     return;
   }
   savingId.value = view.id;
+  let res: ViewCallbackResult;
   try {
-    await props.onUpdateView(view.id, {
+    res = (await props.onUpdateView(view.id, {
       name: trimmed,
       columns: view.columns ?? undefined,
       filterParams: view.filterParams ?? undefined,
-    });
+    })) as ViewCallbackResult;
   } finally {
     savingId.value = null;
-    cancelEdit();
   }
+  if (res && res.status === 'error') {
+    editError.value = res.message ?? '';
+    failedName.value = trimmed;
+    nextTick(() => {
+      const el = editInputRef.value[0];
+      el?.focus();
+      el?.select();
+    });
+    return;
+  }
+  cancelEdit();
 }
 
 async function onDelete(view: ViewItem) {
-  await props.onDeleteView(view);
+  const wasActive = route.query.viewId === view.id;
+  const res = (await props.onDeleteView(view)) as ViewCallbackResult;
+  // Supprimer la vue active ramène à « Tous » (vue absente de la liste rafraîchie, ou succès explicite).
+  const deleted = (res && res.status === 'success') || !props.views.some((v) => v.id === view.id);
+  if (wasActive && deleted && route.query.viewId === view.id) selectView(null);
 }
 </script>

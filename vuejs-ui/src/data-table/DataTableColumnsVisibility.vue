@@ -45,10 +45,11 @@
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { Column } from '@tanstack/vue-table';
 import { SlidersHorizontalIcon } from 'lucide-vue-next';
-import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import HTooltip from '../HTooltip.vue';
 import { useLibraryTexts } from '../texts';
+import { COLUMNS_QUERY_KEY, columnsFromQuery, getHideableColumnIds, visibilityFromColumns } from './advanced/views/utils';
 
 const { table } = useTableInstance();
 const texts = useLibraryTexts();
@@ -63,20 +64,32 @@ const toggleableColumns = computed(() =>
   table.getAllColumns().filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide()),
 );
 
+// L'URL (`cols`) est la source de vérité des colonnes visibles : elle est relue au chargement
+// (rechargement de page sur une vue), à la sélection d'une vue et à sa réinitialisation —
+// absent = toutes les colonnes visibles.
+watch(
+  () => route.query[COLUMNS_QUERY_KEY],
+  () => {
+    const hideable = getHideableColumnIds(table);
+    const wanted = visibilityFromColumns(columnsFromQuery(route.query), hideable);
+    const differs = hideable.some((id) => (wanted[id] !== false) !== table.getColumn(id)?.getIsVisible());
+    if (differs) table.setColumnVisibility(wanted);
+  },
+  { immediate: true },
+);
+
 function toggleCol(col: Column<any, any>) {
+  const visible = toggleableColumns.value
+    .filter((c) => (c.id === col.id ? !c.getIsVisible() : c.getIsVisible()))
+    .map((c) => c.id);
+  const q = { ...(route.query as Record<string, any>) };
+  if (visible.length === toggleableColumns.value.length) {
+    delete q[COLUMNS_QUERY_KEY];
+  } else {
+    q[COLUMNS_QUERY_KEY] = visible.join('.');
+  }
   col.toggleVisibility(!col.getIsVisible());
-  // Sync dans l'URL apres que Vue a applique le changement d'etat
-  nextTick(() => {
-    const visible = toggleableColumns.value.filter((c) => c.getIsVisible()).map((c) => c.id);
-    const allVisible = visible.length === toggleableColumns.value.length;
-    const q = { ...(route.query as Record<string, any>) };
-    if (allVisible) {
-      delete q.cols;
-    } else {
-      q.cols = visible.join('.');
-    }
-    router.replace({ query: q });
-  });
+  router.replace({ query: q });
 }
 
 function toggleOpen() {

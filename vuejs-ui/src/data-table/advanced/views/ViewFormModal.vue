@@ -16,7 +16,6 @@
         v-model="name"
         :placeholder="texts.dataTableViews.formNamePlaceholder"
         class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
-        @keyup.enter="onSubmit"
       />
       <p v-if="error" class="text-xs text-destructive">{{ error }}</p>
     </div>
@@ -39,6 +38,7 @@ import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { TrashIcon } from 'lucide-vue-next';
 import { computed, nextTick, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import FormDialog from '../../../FormDialog.vue';
 import { useLibraryTexts } from '../../../texts';
 
@@ -55,6 +55,8 @@ const props = defineProps<{
 const emit = defineEmits<(e: 'update:open', v: boolean) => void>();
 
 const texts = useLibraryTexts();
+const router = useRouter();
+const route = useRoute();
 
 const openModel = computed({ get: () => props.open, set: (v) => emit('update:open', v) });
 
@@ -75,7 +77,10 @@ watch(
   },
 );
 
+// Une seule soumission : Entrée dans le champ déclenche la soumission implicite du formulaire
+// (FormDialog), le bouton passe par le même chemin, et `pending` bloque les doublons.
 async function onSubmit() {
+  if (pending.value) return;
   error.value = '';
   if (!name.value.trim()) {
     error.value = texts.value.dataTableViews.formNameRequired;
@@ -95,9 +100,14 @@ async function onSubmit() {
             columns: props.view!.columns ?? undefined,
             filterParams: props.view!.filterParams ?? undefined,
           });
+    // Message d'échec renvoyé par le consommateur, affiché tel quel (à lui de le traduire).
     if (res?.status === 'error') {
-      error.value = res.message;
+      error.value = res.message ?? '';
       return;
+    }
+    // La vue créée devient la vue active (même comportement que les autres chemins de création).
+    if (props.mode === 'create' && res?.view?.id) {
+      router.replace({ path: route.path, query: { ...(route.query as Record<string, any>), viewId: res.view.id, page: '1' } });
     }
     openModel.value = false;
   } finally {
@@ -107,16 +117,23 @@ async function onSubmit() {
 
 async function onDelete() {
   if (!props.view) return;
+  const view = props.view;
   const ok = await showConfirm({
     title: texts.value.dataTableViews.deleteTitle,
-    description: texts.value.dataTableViews.deleteDescription(props.view.name),
+    description: texts.value.dataTableViews.deleteDescription(view.name),
     confirmLabel: texts.value.dataTableViews.deleteConfirm,
     variant: 'destructive',
   });
   if (!ok) return;
   deleting.value = true;
   try {
-    await props.onDeleteView(props.view.id);
+    const res = await props.onDeleteView(view.id);
+    if (res?.status === 'error') {
+      error.value = res.message ?? '';
+      return;
+    }
+    // Supprimer la vue active ramène à « Tous ».
+    if (route.query.viewId === view.id) router.replace({ path: route.path, query: {} });
     openModel.value = false;
   } finally {
     deleting.value = false;

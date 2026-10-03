@@ -159,6 +159,7 @@
         <SaveIcon v-else class="size-3.5" />
         {{ texts.dataTableViews.updateView }}
       </button>
+      <p v-if="updateViewError && isUpdated && currentView" class="text-xs text-destructive">{{ updateViewError }}</p>
 
     </div>
   </div>
@@ -188,15 +189,20 @@ import DataTableMultiFilter from './DataTableMultiFilter.vue';
 import DataTableViewsDropdown from './views/DataTableViewsDropdown.vue';
 import {
   buildFilterOptionsFromQuery,
-  COLUMNS,
   calcFilterParams,
   calcViewSearchParams,
-  getIsFiltered,
+  columnsEqual,
+  filterParamsEqual,
+  getHideableColumnIds,
 } from './views/utils';
 
 const props = defineProps<{
   filterFields: { label: string; value: string; placeholder?: string; options?: { label: string; value: string }[] }[];
   views: ViewItem[];
+  // Contrat des callbacks de vues : résoudre APRÈS avoir rafraîchi `views`, et renvoyer
+  // `{ status: 'error', message }` en cas d'échec — `message` est affiché tel quel (au
+  // consommateur de le traduire). La création renvoie `{ view: { id } }` : la vue créée devient
+  // la vue active.
   onCreateView: (p: any) => Promise<any>;
   onUpdateView: (id: string, p: any) => Promise<any>;
   onDeleteView: (id: string) => Promise<any>;
@@ -298,34 +304,29 @@ const hasActiveFilterValues = computed(() =>
   ),
 );
 
-// Colonnes actuellement visibles (toggleables uniquement)
-const currentColumns = computed(() =>
-  table
-    .getAllColumns()
-    .filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide())
-    .filter((c) => columnVisibility.value[c.id] !== false)
-    .map((c) => c.id),
-);
+// Colonnes masquables de CE tableau et celles actuellement visibles
+const hideableColumns = computed(() => getHideableColumnIds(table));
+const currentColumns = computed(() => hideableColumns.value.filter((id) => columnVisibility.value[id] !== false));
 
+// Comparaison SÉMANTIQUE avec la vue active (ordre des clés, valeurs vides, ordre des filtres
+// et colonnes inconnues sans effet) : « Réinitialiser » / « Mettre à jour » n'apparaissent
+// qu'en cas de vraie différence.
 const isUpdated = computed(() => {
   if (!currentView.value) return false;
-
-  const filterChanged = JSON.stringify(currentFilterParams.value) !== JSON.stringify(currentView.value.filterParams);
-
-  // Comparaison des colonnes : si la vue n'a pas de colonnes sauvegardees, on compare avec tout visible
-  const viewCols = currentView.value.columns;
-  const sortedCurrent = [...currentColumns.value].sort();
-  let colsChanged: boolean;
-  if (viewCols === null) {
-    // Vue sans restriction de colonnes => toutes doivent etre visibles
-    const hasHidden = Object.values(columnVisibility.value).some((v) => v === false);
-    colsChanged = hasHidden;
-  } else {
-    colsChanged = JSON.stringify(sortedCurrent) !== JSON.stringify([...viewCols].sort());
-  }
-
-  return filterChanged || colsChanged;
+  return (
+    !filterParamsEqual(currentFilterParams.value, currentView.value.filterParams) ||
+    !columnsEqual(currentView.value.columns, currentColumns.value, hideableColumns.value)
+  );
 });
+
+// Échec de la mise à jour de la vue active (message renvoyé par `onUpdateView`, affiché tel quel)
+const updateViewError = ref('');
+watch(
+  () => route.query.viewId,
+  () => {
+    updateViewError.value = '';
+  },
+);
 
 // Affiche le separateur vertical seulement quand des actions de vue sont presentes
 const showViewActions = computed(
@@ -399,57 +400,53 @@ function onMultiUpdate(opts: DataTableFilterOption[]) {
   pushFilters(opts, multiOperator.value);
 }
 
+// Les colonnes suivent l'URL (`cols`, relu par DataTableColumnsVisibility) : remettre la query
+// de la vue suffit à restaurer ses filtres ET ses colonnes.
 function resetToCurrentView() {
   if (!currentView.value) return;
-  router.replace({ query: calcViewSearchParams(currentView.value) });
-  if (currentView.value.columns) {
-    const vis: Record<string, boolean> = {};
-    COLUMNS.forEach((c) => {
-      vis[c] = currentView.value!.columns!.includes(c);
-    });
-    table.setColumnVisibility(vis);
-  }
+  router.replace({ path: route.path, query: calcViewSearchParams(currentView.value, hideableColumns.value) });
 }
 
 async function handleSaveView() {
+  if (saving.value) return;
   if (!newViewName.value.trim()) {
     saveViewError.value = texts.value.dataTableViews.nameRequired;
     return;
   }
   saving.value = true;
-  const cols = table
-    .getVisibleFlatColumns()
-    .filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide())
-    .map((c) => c.id);
-  const res = await props.onCreateView({
-    name: newViewName.value.trim(),
-    columns: cols,
-    filterParams: currentFilterParams.value,
-  });
-  saving.value = false;
-  if (res?.status === 'error') {
-    saveViewError.value = res.message;
-    return;
+  try {
+    const res = await props.onCreateView({
+      name: newViewName.value.trim(),
+      columns: [...currentColumns.value],
+      filterParams: currentFilterParams.value,
+    });
+    if (res?.status === 'error') {
+      saveViewError.value = res.message ?? '';
+      return;
+    }
+    if (res?.view?.id) router.replace({ query: { ...(route.query as any), viewId: res.view.id } });
+    openSaveView.value = false;
+    newViewName.value = '';
+    saveViewError.value = '';
+  } finally {
+    saving.value = false;
   }
-  if (res?.view?.id) router.replace({ query: { ...(route.query as any), viewId: res.view.id } });
-  openSaveView.value = false;
-  newViewName.value = '';
-  saveViewError.value = '';
 }
 
 async function handleUpdateView() {
-  if (!currentView.value) return;
+  if (!currentView.value || saving.value) return;
   saving.value = true;
-  const cols = table
-    .getVisibleFlatColumns()
-    .filter((c) => typeof c.accessorFn !== 'undefined' && c.getCanHide())
-    .map((c) => c.id);
-  await props.onUpdateView(currentView.value.id, {
-    name: currentView.value.name,
-    columns: cols,
-    filterParams: currentFilterParams.value,
-  });
-  saving.value = false;
+  updateViewError.value = '';
+  try {
+    const res = await props.onUpdateView(currentView.value.id, {
+      name: currentView.value.name,
+      columns: [...currentColumns.value],
+      filterParams: currentFilterParams.value,
+    });
+    if (res?.status === 'error') updateViewError.value = res.message ?? '';
+  } finally {
+    saving.value = false;
+  }
 }
 
 // Sync URL -> state
