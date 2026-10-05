@@ -58,7 +58,7 @@ function onDraft(value: string | number | null) {
         variant="outline"
         type="button"
         :disabled="props.disabled"
-        :class="cn('justify-start gap-2 font-mono font-normal', props.size === 'sm' ? 'h-8 px-2.5 text-[12.5px]' : 'h-9', props.class)"
+        :class="cn('justify-start gap-2 font-mono font-normal', props.size === 'sm' ? 'h-8 px-2.5 text-compact' : 'h-9', props.class)"
       >
         <span
           class="size-4 shrink-0 rounded-sm border border-black/10"
@@ -85,7 +85,7 @@ function onDraft(value: string | number | null) {
         <span class="size-8 shrink-0 rounded-md border" :style="{ background: HEX.test(draft) ? draft : 'transparent' }" />
         <Input
           :model-value="draft"
-          class="h-8 font-mono text-[12.5px]"
+          class="h-8 font-mono text-compact"
           placeholder="#rrggbb"
           maxlength="7"
           @update:model-value="onDraft"

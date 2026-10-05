@@ -1,7 +1,14 @@
 import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { extendTailwindMerge } from 'tailwind-merge';
 
-/** Fusionne les classes conditionnelles et résout les conflits Tailwind. */
+// Pas de l'échelle typographique ajoutés à Tailwind (voir `typography.css`) : déclarés comme
+// TAILLES de texte, sinon tailwind-merge les prendrait pour des couleurs (`text-compact` effacerait
+// `text-muted-foreground`, et inversement).
+const twMerge = extendTailwindMerge({
+  extend: { classGroups: { 'font-size': [{ text: ['2xs', 'compact'] }] } },
+});
+
+/** Fusionne les classes conditionnelles et résout les conflits Tailwind (échelle typographique comprise). */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

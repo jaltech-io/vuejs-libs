@@ -41,7 +41,7 @@ export const buttonVariants = cva(
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',
         // Géométrie des ex-.h-btn-* (bouton texte) et .h-icon-btn (bouton icône).
-        hbtn: 'h-auto gap-1.5 rounded-(--h-radius) border-[0.5px] px-3.5 py-[7px] text-[13px] font-normal whitespace-nowrap disabled:opacity-55',
+        hbtn: 'h-auto gap-1.5 rounded-(--h-radius) border-[0.5px] px-3.5 py-[7px] text-compact font-normal whitespace-nowrap disabled:opacity-55',
         hicon: 'size-7 rounded-md border-[0.5px]',
       },
     },

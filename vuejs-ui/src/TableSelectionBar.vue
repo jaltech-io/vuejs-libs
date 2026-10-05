@@ -28,7 +28,7 @@ const countLabel = computed(() => {
   >
     <div v-if="selectedCount > 0" class="flex items-center gap-1.5">
       <span class="h-4 w-px bg-border" />
-      <div class="flex h-7 items-center gap-1 rounded-md border border-dashed px-2 text-xs text-muted-foreground">
+      <div class="flex h-7 items-center gap-1 rounded-md border border-dashed px-2 text-xs tabular-nums text-muted-foreground">
         {{ countLabel }}
         <Button
           type="button"

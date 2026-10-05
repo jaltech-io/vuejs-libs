@@ -2,7 +2,7 @@
   <div class="flex gap-1 border-b-[0.5px] border-b-(--h-border) mb-5">
     <RouterLink
       v-for="tab in TABS" :key="tab.routeName"
-      class="flex items-center gap-1.5 py-[9px] px-3.5 border-0 bg-none cursor-pointer no-underline text-[13px]
+      class="flex items-center gap-1.5 py-[9px] px-3.5 border-0 bg-none cursor-pointer no-underline text-compact
              font-medium text-(--h-text-3) border-b-2 border-b-transparent -mb-px font-[inherit]
              transition-[color,border-color] duration-100 hover:text-(--h-text-2)"
       active-class="h-tenant-tab-active"

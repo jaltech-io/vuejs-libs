@@ -1,6 +1,6 @@
 <template>
   <aside class="h-table-wrap w-full md:w-52 shrink-0 self-start">
-    <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-(--h-surface2) px-3.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-(--h-text-3)">
+    <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-(--h-surface2) px-3.5 text-2xs font-semibold uppercase tracking-[0.06em] text-(--h-text-3)">
       <span>{{ texts.dataTableViews.sidebarTitle }}</span>
       <HTooltip placement="top-end" :text="texts.dataTableViews.sidebarNewView">
         <button
@@ -16,7 +16,7 @@
     <nav class="flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto p-1.5">
       <button
         type="button"
-        class="flex items-center gap-2 rounded-(--h-radius) px-2 py-1.5 text-left text-[13px] transition-colors hover:bg-(--h-surface2)"
+        class="flex items-center gap-2 rounded-(--h-radius) px-2 py-1.5 text-left text-compact transition-colors hover:bg-(--h-surface2)"
         :class="!currentView ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
         @click="selectView(null)"
       >
@@ -26,7 +26,7 @@
 
       <template v-for="view in views" :key="view.id">
       <div
-        class="flex items-center gap-1 rounded-(--h-radius) pr-1 pl-2 text-[13px] transition-colors hover:bg-(--h-surface2)"
+        class="flex items-center gap-1 rounded-(--h-radius) pr-1 pl-2 text-compact transition-colors hover:bg-(--h-surface2)"
         :class="currentView?.id === view.id ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
       >
         <BookmarkIcon class="size-3.5 shrink-0" :class="currentView?.id === view.id ? 'text-(--h-blue-600)' : 'opacity-60'" />
@@ -35,7 +35,7 @@
           v-if="editingId === view.id"
           ref="editInputRef"
           v-model="editingName"
-          class="min-w-0 flex-1 rounded-(--h-radius) border border-input bg-background px-1.5 py-1 text-[13px] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          class="min-w-0 flex-1 rounded-(--h-radius) border border-input bg-background px-1.5 py-1 text-compact focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
           :disabled="savingId === view.id"
           @keyup.enter="saveEdit(view)"
           @keyup.esc="cancelEdit"

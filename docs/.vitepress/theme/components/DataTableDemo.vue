@@ -200,7 +200,7 @@ const columns: ColumnDef<Project, any>[] = [
     cell: ({ row }) => {
       const v = row.original.visibility;
       const Icon = v === 'private' ? LockIcon : v === 'internal' ? BuildingIcon : GlobeIcon;
-      return h('span', { class: 'inline-flex items-center gap-1.5 text-[13px]' }, [
+      return h('span', { class: 'inline-flex items-center gap-1.5 text-compact' }, [
         h(Icon, { class: 'size-3 text-muted-foreground shrink-0' }), VIS_LABEL[v],
       ]);
     },
@@ -211,7 +211,7 @@ const columns: ColumnDef<Project, any>[] = [
     filterFn: (r, id, value) => (value as string[]).includes(r.getValue(id)),
     cell: ({ row }) => {
       const hh = HEALTH[row.original.healthStatus];
-      return h('span', { class: 'inline-flex items-center gap-1.5 text-[13px]' }, [
+      return h('span', { class: 'inline-flex items-center gap-1.5 text-compact' }, [
         h('span', { style: `width:8px;height:8px;border-radius:9999px;background:${hh.color}` }), hh.label,
       ]);
     },

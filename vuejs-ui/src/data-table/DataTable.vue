@@ -81,10 +81,10 @@ const texts = useLibraryTexts();
   @apply rounded;
 }
 .h-dt-table {
-  @apply w-full text-[13px] border-collapse max-md:min-w-[600px];
+  @apply w-full text-compact border-collapse max-md:min-w-[600px];
 }
 .h-dt-th {
-  @apply h-[38px] px-3.5 text-left text-[11px] font-semibold text-(--h-text-3) tracking-[0.06em] uppercase bg-(--h-surface2) whitespace-nowrap sticky top-0 z-[1];
+  @apply h-[38px] px-3.5 text-left text-2xs font-semibold text-(--h-text-3) tracking-[0.06em] uppercase bg-(--h-surface2) whitespace-nowrap sticky top-0 z-[1];
 }
 .h-dt-row:hover {
   @apply bg-[var(--h-surface2)];
@@ -93,9 +93,9 @@ const texts = useLibraryTexts();
   @apply bg-[var(--h-blue-50)];
 }
 .h-dt-td {
-  @apply py-[11px] px-3.5 align-middle text-[13px] text-[var(--h-text)];
+  @apply py-[11px] px-3.5 align-middle text-compact text-[var(--h-text)];
 }
 .h-dt-empty {
-  @apply py-14 px-6 text-center text-(--h-text-3) text-[13px];
+  @apply py-14 px-6 text-center text-(--h-text-3) text-compact;
 }
 </style>

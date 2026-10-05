@@ -7,8 +7,8 @@
       <span class="absolute inset-0 rounded-full bg-(--h-blue-50) animate-ping" />
       <component :is="icon" :size="15" class="relative text-(--h-blue-600)" />
     </div>
-    <span class="text-[13px] font-semibold text-(--h-text) shrink-0">{{ title }}</span>
-    <span class="text-[13px] text-(--h-text-3)">{{ description }}</span>
+    <span class="text-compact font-semibold text-(--h-text) shrink-0">{{ title }}</span>
+    <span class="text-compact text-(--h-text-3)">{{ description }}</span>
   </div>
 </template>
 

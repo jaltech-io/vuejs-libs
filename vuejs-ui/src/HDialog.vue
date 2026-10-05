@@ -7,7 +7,7 @@
       :style="width ? { maxWidth: width } : undefined"
     >
       <DialogHeader class="border-b px-6 pt-5 pb-3.5 max-sm:px-4">
-        <DialogTitle class="text-[15px]">{{ title }}</DialogTitle>
+        <DialogTitle class="text-base">{{ title }}</DialogTitle>
       </DialogHeader>
       <ScrollArea class="min-h-0 flex-1 [&>[data-slot=scroll-area-viewport]]:max-h-[calc(100dvh-10rem)]">
         <div class="flex flex-col gap-4 px-6 py-5 max-sm:px-4">

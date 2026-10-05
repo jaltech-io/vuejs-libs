@@ -17,7 +17,7 @@ A scrollable message list that keeps itself pinned to the newest item, with a ju
       <MessageScrollerViewport style="padding:1rem">
         <MessageScrollerContent>
           <MessageScrollerItem v-for="m in messages" :key="m.id" :message-id="m.id">
-            <div style="font-size:14px">{{ m.text }}</div>
+            <div style="font-size: var(--text-sm)">{{ m.text }}</div>
           </MessageScrollerItem>
         </MessageScrollerContent>
       </MessageScrollerViewport>

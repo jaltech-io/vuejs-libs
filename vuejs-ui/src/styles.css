@@ -6,6 +6,8 @@
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'tw-animate-css';
+/* Échelle typographique et familles de polices (jetons partagés avec les applications). */
+@import './typography.css';
 
 @custom-variant dark (&:is(.dark *));
 

@@ -19,7 +19,7 @@ defineProps<{
       </span>
       <span v-if="delta" :class="['text-xs font-semibold', up ? 'text-emerald-500' : 'text-red-500']">{{ delta }}</span>
     </div>
-    <p class="mt-4 text-2xl font-bold">{{ value }}</p>
+    <p class="mt-4 text-2xl font-bold tabular-nums">{{ value }}</p>
     <p class="text-sm text-muted-foreground">{{ label }}</p>
   </div>
 </template>

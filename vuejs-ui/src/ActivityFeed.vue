@@ -24,19 +24,19 @@
             <div v-if="i < events.length - 1" class="flex-1 w-[1.5px] bg-(--h-border) my-1 min-h-[24px]" />
           </div>
           <div class="pb-5 flex-1 min-w-0 pt-1.5">
-            <div class="flex items-center gap-[5px] flex-wrap text-[13px]">
+            <div class="flex items-center gap-[5px] flex-wrap text-compact">
               <span class="text-(--h-text-2)">{{ item.summary }}</span>
             </div>
             <div v-if="item.fromValue || item.toValue" class="flex items-center gap-1.5 mt-1.5 flex-wrap">
-              <span v-if="item.fromValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-surface2) text-(--h-text-3) line-through">{{ item.fromValue }}</span>
-              <span v-if="item.fromValue && item.toValue" class="text-(--h-text-3) text-[11px]">→</span>
-              <span v-if="item.toValue" class="text-[11px] py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-blue-50) text-(--h-blue-600)">{{ item.toValue }}</span>
+              <span v-if="item.fromValue" class="text-2xs py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-surface2) text-(--h-text-3) line-through">{{ item.fromValue }}</span>
+              <span v-if="item.fromValue && item.toValue" class="text-(--h-text-3) text-2xs">→</span>
+              <span v-if="item.toValue" class="text-2xs py-0.5 px-2 rounded-[20px] font-semibold bg-(--h-blue-50) text-(--h-blue-600)">{{ item.toValue }}</span>
             </div>
-            <span class="block mt-1 text-[11.5px] text-(--h-text-3)">{{ relativeTime(item.createdAt) }}</span>
+            <span class="block mt-1 text-xs text-(--h-text-3)">{{ relativeTime(item.createdAt) }}</span>
           </div>
         </div>
       </template>
-      <div v-else class="p-12 text-center text-[13px] text-(--h-text-3)">{{ texts.activityFeed.empty }}</div>
+      <div v-else class="p-12 text-center text-compact text-(--h-text-3)">{{ texts.activityFeed.empty }}</div>
     </div>
   </div>
 </template>

@@ -31,7 +31,7 @@
               class="fixed z-400 w-44 overflow-hidden rounded-md border bg-popover shadow-md"
               @mousedown.stop
             >
-              <div class="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <div class="px-3 pt-2 pb-1 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {{ texts.dataTableFilters.filterBy }}
               </div>
               <div
@@ -123,14 +123,14 @@
             @keyup.enter="handleSaveView"
             @keyup.escape="openSaveView = false; newViewName = ''"
           />
-          <p v-if="saveViewError" class="text-[10px] text-destructive">{{ saveViewError }}</p>
+          <p v-if="saveViewError" class="text-xs text-destructive">{{ saveViewError }}</p>
           <div class="flex items-center gap-1">
             <button
               type="button"
               @click="handleSaveView"
               :disabled="saving"
               :title="texts.dataTableViews.saveHint"
-              class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-[10px] font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-2xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
               <Loader2Icon v-if="saving" class="size-3 animate-spin" />
               <CheckIcon v-else class="size-3" />

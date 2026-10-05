@@ -125,7 +125,7 @@
               @click="selectView(view)"
             >
               <span class="truncate">{{ view.name }}</span>
-              <span v-if="view.isPublic" class="ml-1 shrink-0 rounded bg-accent px-1 text-[10px] uppercase text-muted-foreground">{{ texts.dataTableViews.public }}</span>
+              <span v-if="view.isPublic" class="ml-1 shrink-0 rounded bg-accent px-1 text-2xs uppercase text-muted-foreground">{{ texts.dataTableViews.public }}</span>
               <span
                 class="invisible ml-auto flex size-5 shrink-0 items-center justify-center rounded p-0.5 hover:bg-neutral-200 group-hover:visible dark:hover:bg-neutral-700"
                 @click.stop="openEdit(view)"

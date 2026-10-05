@@ -1,0 +1,18 @@
+/*
+  Polices du design system, AUTO-HÉBERGÉES (aucun appel à un service de polices tiers) :
+  fichiers woff2 variables (graisses 100 à 900) découpés par jeu de caractères — le navigateur ne
+  télécharge que ceux dont la page a besoin — avec `font-display: swap`.
+
+    Inter Variable           texte (`font-sans`)
+    JetBrains Mono Variable  code, codes de tickets, identifiants (`font-mono`)
+
+  À importer UNE fois depuis le point d'entrée JavaScript de l'application :
+    import '@jaltech/vuejs-ui/fonts.css';
+  (l'outil de build copie les fichiers et réécrit leurs URL). Les familles sont reliées aux classes
+  `font-sans` / `font-mono` par `@jaltech/vuejs-ui/typography.css`.
+
+  Paquets Fontsource (licence SIL OFL 1.1).
+*/
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/inter/wght-italic.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';

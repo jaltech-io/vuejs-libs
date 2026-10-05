@@ -13,7 +13,7 @@
     <div class="flex gap-0.5 border-b border-(--h-border) mb-5">
       <RouterLink
         v-for="tab in TABS" :key="tab.key" :to="`${basePath}/${tab.key}`"
-        class="inline-flex items-center gap-1.5 py-2 px-3.5 text-[13px] font-medium text-(--h-text-3) bg-none border-0
+        class="inline-flex items-center gap-1.5 py-2 px-3.5 text-compact font-medium text-(--h-text-3) bg-none border-0
                border-b-2 border-b-transparent cursor-pointer font-[inherit] no-underline transition-[color,border-color]
                duration-150 -mb-px whitespace-nowrap hover:text-(--h-text)"
         active-class="h-issue-tab-active"

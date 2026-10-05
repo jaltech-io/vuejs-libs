@@ -50,6 +50,14 @@ Import the stylesheet once, in your application entry point:
 import '@jaltech/vuejs-ui/styles.css'
 ```
 
+Optionally import the self-hosted fonts (Inter and JetBrains Mono, variable `woff2`, `font-display: swap`) the same way:
+
+```ts
+import '@jaltech/vuejs-ui/fonts.css'
+```
+
+An application with its own Tailwind v4 stylesheet can import only the typography tokens (font families and type scale: `text-2xs`, `text-xs`, `text-compact`, `text-sm`… base 14 px) with `@import '@jaltech/vuejs-ui/typography.css';`. See the *Typography & fonts* guide.
+
 Because the package is distributed as source, Vite's dependency pre-bundling (esbuild) cannot process the `.vue` files. Exclude the package from `optimizeDeps`:
 
 ```ts

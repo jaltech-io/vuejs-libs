@@ -1,3 +1,17 @@
+## 0.5.0 (2026-10-05)
+
+### 🚀 Features
+
+- **typographie:** UNE échelle typographique, base 14 px (application dense), en jetons Tailwind v4 — nouveau point d'entrée `@jaltech/vuejs-ui/typography.css` (aussi inclus dans `styles.css`) : `text-2xs` 11/16 px (très petites étiquettes uniquement), `text-xs` 12/16, `text-compact` 13/20 (texte dense : tableaux, listes, menus), `text-sm` 14/20 (base), `text-base` 16/24, `text-lg` 18/28, `text-xl` 20/28, `text-2xl` 24/32, `text-3xl` 30/36. Les pas `xs` à `3xl` gardent les valeurs standard de Tailwind ; `2xs` et `compact` sont nouveaux.
+- **polices:** Inter et JetBrains Mono AUTO-HÉBERGÉES (woff2 variables, graisses 100 à 900, découpées par jeu de caractères, `font-display: swap`) — nouveau point d'entrée `@jaltech/vuejs-ui/fonts.css` (paquets Fontsource, licence OFL). `font-sans` = Inter, `font-mono` = JetBrains Mono. Plus besoin d'aucun service de polices tiers.
+- **chiffres tabulaires:** `tabular-nums` sur les valeurs de `StatCard` / `HMetricCard`, `Pagination`, les cellules de `Calendar` / `RangeCalendar`, `NumberField` et le compteur de `TableSelectionBar` (`SidebarMenuBadge` l'avait déjà). Volontairement PAS sur `Table` / `DataTable` / `Badge` entiers : le `tnum` d'Inter élargit aussi le trait d'union du texte — à poser sur les cellules et badges purement numériques.
+- **cn():** `text-2xs` et `text-compact` sont déclarés à tailwind-merge comme tailles de texte (sinon fusionnés comme des couleurs : `text-compact` effaçait `text-muted-foreground`).
+
+### 🩹 Changements visuels
+
+- Plus aucune taille arbitraire dans la lib (70 remplacements, vitrine comprise) : 10-11 px → `text-2xs` (étiquettes) ou `text-xs` (texte lisible), 11,5 px → `text-xs`, 12,5-13 px → `text-compact`, 15 px → `text-base`, 28 px → `text-3xl`. Les tailles qui portaient un interligne hérité prennent celui de l'échelle.
+- Vitrine : page « Typography & fonts ».
+
 ## 0.4.10 (2026-10-03)
 
 ### 🩹 Fixes

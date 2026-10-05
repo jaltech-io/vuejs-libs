@@ -1,5 +1,5 @@
 <template>
-  <span :class="['text-[11px] px-[9px] py-[3px] rounded-full font-medium whitespace-nowrap', variantClass]"><slot /></span>
+  <span :class="['text-2xs px-[9px] py-[3px] rounded-full font-medium whitespace-nowrap', variantClass]"><slot /></span>
 </template>
 
 <script setup lang="ts">

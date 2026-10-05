@@ -1,6 +1,7 @@
 import DefaultTheme from 'vitepress/theme';
 import { createMemoryHistory, createRouter } from 'vue-router';
 import type { Theme } from 'vitepress';
+import '../../../vuejs-ui/src/fonts.css';
 import './custom.css';
 
 // Some library components (e.g. the advanced data-table views) call

@@ -67,7 +67,7 @@ function select(date: DateValue | undefined) {
           :class="
             cn(
               'w-full justify-start gap-2 font-normal',
-              props.size === 'sm' ? 'h-8 px-2.5 text-[12.5px]' : 'h-9',
+              props.size === 'sm' ? 'h-8 px-2.5 text-compact' : 'h-9',
               !label && 'text-muted-foreground',
               props.clearable && label && 'pr-8',
             )
