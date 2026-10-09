@@ -2,7 +2,11 @@
 # Authentification par TRUSTED PUBLISHING (OIDC) — aucun jeton a renouveler : GitHub prouve a npm
 # l'identite du workflow (permission id-token: write). Configuration cote npmjs.com, pour chaque
 # package : Settings → Trusted Publisher → GitHub Actions, organisation jaltech-io, depot
-# vuejs-libs, workflow release.yml. Prerequis : npm >= 11.5.1, Node >= 22.14.
+# vuejs-libs, workflow release.yml, « Allowed actions » : AUCUNE case cochee (stage publish seul).
+# PUBLICATION EN ATTENTE (staged publishing, recommandee par npm) : la CI depose la version, elle ne
+# sort qu'une fois APPROUVEE par un humain avec sa double authentification (npmjs.com ou
+# `npm stage approve <id>`) — un depot compromis ne peut rien publier seul. Prerequis : npm >= 11.15,
+# Node >= 22.14.
 # Le 27/09/2026, l'essai echouait (ENEEDAUTH/E401) : la permission id-token manquait au job.
 name: release
 on:
@@ -84,7 +88,8 @@ jobs:
             *)   NPM_DIST_TAG="latest" ;;
           esac
 
-          # Trusted publishing : npm echange le jeton OIDC du job contre une autorisation de
-          # publication, et joint la provenance (lien verifiable vers ce commit et ce workflow).
-          npm publish "./$DIST_DIR" --access public --tag "$NPM_DIST_TAG" --provenance
-          echo "✅ Publie $PACKAGE_NAME@$VERSION sur npm (dist-tag: $NPM_DIST_TAG)"
+          # Trusted publishing : npm echange le jeton OIDC du job contre une autorisation, et joint la
+          # provenance (lien verifiable vers ce commit et ce workflow). La version est DEPOSEE en
+          # attente : elle sort a l'approbation humaine.
+          npm stage publish "./$DIST_DIR" --access public --tag "$NPM_DIST_TAG" --provenance
+          echo "✅ $PACKAGE_NAME@$VERSION deposee en attente sur npm (dist-tag: $NPM_DIST_TAG) — a approuver sur npmjs.com"
