@@ -31,8 +31,8 @@
     <Teleport to="body">
       <div
         v-if="open"
-        :style="panelStyle"
-        class="fixed z-600 w-72 rounded-md border bg-popover shadow-xl"
+        :style="[panelStyle, { zIndex }]"
+        class="fixed w-72 rounded-md border bg-popover shadow-xl"
         @mousedown.stop
         @click.stop
       >
@@ -118,6 +118,7 @@
 </template>
 
 <script setup lang="ts">
+import { useLayer } from '../../composables/useLayer';
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
 import { IconChevronDown, IconList, IconSearch, IconTypography, IconX } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
@@ -137,6 +138,8 @@ const rootRef = ref<HTMLElement | null>(null);
 const inputRef = ref<HTMLInputElement | null>(null);
 const opRef = ref<HTMLElement | null>(null);
 const open = ref(false);
+// Panneau téléporté dans <body> : rang de couche pris à l'ouverture (au-dessus d'une fiche ouverte).
+const zIndex = useLayer(open);
 const opOpen = ref(false);
 const panelStyle = ref<Record<string, string>>({});
 const optionSearch = ref('');

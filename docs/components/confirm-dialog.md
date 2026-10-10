@@ -27,6 +27,8 @@ An imperative confirmation dialog: mount `<ConfirmDialog />` once, then call `sh
 </div>
 </ClientOnly>
 
+Called from inside an open dialog (`HDialog`, `FormDialog`, `Dialog`, `Sheet`…), the confirmation always shows above it, overlay included — see [confirmation from inside a dialog](/components/h-dialog#confirmation-from-inside-a-dialog).
+
 Built-in texts are translatable once for the whole application (`confirmDialog` section of [`installLibraryTexts`](/guide/texts)); a prop still wins.
 
 ## Code

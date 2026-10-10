@@ -10,6 +10,7 @@ export * from './row-actions';
 export { default as SectionHeader } from './SectionHeader.vue';
 export * from './checkbox';
 export * from './composables/useConfirm';
+export * from './composables/useLayer';
 export * from './composables/useTableInstance';
 export * from './data-table';
 export * from './dialog';

@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { type CSSProperties, computed, ref } from 'vue';
+import { TOOLTIP_Z_INDEX } from './composables/useLayer';
 
 const props = defineProps<{ text: string; placement?: 'top' | 'top-end' | 'bottom' | 'left' }>();
 
@@ -33,7 +34,7 @@ const bubbleStyle = computed<CSSProperties>(() => {
       top: `${r.top - 4}px`,
       left: `${r.right}px`,
       transform: 'translate(-100%, -100%)',
-      zIndex: '9999',
+      zIndex: TOOLTIP_Z_INDEX,
     };
   }
   if (p === 'left') {
@@ -42,7 +43,7 @@ const bubbleStyle = computed<CSSProperties>(() => {
       top: `${r.top + r.height / 2}px`,
       left: `${r.left - 4}px`,
       transform: 'translate(-100%, -50%)',
-      zIndex: '9999',
+      zIndex: TOOLTIP_Z_INDEX,
     };
   }
   const above = p === 'top';
@@ -51,7 +52,7 @@ const bubbleStyle = computed<CSSProperties>(() => {
     left: `${r.left + r.width / 2}px`,
     top: above ? `${r.top - 4}px` : `${r.bottom + 4}px`,
     transform: above ? 'translate(-50%, -100%)' : 'translate(-50%, 0)',
-    zIndex: '9999',
+    zIndex: TOOLTIP_Z_INDEX,
   };
 });
 </script>

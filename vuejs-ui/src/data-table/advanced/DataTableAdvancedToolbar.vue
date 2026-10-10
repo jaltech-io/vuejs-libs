@@ -27,8 +27,8 @@
           <Teleport to="body">
             <div
               v-if="addOpen"
-              :style="addStyle"
-              class="fixed z-400 w-44 overflow-hidden rounded-md border bg-popover shadow-md"
+              :style="[addStyle, { zIndex: addZIndex }]"
+              class="fixed w-44 overflow-hidden rounded-md border bg-popover shadow-md"
               @mousedown.stop
             >
               <div class="px-3 pt-2 pb-1 text-2xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -166,6 +166,7 @@
 </template>
 
 <script setup lang="ts">
+import { useLayer } from '../../composables/useLayer';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { DataTableFilterOption, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { IconBookmark, IconBookmarkPlus, IconCheck, IconDeviceFloppy, IconFilter, IconList, IconLoader2, IconRotate, IconTypography, IconX } from '@tabler/icons-vue';
@@ -207,6 +208,8 @@ const { table, columnVisibility } = useTableInstance();
 const texts = useLibraryTexts();
 
 const addOpen = ref(false);
+// Panneau téléporté dans <body> : rang de couche pris à l'ouverture (au-dessus d'une fiche ouverte).
+const addZIndex = useLayer(addOpen);
 const openSaveView = ref(false);
 const newViewName = ref('');
 const saveViewError = ref('');

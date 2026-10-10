@@ -1,6 +1,6 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
@@ -301,6 +301,10 @@
     "./composables/useConfirm": {
       "types": "./src/composables/useConfirm.ts",
       "import": "./src/composables/useConfirm.ts"
+    },
+    "./composables/useLayer": {
+      "types": "./src/composables/useLayer.ts",
+      "import": "./src/composables/useLayer.ts"
     },
     "./composables/useTableInstance": {
       "types": "./src/composables/useTableInstance.ts",

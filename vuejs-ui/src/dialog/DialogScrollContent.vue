@@ -4,6 +4,7 @@ import { reactiveOmit } from '@vueuse/core';
 import type { DialogContentEmits, DialogContentProps } from 'reka-ui';
 import { DialogClose, DialogContent, DialogOverlay, DialogPortal, useForwardPropsEmits } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
+import { useDialogLayer } from '../composables/useLayer';
 import { cn } from '../utils';
 import { useLibraryTexts } from '../texts';
 
@@ -19,12 +20,14 @@ const delegatedProps = reactiveOmit(props, 'class');
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
 const texts = useLibraryTexts();
+const zIndex = useDialogLayer();
 </script>
 
 <template>
   <DialogPortal>
     <DialogOverlay
-      class="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+      :style="{ zIndex }"
+      class="fixed inset-0 grid place-items-center overflow-y-auto bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
     >
       <DialogContent
         :class="

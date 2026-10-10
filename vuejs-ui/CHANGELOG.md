@@ -1,3 +1,14 @@
+## 0.6.1 (2026-10-10)
+
+### 🩹 Fixes
+
+- **couches (z-index):** une confirmation (`showConfirm` / `ConfirmDialog`) ouverte depuis une fiche (`HDialog`, `FormDialog`, `Dialog`…) passe TOUJOURS au-dessus d'elle, voile compris — elle s'affichait dessous, invisible, et la fiche semblait bloquée. Cause : toutes les couches étaient à `z-50` et départagées par l'ordre du DOM ; or les portails (`DialogPortal` de reka-ui, `Teleport`) sont insérés dans `<body>` au MONTAGE du composant, pas à l'ouverture : `<ConfirmDialog />`, monté une fois à la racine de l'application, précédait toute fiche montée plus tard. Même cause, mêmes effets pour le `Dialog` shadcn, `AlertDialog`, `Sheet`, `Drawer`, les popovers / menus / listes et les panneaux du tableau de données (vues, filtres, colonnes : la confirmation de suppression d'une vue passait sous le panneau).
+- **couches (z-index):** UNE échelle documentée (`@jaltech/vuejs-ui/composables/useLayer`) : page de l'application `< 1000` ; couches empilées à partir de `1001` — toute couche qui S'OUVRE (modale, Sheet, Drawer, Popover, Combobox, DatePicker, DropdownMenu, ContextMenu, Menubar, Select, HoverCard, panneaux du tableau de données) prend le rang suivant le plus haut rang ouvert, quel que soit l'ordre de montage ; infobulles (`Tooltip`, `HTooltip`) à `9999`. Une modale et son voile partagent le même rang (le contenu recouvre son voile). Rang posé en style en ligne : les classes `z-50` / `z-300`…`z-700` de ces couches sont retirées.
+- **useLayer** (nouveau) : `useLayer(open)` donne le rang d'une couche maison (panneau téléporté…) dans la même échelle ; `useDialogLayer()` pour un contenu bâti sur le Dialog de reka-ui ; constantes `LAYER_BASE_Z_INDEX` (1000) et `TOOLTIP_Z_INDEX` (9999).
+- Vitrine : exemple « Confirmation from inside a dialog » (page HDialog, `<ConfirmDialog />` monté AVANT la fiche, comme à la racine d'une application), renvoi depuis la page ConfirmDialog.
+
+À vérifier côté application : un élément maison qui devait passer au-dessus des modales de la lib avec un `z-index` entre 50 et 1000 passe désormais dessous (utiliser `useLayer`) ; l'habillage de la page (en-têtes, barre latérale, bandeaux) doit rester sous 1000.
+
 ## 0.6.0 (2026-10-10)
 
 UN motif par action : composants pour les actions de ligne, les en-têtes de section et les états vides ; une seule famille d'icônes.

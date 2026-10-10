@@ -44,6 +44,7 @@ export default defineConfig({
         'tabs/index': entry('tabs/index.ts'),
         'tooltip/index': entry('tooltip/index.ts'),
         'composables/useConfirm': entry('composables/useConfirm.ts'),
+        'composables/useLayer': entry('composables/useLayer.ts'),
         'composables/useTableInstance': entry('composables/useTableInstance.ts'),
         types: entry('types.ts'),
         utils: entry('utils.ts'),

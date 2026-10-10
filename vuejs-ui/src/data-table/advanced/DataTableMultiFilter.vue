@@ -36,8 +36,8 @@
         <Teleport to="body">
           <div
             v-if="addOpen"
-            :style="addStyle"
-            class="fixed z-300 w-44 rounded-md border bg-popover p-1 shadow-md"
+            :style="[addStyle, { zIndex: addZIndex }]"
+            class="fixed w-44 rounded-md border bg-popover p-1 shadow-md"
           >
             <button
               v-for="opt in addableOptions"
@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { useLayer } from '../../composables/useLayer';
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
 import { IconPlus, IconX } from '@tabler/icons-vue';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
@@ -75,6 +76,8 @@ const emit = defineEmits<{
 const texts = useLibraryTexts();
 
 const addOpen = ref(false);
+// Panneau téléporté dans <body> : rang de couche pris à l'ouverture (au-dessus d'une fiche ouverte).
+const addZIndex = useLayer(addOpen);
 const addRef = ref<HTMLElement | null>(null);
 const addStyle = ref({});
 const localOperator = ref(props.operator || 'and');

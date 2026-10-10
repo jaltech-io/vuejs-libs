@@ -13,8 +13,8 @@
     <Teleport to="body">
       <div
         v-if="open"
-        :style="panelStyle"
-        class="fixed z-400 w-48 rounded-md border bg-popover shadow-md"
+        :style="[panelStyle, { zIndex }]"
+        class="fixed w-48 rounded-md border bg-popover shadow-md"
         @mousedown.stop
       >
         <p class="border-b px-3 py-2 text-xs font-semibold text-muted-foreground">{{ texts.dataTable.columnsTitle }}</p>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import { useLayer } from '../composables/useLayer';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { Column } from '@tanstack/vue-table';
 import { IconAdjustmentsHorizontal } from '@tabler/icons-vue';
@@ -58,6 +59,8 @@ const route = useRoute();
 
 const rootRef = ref<HTMLElement | null>(null);
 const open = ref(false);
+// Panneau téléporté dans <body> : rang de couche pris à l'ouverture (au-dessus d'une fiche ouverte).
+const zIndex = useLayer(open);
 const panelStyle = ref<Record<string, string>>({});
 
 const toggleableColumns = computed(() =>

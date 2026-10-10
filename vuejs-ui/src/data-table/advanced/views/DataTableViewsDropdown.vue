@@ -13,8 +13,8 @@
     <Teleport to="body">
       <div
         v-if="open"
-        :style="panelStyle"
-        class="fixed z-500 w-[200px] rounded-md border bg-popover shadow-md"
+        :style="[panelStyle, { zIndex }]"
+        class="fixed w-[200px] rounded-md border bg-popover shadow-md"
         @mousedown.stop
         @click.stop
       >
@@ -158,6 +158,7 @@
 </template>
 
 <script setup lang="ts">
+import { useLayer } from '../../../composables/useLayer';
 import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
@@ -196,6 +197,8 @@ const createInputRef = ref<HTMLInputElement | null>(null);
 const editInputRef = ref<HTMLInputElement | null>(null);
 
 const open = ref(false);
+// Panneau téléporté dans <body> : rang de couche pris à l'ouverture (au-dessus d'une fiche ouverte).
+const zIndex = useLayer(open);
 const panelStyle = ref<Record<string, string>>({});
 const mode = ref<'list' | 'create' | 'edit'>('list');
 const search = ref('');
