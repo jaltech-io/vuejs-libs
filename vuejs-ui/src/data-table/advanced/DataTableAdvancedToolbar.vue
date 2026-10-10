@@ -51,6 +51,8 @@
       <div class="flex flex-wrap items-center gap-2 min-w-0">
         <slot name="selection" />
         <slot />
+        <!-- Tableau en arbre uniquement (useDataTableTree) : rien sinon. -->
+        <DataTableExpandToggle />
         <DataTableColumnsVisibility />
       </div>
     </div>
@@ -174,6 +176,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLibraryTexts } from '../../texts';
 import DataTableColumnsVisibility from '../DataTableColumnsVisibility.vue';
+import DataTableExpandToggle from '../DataTableExpandToggle.vue';
 import DataTableFilterItem from './DataTableFilterItem.vue';
 import DataTableMultiFilter from './DataTableMultiFilter.vue';
 import DataTableViewsDropdown from './views/DataTableViewsDropdown.vue';

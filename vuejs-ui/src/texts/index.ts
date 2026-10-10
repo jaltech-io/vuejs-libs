@@ -41,6 +41,10 @@ export interface LibraryTextsDefinition {
     sortAscending: string;
     sortDescending: string;
     hideColumn: string;
+    /** Tableau en arbre : nom accessible du bouton d'une ligne (l'état est porté par `aria-expanded`). */
+    toggleRow: string;
+    expandAll: string;
+    collapseAll: string;
   };
   dataTableFilters: {
     filter: string;
@@ -196,6 +200,9 @@ export const defaultLibraryTexts: LibraryTextsDefinition = {
     sortAscending: 'Asc',
     sortDescending: 'Desc',
     hideColumn: 'Hide',
+    toggleRow: 'Afficher les sous-lignes',
+    expandAll: 'Tout déplier',
+    collapseAll: 'Tout replier',
   },
   dataTableFilters: {
     filter: 'Filtrer',

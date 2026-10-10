@@ -33,9 +33,13 @@
             <td
               v-for="cell in row.getVisibleCells()"
               :key="cell.id"
-              class="h-dt-td"
+              :class="cell.column.columnDef.meta?.tree ? 'h-dt-td h-dt-td-tree' : 'h-dt-td'"
             >
-              <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+              <!-- Colonne arborescente (`meta: { tree: true }`) : indentation, liaisons, déplier/replier. -->
+              <DataTableTreeCell v-if="cell.column.columnDef.meta?.tree" :row="row">
+                <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+              </DataTableTreeCell>
+              <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </td>
           </tr>
         </template>
@@ -53,6 +57,9 @@
 import type { ColumnDef, Table } from '@tanstack/vue-table';
 import { FlexRender } from '@tanstack/vue-table';
 import { useLibraryTexts } from '../texts';
+import DataTableTreeCell from './DataTableTreeCell.vue';
+// Déclare `meta.tree` sur les colonnes TanStack.
+import './tree';
 
 defineProps<{
   table: Table<TData>;
@@ -94,6 +101,11 @@ const texts = useLibraryTexts();
 }
 .h-dt-td {
   @apply py-[11px] px-3.5 align-middle text-compact text-[var(--h-text)];
+}
+/* Cellule arborescente : repère des lignes de liaison (toute la hauteur de la ligne), décalées du padding. */
+.h-dt-td-tree {
+  @apply relative;
+  --h-dt-tree-inset: 0.875rem;
 }
 .h-dt-empty {
   @apply py-14 px-6 text-center text-(--h-text-3) text-compact;

@@ -35,7 +35,7 @@ installLibraryTexts(app, () => ({
 | `formDialog` | `FormDialog` |
 | `rowActions` | `RowActions` / `rowActionsCell` (« ⋯ » trigger) |
 | `datePicker` | `DatePicker` |
-| `dataTable` | `DataTable`, `createSelectColumn`, `DataTableColumnHeader`, `DataTableColumnsVisibility` |
+| `dataTable` | `DataTable`, `createSelectColumn`, `DataTableColumnHeader`, `DataTableColumnsVisibility`, tree mode (`DataTableTreeCell`: `toggleRow`; `DataTableExpandToggle`: `expandAll` / `collapseAll`) |
 | `dataTableFilters` | advanced toolbar filters and operators |
 | `dataTableViews` | saved views (toolbar, dropdown, `ViewFormModal`, `ViewsSidebar`) |
 | `activityFeed` | `ActivityFeed` (counter, filters, relative dates) |

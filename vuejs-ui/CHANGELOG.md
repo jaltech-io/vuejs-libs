@@ -1,3 +1,18 @@
+## 0.8.0 (2026-10-11)
+
+Nouvelle fonctionnalité, rétrocompatible : sans `getSubRows`, un tableau se comporte exactement comme avant.
+
+### 🚀 Features
+
+- **data-table (mode arbre):** les lignes d'un `DataTable` peuvent s'afficher en ARBRE (espaces et sous-espaces, groupes…), sur le modèle de la table d'Horizon.
+  - **`useDataTableTree({ getSubRows, initiallyExpanded?, expanded? })`** (`@jaltech/vuejs-ui/data-table`) : renvoie `tableOptions`, à étaler dans `useVueTable`, et `expanded` (état déplié : `true` = tout, ou `{ [rowId]: true }`), à brancher dans `state.expanded`. `getSubRows` porte le nom de l'option TanStack et est branché sur `getExpandedRowModel`. État contrôlable (ref `expanded` fournie par l'appelant) ; `initiallyExpanded: true` = tout déplié au départ, lignes chargées ensuite comprises.
+  - Filtres, filtres de la barre d'outils avancée et recherche partent des feuilles (`filterFromLeafRows: true`) : un parent reste affiché si un de ses enfants correspond. Le tri s'applique à chaque niveau, sous le parent. La pagination porte sur les lignes RACINES (`paginateExpandedRows: false`) : un parent et ses enfants dépliés restent sur la même page et déplier ne change pas le nombre de lignes racines par page (le défaut TanStack coupait une branche entre deux pages).
+  - **`meta: { tree: true }`** sur une colonne : `DataTable` rend sa cellule dans **`DataTableTreeCell`** (nouveau, exporté) — indentation par profondeur, lignes de liaison, bouton chevron déplier/replier avec `aria-expanded` ; le contenu de la cellule est inchangé, le clic ne remonte pas à la ligne. `meta.tree` est déclaré sur le `ColumnMeta` de TanStack.
+  - **`DataTableExpandToggle`** (nouveau) : bouton « Tout déplier / Tout replier » de la barre d'outils, inclus par `DataTableAdvancedToolbar` en mode arbre uniquement (rien sinon, ni quand aucune ligne n'a d'enfants) ; ailleurs, prop `table`.
+  - Utilitaires `isTreeTable(table)`, `isLastSiblingRow(row)`.
+- **texts:** section `dataTable` : `toggleRow` (« Afficher les sous-lignes », nom accessible du chevron, l'état étant porté par `aria-expanded`), `expandAll` (« Tout déplier »), `collapseAll` (« Tout replier ») ; props `toggleLabel`, `expandAllLabel`, `collapseAllLabel` prioritaires.
+- Vitrine : section « Tree mode » de la page DataTable (arbre déplié au départ, recherche, tri, pagination par racines).
+
 ## 0.7.0 (2026-10-10)
 
 ### ⚠️ Changement de comportement (couches)
