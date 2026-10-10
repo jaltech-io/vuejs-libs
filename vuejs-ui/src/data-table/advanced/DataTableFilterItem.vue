@@ -9,8 +9,8 @@
     >
       <!-- Zone cliquable -->
       <span class="flex items-center gap-1 pl-2 pr-1.5 h-full" @click="toggleOpen">
-        <TypeIcon v-if="option.value === 'title'" class="size-3 shrink-0 opacity-50" />
-        <ListIcon v-else class="size-3 shrink-0 opacity-50" />
+        <IconTypography v-if="option.value === 'title'" class="size-3 shrink-0 opacity-50" />
+        <IconList v-else class="size-3 shrink-0 opacity-50" />
         <span class="capitalize font-semibold text-foreground">{{ option.label }}</span>
         <template v-if="hasValue">
           <span class="text-muted-foreground font-normal">{{ activeOperatorLabel }}</span>
@@ -23,7 +23,7 @@
         class="flex h-full items-center px-1.5 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
         @click.stop="onRemove"
       >
-        <XIcon class="size-3" />
+        <IconX class="size-3" />
       </span>
     </div>
 
@@ -46,7 +46,7 @@
               class="inline-flex h-6 items-center gap-1 rounded border border-input bg-background px-2 text-xs hover:bg-accent"
             >
               {{ activeOperatorLabel }}
-              <ChevronDownIcon class="size-3 opacity-60" />
+              <IconChevronDown class="size-3 opacity-60" />
             </button>
             <div
               v-if="opOpen"
@@ -84,7 +84,7 @@
           <!-- Checkboxes for enum fields -->
           <template v-else>
             <div class="relative mb-2">
-              <SearchIcon class="absolute left-2 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+              <IconSearch class="absolute left-2 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <input
                 v-model="optionSearch"
                 :placeholder="texts.dataTableFilters.searchPlaceholder"
@@ -119,7 +119,7 @@
 
 <script setup lang="ts">
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
-import { ChevronDownIcon, ListIcon, SearchIcon, TypeIcon, XIcon } from 'lucide-vue-next';
+import { IconChevronDown, IconList, IconSearch, IconTypography, IconX } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useLibraryTexts } from '../../texts';
 

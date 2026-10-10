@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@internationalized/date": "^3.12.3",
-    "@lucide/vue": "^1.33.0",
     "@tabler/icons-vue": "^3.46.0",
     "@tanstack/vue-table": "^8.21.3",
     "@types/node": "^25.6.0",
@@ -27,7 +26,6 @@
     "clsx": "^2.1.1",
     "embla-carousel": "8.6.0",
     "embla-carousel-vue": "^8.6.0",
-    "lucide-vue-next": "^0.363.0",
     "postcss": "^8.5.15",
     "reka-ui": "^2.10.3",
     "tailwind-merge": "^2.6.1",

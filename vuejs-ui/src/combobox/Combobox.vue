@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, ChevronsUpDown, X } from '@lucide/vue';
+import { IconCheck, IconSelector, IconX } from '@tabler/icons-vue';
 import type { AcceptableValue } from 'reka-ui';
 import { computed, inject, ref, toValue } from 'vue';
 import { Button } from '../button';
@@ -149,7 +149,7 @@ function selectNone() {
           />
           <template v-else>{{ triggerLabel ?? texts.placeholder }}</template>
         </span>
-        <ChevronsUpDown class="size-4 shrink-0 opacity-50" />
+        <IconSelector class="size-4 shrink-0 opacity-50" />
       </Button>
     </PopoverTrigger>
 
@@ -161,7 +161,7 @@ function selectNone() {
           <template v-if="props.noneLabel">
             <CommandGroup>
               <CommandItem value="__combobox_none__" @select="selectNone">
-                <Check :class="cn('mr-2 size-4', selectedValues.length ? 'opacity-0' : 'opacity-100')" />
+                <IconCheck :class="cn('mr-2 size-4', selectedValues.length ? 'opacity-0' : 'opacity-100')" />
                 <span class="text-muted-foreground">{{ props.noneLabel }}</span>
               </CommandItem>
             </CommandGroup>
@@ -175,7 +175,7 @@ function selectNone() {
               :disabled="Boolean(option.disabled)"
               @select="() => select(option[valueField])"
             >
-              <Check :class="cn('mr-2 size-4 shrink-0', isSelected(option[valueField]) ? 'opacity-100' : 'opacity-0')" />
+              <IconCheck :class="cn('mr-2 size-4 shrink-0', isSelected(option[valueField]) ? 'opacity-100' : 'opacity-0')" />
               <slot name="option" :option="option" :selected="isSelected(option[valueField])">
                 <span class="truncate">{{ option[labelField] }}</span>
               </slot>
@@ -184,7 +184,7 @@ function selectNone() {
         </CommandList>
         <div v-if="props.multiple && selectedValues.length" class="border-t p-1">
           <Button variant="ghost" size="sm" type="button" class="h-7 w-full justify-center gap-1.5 text-xs" @click="selectNone">
-            <X class="size-3.5" /> {{ texts.clearAllLabel }}
+            <IconX class="size-3.5" /> {{ texts.clearAllLabel }}
           </Button>
         </div>
       </Command>

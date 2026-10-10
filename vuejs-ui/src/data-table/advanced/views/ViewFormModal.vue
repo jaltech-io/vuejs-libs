@@ -27,7 +27,7 @@
       class="inline-flex h-8 items-center gap-1.5 self-start rounded-md border border-destructive px-3 text-xs font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50"
       @click="onDelete"
     >
-      <TrashIcon class="size-3.5" />
+      <IconTrash class="size-3.5" />
       {{ deleting ? texts.dataTableViews.formDeleting : texts.dataTableViews.formDelete }}
     </button>
   </FormDialog>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
-import { TrashIcon } from 'lucide-vue-next';
+import { IconTrash } from '@tabler/icons-vue';
 import { computed, nextTick, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import FormDialog from '../../../FormDialog.vue';

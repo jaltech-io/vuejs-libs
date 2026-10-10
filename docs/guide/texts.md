@@ -33,6 +33,7 @@ installLibraryTexts(app, () => ({
 | `selectionBar` | `TableSelectionBar` |
 | `confirmDialog` | `ConfirmDialog` / `showConfirm` |
 | `formDialog` | `FormDialog` |
+| `rowActions` | `RowActions` / `rowActionsCell` (« ⋯ » trigger) |
 | `datePicker` | `DatePicker` |
 | `dataTable` | `DataTable`, `createSelectColumn`, `DataTableColumnHeader`, `DataTableColumnsVisibility` |
 | `dataTableFilters` | advanced toolbar filters and operators |

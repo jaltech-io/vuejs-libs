@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PanelLeft } from '@lucide/vue';
+import { IconLayoutSidebar } from '@tabler/icons-vue';
 import type { HTMLAttributes } from 'vue';
 import { Button } from '../button';
 import { cn } from '../utils';
@@ -24,7 +24,7 @@ const texts = useLibraryTexts();
     :class="cn('h-7 w-7', props.class)"
     @click="toggleSidebar"
   >
-    <PanelLeft />
+    <IconLayoutSidebar />
     <span class="sr-only">{{ texts.sidebar.toggle }}</span>
   </Button>
 </template>

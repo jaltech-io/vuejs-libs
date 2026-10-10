@@ -15,16 +15,16 @@
           title="Export CSV"
           @click="noop"
         >
-          <DownloadIcon class="size-3.5" />
+          <IconDownload class="size-3.5" />
         </button>
       </div>
       <template #selection>
         <TableSelectionBar :selected-count="selectedCount" @clear="table.toggleAllRowsSelected(false)">
           <TableSelectionBarButton title="Export selection" @click="noop">
-            <DownloadIcon class="size-3.5" />
+            <IconDownload class="size-3.5" />
           </TableSelectionBarButton>
           <TableSelectionBarButton title="Delete selection" destructive @click="noop">
-            <TrashIcon class="size-3.5" />
+            <IconTrash class="size-3.5" />
           </TableSelectionBarButton>
         </TableSelectionBar>
       </template>
@@ -95,7 +95,8 @@ import {
 import { Badge } from '@jaltech/vuejs-ui/badge';
 import { TableSelectionBar, TableSelectionBarButton } from '@jaltech/vuejs-ui';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
-import { BuildingIcon, DownloadIcon, GlobeIcon, LockIcon, TrashIcon } from 'lucide-vue-next';
+import { rowActionsCell } from '@jaltech/vuejs-ui/row-actions';
+import { IconBuilding, IconDownload, IconLock, IconPencil, IconTrash, IconWorld } from '@tabler/icons-vue';
 
 interface Project {
   id: string;
@@ -199,7 +200,7 @@ const columns: ColumnDef<Project, any>[] = [
     filterFn: (r, id, value) => (value as string[]).includes(r.getValue(id)),
     cell: ({ row }) => {
       const v = row.original.visibility;
-      const Icon = v === 'private' ? LockIcon : v === 'internal' ? BuildingIcon : GlobeIcon;
+      const Icon = v === 'private' ? IconLock : v === 'internal' ? IconBuilding : IconWorld;
       return h('span', { class: 'inline-flex items-center gap-1.5 text-compact' }, [
         h(Icon, { class: 'size-3 text-muted-foreground shrink-0' }), VIS_LABEL[v],
       ]);
@@ -221,6 +222,18 @@ const columns: ColumnDef<Project, any>[] = [
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Priority' }),
     filterFn: (r, id, value) => (value as string[]).includes(r.getValue(id)),
     cell: ({ row }) => h(Badge, { variant: 'outline' }, () => PRIORITY_LABEL[row.original.priority]),
+  },
+  {
+    id: 'actions',
+    header: () => null,
+    enableSorting: false,
+    enableHiding: false,
+    size: 96,
+    cell: ({ row }) =>
+      rowActionsCell([
+        { key: 'edit', label: 'Edit', icon: IconPencil, onClick: noop },
+        { key: 'delete', label: 'Delete', icon: IconTrash, danger: true, hidden: row.original.status === 'archived', onClick: noop },
+      ]),
   },
 ];
 

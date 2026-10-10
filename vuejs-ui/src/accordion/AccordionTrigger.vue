@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown } from '@lucide/vue';
+import { IconChevronDown } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { AccordionTriggerProps } from 'reka-ui';
 import { AccordionHeader, AccordionTrigger } from 'reka-ui';
@@ -25,7 +25,7 @@ const delegatedProps = reactiveOmit(props, 'class');
     >
       <slot />
       <slot name="icon">
-        <ChevronDown
+        <IconChevronDown
           class="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200"
         />
       </slot>

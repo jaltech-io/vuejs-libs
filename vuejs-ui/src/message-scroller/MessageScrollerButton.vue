@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowDownIcon } from '@lucide/vue';
+import { IconArrowDown } from '@tabler/icons-vue';
 import type { HTMLAttributes } from 'vue';
 import { computed } from 'vue';
 import type { ButtonVariants } from '../button';
@@ -58,7 +58,7 @@ const texts = useLibraryTexts();
     @click="onClick"
   >
     <slot>
-      <ArrowDownIcon />
+      <IconArrowDown />
       <span class="sr-only">{{ direction === "end" ? texts.messageScroller.scrollToEnd : texts.messageScroller.scrollToStart }}</span>
     </slot>
   </Button>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDown } from '@lucide/vue';
+import { IconChevronDown } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { NavigationMenuTriggerProps } from 'reka-ui';
 import { NavigationMenuTrigger, useForwardProps } from 'reka-ui';
@@ -21,7 +21,7 @@ const forwardedProps = useForwardProps(delegatedProps);
     :class="cn(navigationMenuTriggerStyle(), 'group', props.class)"
   >
     <slot />
-    <ChevronDown
+    <IconChevronDown
       class="relative top-px ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
       aria-hidden="true"
     />

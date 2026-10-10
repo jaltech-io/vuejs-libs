@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getLocalTimeZone, parseDate } from '@internationalized/date';
-import { CalendarIcon, X } from '@lucide/vue';
+import { IconCalendar, IconX } from '@tabler/icons-vue';
 import type { DateValue } from 'reka-ui';
 import { computed, ref } from 'vue';
 import { Button } from '../button';
@@ -73,7 +73,7 @@ function select(date: DateValue | undefined) {
             )
           "
         >
-          <CalendarIcon class="size-4 shrink-0 opacity-60" />
+          <IconCalendar class="size-4 shrink-0 opacity-60" />
           <span class="truncate">{{ label ?? props.placeholder ?? texts.datePicker.placeholder }}</span>
         </Button>
       </PopoverTrigger>
@@ -95,7 +95,7 @@ function select(date: DateValue | undefined) {
       class="absolute top-1/2 right-1.5 grid size-6 -translate-y-1/2 place-items-center rounded-sm text-muted-foreground hover:bg-accent hover:text-foreground"
       @click="emit('update:modelValue', null)"
     >
-      <X class="size-3.5" />
+      <IconX class="size-3.5" />
     </button>
   </div>
 </template>

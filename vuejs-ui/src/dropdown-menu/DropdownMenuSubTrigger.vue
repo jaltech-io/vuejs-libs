@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronRight } from '@lucide/vue';
+import { IconChevronRight } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { DropdownMenuSubTriggerProps } from 'reka-ui';
 import { DropdownMenuSubTrigger, useForwardProps } from 'reka-ui';
@@ -23,6 +23,6 @@ const forwardedProps = useForwardProps(delegatedProps);
     )"
   >
     <slot />
-    <ChevronRight class="ml-auto size-4" />
+    <IconChevronRight class="ml-auto size-4" />
   </DropdownMenuSubTrigger>
 </template>

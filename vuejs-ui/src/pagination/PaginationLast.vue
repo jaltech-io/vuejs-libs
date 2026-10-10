@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronRightIcon } from '@lucide/vue';
+import { IconChevronRight } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { PaginationLastProps } from 'reka-ui';
 import { PaginationLast, useForwardProps } from 'reka-ui';
@@ -35,7 +35,7 @@ const texts = useLibraryTexts();
   >
     <slot>
       <span class="hidden sm:block">{{ texts.pagination.last }}</span>
-      <ChevronRightIcon />
+      <IconChevronRight />
     </slot>
   </PaginationLast>
 </template>

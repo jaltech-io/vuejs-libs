@@ -20,7 +20,7 @@
           : {{ opt.filterValues.join(', ') }}
         </span>
         <button @click="removeFilter(opt)" class="ml-0.5 hover:text-destructive">
-          <XIcon class="size-3" />
+          <IconX class="size-3" />
         </button>
       </div>
 
@@ -30,7 +30,7 @@
           @click="addOpen = !addOpen"
           class="inline-flex h-6 items-center gap-1 rounded-full border border-dashed px-2 text-xs hover:bg-accent"
         >
-          <PlusIcon class="size-3" />
+          <IconPlus class="size-3" />
           {{ texts.dataTableFilters.addInGroup }}
         </button>
         <Teleport to="body">
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import type { DataTableFilterOption } from '@jaltech/vuejs-ui/types';
-import { PlusIcon, XIcon } from 'lucide-vue-next';
+import { IconPlus, IconX } from '@tabler/icons-vue';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useLibraryTexts } from '../../texts';
 

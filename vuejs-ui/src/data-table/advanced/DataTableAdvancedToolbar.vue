@@ -21,7 +21,7 @@
             @click.stop="toggleAdd"
             class="inline-flex h-7 items-center gap-1.5 rounded-md border border-input bg-background px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
-            <ListFilterIcon class="size-3.5" />
+            <IconFilter class="size-3.5" />
             {{ selectedOptions.length === 0 ? texts.dataTableFilters.filter : texts.dataTableFilters.add }}
           </button>
           <Teleport to="body">
@@ -40,8 +40,8 @@
                 @mousedown.prevent.stop="addOption(opt)"
                 class="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm capitalize hover:bg-accent"
               >
-                <TypeIcon v-if="opt.value === 'title'" class="size-3.5 shrink-0 text-muted-foreground" />
-                <ListIcon v-else class="size-3.5 shrink-0 text-muted-foreground" />
+                <IconTypography v-if="opt.value === 'title'" class="size-3.5 shrink-0 text-muted-foreground" />
+                <IconList v-else class="size-3.5 shrink-0 text-muted-foreground" />
                 {{ opt.label }}
               </div>
             </div>
@@ -92,7 +92,7 @@
         @click="resetToCurrentView"
         class="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
       >
-        <RotateCcwIcon class="size-3" />
+        <IconRotate class="size-3" />
         {{ texts.dataTableViews.reset }}
       </button>
 
@@ -105,7 +105,7 @@
           @click="openSaveView = true; $nextTick(() => saveInputRef?.focus())"
           class="inline-flex h-7 items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2.5 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50"
         >
-          <BookmarkPlusIcon class="size-3.5" />
+          <IconBookmarkPlus class="size-3.5" />
           {{ texts.dataTableViews.saveView }}
         </button>
 
@@ -114,7 +114,7 @@
           v-else
           class="flex items-center gap-1.5 rounded-md border border-primary/30 bg-background px-2.5 py-1 shadow-xs"
         >
-          <BookmarkIcon class="size-3.5 shrink-0 text-primary" />
+          <IconBookmark class="size-3.5 shrink-0 text-primary" />
           <input
             ref="saveInputRef"
             v-model="newViewName"
@@ -132,8 +132,8 @@
               :title="texts.dataTableViews.saveHint"
               class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-2xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
             >
-              <Loader2Icon v-if="saving" class="size-3 animate-spin" />
-              <CheckIcon v-else class="size-3" />
+              <IconLoader2 v-if="saving" class="size-3 animate-spin" />
+              <IconCheck v-else class="size-3" />
             </button>
             <button
               type="button"
@@ -141,7 +141,7 @@
               :title="texts.dataTableViews.cancelHint"
               class="flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
             >
-              <XIcon class="size-3" />
+              <IconX class="size-3" />
             </button>
           </div>
         </div>
@@ -155,8 +155,8 @@
         @click="handleUpdateView"
         class="inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
       >
-        <Loader2Icon v-if="saving" class="size-3.5 animate-spin" />
-        <SaveIcon v-else class="size-3.5" />
+        <IconLoader2 v-if="saving" class="size-3.5 animate-spin" />
+        <IconDeviceFloppy v-else class="size-3.5" />
         {{ texts.dataTableViews.updateView }}
       </button>
       <p v-if="updateViewError && isUpdated && currentView" class="text-xs text-destructive">{{ updateViewError }}</p>
@@ -168,18 +168,7 @@
 <script setup lang="ts">
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { DataTableFilterOption, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
-import {
-  BookmarkIcon,
-  BookmarkPlusIcon,
-  CheckIcon,
-  ListFilterIcon,
-  ListIcon,
-  Loader2Icon,
-  RotateCcwIcon,
-  SaveIcon,
-  TypeIcon,
-  XIcon,
-} from 'lucide-vue-next';
+import { IconBookmark, IconBookmarkPlus, IconCheck, IconDeviceFloppy, IconFilter, IconList, IconLoader2, IconRotate, IconTypography, IconX } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLibraryTexts } from '../../texts';

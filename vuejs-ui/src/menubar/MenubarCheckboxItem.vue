@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check } from '@lucide/vue';
+import { IconCheck } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { MenubarCheckboxItemEmits, MenubarCheckboxItemProps } from 'reka-ui';
 import { MenubarCheckboxItem, MenubarItemIndicator, useForwardPropsEmits } from 'reka-ui';
@@ -26,7 +26,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     <span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
       <MenubarItemIndicator>
         <slot name="indicator-icon">
-          <Check class="size-4" />
+          <IconCheck class="size-4" />
         </slot>
       </MenubarItemIndicator>
     </span>

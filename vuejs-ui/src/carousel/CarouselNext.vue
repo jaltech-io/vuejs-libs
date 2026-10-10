@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowRight } from '@lucide/vue';
+import { IconArrowRight } from '@tabler/icons-vue';
 import type { ButtonVariants } from '../button';
 import { Button } from '../button';
 import { cn } from '../utils';
@@ -41,7 +41,7 @@ const texts = useLibraryTexts();
     @click="scrollNext"
   >
     <slot>
-      <ArrowRight />
+      <IconArrowRight />
       <span class="sr-only">{{ texts.carousel.next }}</span>
     </slot>
   </Button>

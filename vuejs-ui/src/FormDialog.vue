@@ -22,6 +22,11 @@ const props = defineProps<{
   pending?: boolean;
   /** Désactive le bouton de validation (formulaire incomplet). */
   submitDisabled?: boolean;
+  /**
+   * Variante du bouton de validation : `default` (bleu, défaut) ou `destructive` (rouge, action
+   * négative : refuser, rejeter…).
+   */
+  submitVariant?: 'default' | 'destructive';
   contentClass?: string;
   cancelLabel?: string;
 }>();
@@ -69,7 +74,12 @@ function onCancel() {
       </ScrollArea>
       <DialogFooter class="border-t px-6 py-3 max-sm:px-4">
         <Button type="button" variant="outline" @click="onCancel">{{ cancelText }}</Button>
-        <Button type="button" :disabled="pending || submitDisabled" @click="emit('submit')">
+        <Button
+          type="button"
+          :variant="submitVariant ?? 'default'"
+          :disabled="pending || submitDisabled"
+          @click="emit('submit')"
+        >
           <IconLoader2 v-if="pending" class="animate-spin" />
           {{ pending ? (pendingLabel ?? submitText) : submitText }}
         </Button>

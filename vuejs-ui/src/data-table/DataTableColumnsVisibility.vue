@@ -6,7 +6,7 @@
         @click="toggleOpen"
         class="flex size-7 items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground"
       >
-        <SlidersHorizontalIcon class="size-4" />
+        <IconAdjustmentsHorizontal class="size-4" />
       </button>
     </HTooltip>
 
@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { Column } from '@tanstack/vue-table';
-import { SlidersHorizontalIcon } from 'lucide-vue-next';
+import { IconAdjustmentsHorizontal } from '@tabler/icons-vue';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import HTooltip from '../HTooltip.vue';

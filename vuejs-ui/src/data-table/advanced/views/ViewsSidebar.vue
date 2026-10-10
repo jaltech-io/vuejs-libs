@@ -8,7 +8,7 @@
           class="flex size-7 shrink-0 items-center justify-center rounded-(--h-radius) bg-(--h-blue-50) text-(--h-blue-600) transition-colors hover:brightness-95"
           @click="emit('create')"
         >
-          <PlusIcon class="size-4" />
+          <IconPlus class="size-4" />
         </button>
       </HTooltip>
     </div>
@@ -20,7 +20,7 @@
         :class="!currentView ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
         @click="selectView(null)"
       >
-        <ListIcon class="size-3.5 shrink-0" :class="!currentView ? 'text-(--h-blue-600)' : 'opacity-60'" />
+        <IconList class="size-3.5 shrink-0" :class="!currentView ? 'text-(--h-blue-600)' : 'opacity-60'" />
         <span class="min-w-0 flex-1 truncate">{{ defaultLabel }}</span>
       </button>
 
@@ -29,7 +29,7 @@
         class="flex items-center gap-1 rounded-(--h-radius) pr-1 pl-2 text-compact transition-colors hover:bg-(--h-surface2)"
         :class="currentView?.id === view.id ? 'bg-(--h-blue-50) font-medium text-(--h-text)' : 'text-(--h-text-2)'"
       >
-        <BookmarkIcon class="size-3.5 shrink-0" :class="currentView?.id === view.id ? 'text-(--h-blue-600)' : 'opacity-60'" />
+        <IconBookmark class="size-3.5 shrink-0" :class="currentView?.id === view.id ? 'text-(--h-blue-600)' : 'opacity-60'" />
 
         <input
           v-if="editingId === view.id"
@@ -51,7 +51,7 @@
             :title="texts.dataTableViews.sidebarEdit"
             @click.stop="startEdit(view)"
           >
-            <PencilIcon class="size-3.5" />
+            <IconPencil class="size-3.5" />
           </button>
           <button
             type="button"
@@ -59,10 +59,10 @@
             :title="texts.dataTableViews.sidebarDelete"
             @click.stop="onDelete(view)"
           >
-            <TrashIcon class="size-3.5" />
+            <IconTrash class="size-3.5" />
           </button>
         </template>
-        <Loader2Icon v-else-if="savingId === view.id" class="size-3.5 shrink-0 animate-spin text-muted-foreground" />
+        <IconLoader2 v-else-if="savingId === view.id" class="size-3.5 shrink-0 animate-spin text-muted-foreground" />
       </div>
       <p v-if="editingId === view.id && editError" class="px-2 pb-1 text-xs text-destructive">{{ editError }}</p>
       </template>
@@ -84,7 +84,7 @@ import { useTableInstance } from '../../../composables/useTableInstance';
 import HTooltip from '../../../HTooltip.vue';
 import { useLibraryTexts } from '../../../texts';
 import type { FilterParams, ViewItem } from '../../../types';
-import { BookmarkIcon, ListIcon, Loader2Icon, PencilIcon, PlusIcon, TrashIcon } from 'lucide-vue-next';
+import { IconBookmark, IconList, IconLoader2, IconPencil, IconPlus, IconTrash } from '@tabler/icons-vue';
 import { calcViewSearchParams, getHideableColumnIds } from './utils';
 
 // Contrat des callbacks : résoudre APRÈS avoir rafraîchi `views` ; en cas d'échec, renvoyer

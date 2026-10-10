@@ -29,6 +29,8 @@ export interface LibraryTextsDefinition {
   };
   confirmDialog: { cancel: string; confirm: string };
   formDialog: { submit: string; cancel: string };
+  /** `RowActions` : nom du déclencheur « ⋯ » des actions au-delà de `max`. */
+  rowActions: { more: string };
   datePicker: { placeholder: string; clear: string };
   dataTable: {
     noResults: string;
@@ -183,6 +185,7 @@ export const defaultLibraryTexts: LibraryTextsDefinition = {
   },
   confirmDialog: { cancel: 'Annuler', confirm: 'Confirmer' },
   formDialog: { submit: 'Créer', cancel: 'Annuler' },
+  rowActions: { more: "Plus d'actions" },
   datePicker: { placeholder: 'Choisir une date', clear: 'Effacer la date' },
   dataTable: {
     noResults: 'Aucun résultat.',

@@ -6,6 +6,8 @@ export * from './badge';
 export { default as ConfirmDialog } from './ConfirmDialog.vue';
 export { default as EmptyState } from './EmptyState.vue';
 export { default as RouterTabsNav } from './RouterTabsNav.vue';
+export * from './row-actions';
+export { default as SectionHeader } from './SectionHeader.vue';
 export * from './checkbox';
 export * from './composables/useConfirm';
 export * from './composables/useTableInstance';

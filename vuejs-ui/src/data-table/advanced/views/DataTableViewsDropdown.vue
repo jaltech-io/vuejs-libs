@@ -7,7 +7,7 @@
       :title="texts.dataTableViews.openViewsHint(`${isMac ? '⌘' : 'Ctrl'}+V`)"
     >
       <span class="truncate">{{ currentView?.name || props.defaultLabel || texts.dataTableViews.all }}</span>
-      <ChevronDownIcon class="ml-1 size-4 shrink-0 opacity-50" />
+      <IconChevronDown class="ml-1 size-4 shrink-0 opacity-50" />
     </button>
 
     <Teleport to="body">
@@ -23,7 +23,7 @@
         <template v-if="mode === 'create'">
           <div class="flex items-center border-b px-3 py-2">
             <button type="button" @click="mode = 'list'" class="mr-2 rounded p-0.5 hover:bg-accent">
-              <ChevronLeftIcon class="size-4" />
+              <IconChevronLeft class="size-4" />
             </button>
             <span class="text-sm font-medium">{{ texts.dataTableViews.newView }}</span>
           </div>
@@ -56,7 +56,7 @@
         <template v-else-if="mode === 'edit' && editingView">
           <div class="flex items-center border-b px-3 py-2">
             <button type="button" @click="mode = 'list'" class="mr-2 rounded p-0.5 hover:bg-accent">
-              <ChevronLeftIcon class="size-4" />
+              <IconChevronLeft class="size-4" />
             </button>
             <span class="text-sm font-medium">{{ texts.dataTableViews.editView }}</span>
           </div>
@@ -98,7 +98,7 @@
         <!-- List -->
         <template v-else>
           <div class="flex items-center border-b px-3 py-1.5">
-            <SearchIcon class="mr-2 size-4 shrink-0 opacity-50" />
+            <IconSearch class="mr-2 size-4 shrink-0 opacity-50" />
             <input
               v-model="search"
               :placeholder="texts.dataTableViews.searchViews"
@@ -130,7 +130,7 @@
                 class="invisible ml-auto flex size-5 shrink-0 items-center justify-center rounded p-0.5 hover:bg-neutral-200 group-hover:visible dark:hover:bg-neutral-700"
                 @click.stop="openEdit(view)"
               >
-                <PencilIcon class="size-3" />
+                <IconPencil class="size-3" />
               </span>
             </div>
 
@@ -146,7 +146,7 @@
               class="flex w-full items-center rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
               @click="mode = 'create'; nextTick(() => createInputRef?.focus())"
             >
-              <PlusIcon class="mr-2 size-4" />
+              <IconPlus class="mr-2 size-4" />
               {{ texts.dataTableViews.addView }}
             </button>
           </div>
@@ -162,7 +162,7 @@ import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
 import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import { getIsMacOS } from '@jaltech/vuejs-ui/utils';
-import { ChevronDownIcon, ChevronLeftIcon, PencilIcon, PlusIcon, SearchIcon } from 'lucide-vue-next';
+import { IconChevronDown, IconChevronLeft, IconPencil, IconPlus, IconSearch } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLibraryTexts } from '../../../texts';

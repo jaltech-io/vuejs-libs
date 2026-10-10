@@ -11,9 +11,6 @@ importers:
       '@internationalized/date':
         specifier: ^3.12.3
         version: 3.12.3
-      '@lucide/vue':
-        specifier: ^1.33.0
-        version: 1.33.0(vue@3.5.41(typescript@6.0.3))
       '@tabler/icons-vue':
         specifier: ^3.46.0
         version: 3.46.0(vue@3.5.41(typescript@6.0.3))
@@ -47,9 +44,6 @@ importers:
       embla-carousel-vue:
         specifier: ^8.6.0
         version: 8.6.0(vue@3.5.41(typescript@6.0.3))
-      lucide-vue-next:
-        specifier: ^0.363.0
-        version: 0.363.0(vue@3.5.41(typescript@6.0.3))
       postcss:
         specifier: ^8.5.15
         version: 8.5.26
@@ -132,9 +126,6 @@ importers:
       '@internationalized/date':
         specifier: ^3.12.3
         version: 3.12.3
-      '@lucide/vue':
-        specifier: ^1.27.0
-        version: 1.33.0(vue@3.5.41(typescript@6.0.3))
       '@tabler/icons-vue':
         specifier: ^3.44.0
         version: 3.46.0(vue@3.5.41(typescript@6.0.3))
@@ -159,9 +150,6 @@ importers:
       embla-carousel-vue:
         specifier: ^8.6.0
         version: 8.6.0(vue@3.5.41(typescript@6.0.3))
-      lucide-vue-next:
-        specifier: ^0.363.0
-        version: 0.363.0(vue@3.5.41(typescript@6.0.3))
       reka-ui:
         specifier: ^2.10.1
         version: 2.10.3(vue@3.5.41(typescript@6.0.3))
@@ -599,11 +587,6 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
-  '@lucide/vue@1.33.0':
-    resolution: {integrity: sha512-8d3HnIIglHnosvsnm+IWNy8XhYYJvkf4YEgQqb74HnY3ihzdz+7XX4MxMZoyKdw7pbKOGno2HoaHTq7DH/v5AA==}
-    peerDependencies:
-      vue: '>=3.0.1'
 
   '@mapbox/geojson-rewind@0.5.2':
     resolution: {integrity: sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA==}
@@ -2098,12 +2081,6 @@ packages:
   lodash-es@4.18.1:
     resolution: {integrity: sha512-J8xewKD/Gk22OZbhpOVSwcs60zhd95ESDwezOFuA3/099925PdHJ7OFHNTGtajL3AlZkykD32HykiMo+BIBI8A==}
 
-  lucide-vue-next@0.363.0:
-    resolution: {integrity: sha512-dc5KgrXhCPMEzKz6voDVvxXkwEr7n+Q4b7qLyS2e3DTlH9GMFydS4fHoSvpZR/a5M7i1EOpFI8/BA8SPjAOwEQ==}
-    deprecated: Package deprecated. Please use @lucide/vue instead.
-    peerDependencies:
-      vue: '>=3.0.1'
-
   magic-string-ast@1.0.3:
     resolution: {integrity: sha512-CvkkH1i81zl7mmb94DsRiFeG9V2fR2JeuK8yDgS8oiZSFa++wWLEgZ5ufEOyLHbvSbD1gTRKv9NdX69Rnvr9JA==}
     engines: {node: '>=20.19.0'}
@@ -3163,10 +3140,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   '@juggle/resize-observer@3.4.0': {}
-
-  '@lucide/vue@1.33.0(vue@3.5.41(typescript@6.0.3))':
-    dependencies:
-      vue: 3.5.41(typescript@6.0.3)
 
   '@mapbox/geojson-rewind@0.5.2':
     dependencies:
@@ -4637,10 +4610,6 @@ snapshots:
       quansync: 0.2.11
 
   lodash-es@4.18.1: {}
-
-  lucide-vue-next@0.363.0(vue@3.5.41(typescript@6.0.3)):
-    dependencies:
-      vue: 3.5.41(typescript@6.0.3)
 
   magic-string-ast@1.0.3:
     dependencies:

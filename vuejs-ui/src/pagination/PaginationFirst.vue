@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronLeftIcon } from '@lucide/vue';
+import { IconChevronLeft } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { PaginationFirstProps } from 'reka-ui';
 import { PaginationFirst, useForwardProps } from 'reka-ui';
@@ -34,7 +34,7 @@ const texts = useLibraryTexts();
     v-bind="forwarded"
   >
     <slot>
-      <ChevronLeftIcon />
+      <IconChevronLeft />
       <span class="hidden sm:block">{{ texts.pagination.first }}</span>
     </slot>
   </PaginationFirst>

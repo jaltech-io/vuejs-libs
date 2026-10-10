@@ -2,12 +2,12 @@
 
 <script setup>
 import RouterTabsNav from '@jaltech/vuejs-ui/router-tabs-nav'
-import { LayoutDashboardIcon, ListIcon, GaugeIcon } from 'lucide-vue-next'
+import { IconGauge, IconLayoutDashboard, IconList } from '@tabler/icons-vue'
 
 const tabs = [
-  { label: 'Tableau de bord', to: '/', icon: LayoutDashboardIcon },
-  { label: 'Backlog', to: '/backlog', icon: ListIcon },
-  { label: 'Vélocité', to: '/velocity', icon: GaugeIcon },
+  { label: 'Tableau de bord', to: '/', icon: IconLayoutDashboard },
+  { label: 'Backlog', to: '/backlog', icon: IconList },
+  { label: 'Vélocité', to: '/velocity', icon: IconGauge },
 ]
 </script>
 
@@ -24,12 +24,12 @@ A generic router-driven tab bar built on `RouterLink`; the active tab is derived
 ```vue
 <script setup lang="ts">
 import RouterTabsNav from '@jaltech/vuejs-ui/router-tabs-nav'
-import { LayoutDashboardIcon, ListIcon, GaugeIcon } from 'lucide-vue-next'
+import { IconGauge, IconLayoutDashboard, IconList } from '@tabler/icons-vue'
 
 const tabs = [
-  { label: 'Tableau de bord', to: '/', icon: LayoutDashboardIcon },
-  { label: 'Backlog', to: '/backlog', icon: ListIcon },
-  { label: 'Vélocité', to: '/velocity', icon: GaugeIcon },
+  { label: 'Tableau de bord', to: '/', icon: IconLayoutDashboard },
+  { label: 'Backlog', to: '/backlog', icon: IconList },
+  { label: 'Vélocité', to: '/velocity', icon: IconGauge },
 ]
 </script>
 

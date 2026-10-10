@@ -28,7 +28,7 @@
         :disabled="currentPage <= 1"
         @click="table.setPageIndex(0)"
       >
-        <ChevronsLeftIcon class="size-3.5" />
+        <IconChevronsLeft class="size-3.5" />
       </button>
       <button
         type="button"
@@ -36,7 +36,7 @@
         :disabled="currentPage <= 1"
         @click="table.previousPage()"
       >
-        <ChevronLeftIcon class="size-3.5" />
+        <IconChevronLeft class="size-3.5" />
       </button>
       <button
         type="button"
@@ -44,7 +44,7 @@
         :disabled="currentPage >= totalPages"
         @click="table.nextPage()"
       >
-        <ChevronRightIcon class="size-3.5" />
+        <IconChevronRight class="size-3.5" />
       </button>
       <button
         type="button"
@@ -52,7 +52,7 @@
         :disabled="currentPage >= totalPages"
         @click="table.setPageIndex(table.getPageCount() - 1)"
       >
-        <ChevronsRightIcon class="size-3.5" />
+        <IconChevronsRight class="size-3.5" />
       </button>
     </div>
   </div>
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@jaltech/vuejs-ui/select';
 import type { Table } from '@tanstack/vue-table';
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-vue-next';
+import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-vue';
 import { computed } from 'vue';
 
 const props = defineProps<{ table: Table<any> }>();

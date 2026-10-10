@@ -9,7 +9,6 @@ const externals = [
   '@tabler/icons-vue',
   '@tanstack/vue-table',
   'clsx',
-  'lucide-vue-next',
   'radix-vue',
   'tailwind-merge',
   'vue',

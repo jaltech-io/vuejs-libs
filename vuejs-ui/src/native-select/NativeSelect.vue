@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronDownIcon } from '@lucide/vue';
+import { IconChevronDown } from '@tabler/icons-vue';
 import { reactiveOmit, useVModel } from '@vueuse/core';
 import type { AcceptableValue } from 'reka-ui';
 import type { HTMLAttributes } from 'vue';
@@ -41,7 +41,7 @@ const delegatedProps = reactiveOmit(props, 'class');
     >
       <slot />
     </select>
-    <ChevronDownIcon
+    <IconChevronDown
       class="text-muted-foreground pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 opacity-50 select-none"
       aria-hidden="true"
       data-slot="native-select-icon"

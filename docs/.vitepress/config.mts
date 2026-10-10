@@ -39,6 +39,8 @@ export default defineConfig({
             { text: 'MetricCard', link: '/components/metric-card' },
             { text: 'RouterTabsNav', link: '/components/router-tabs-nav' },
             { text: 'TableSelectionBar', link: '/components/table-selection-bar' },
+            { text: 'RowActions', link: '/components/row-actions' },
+            { text: 'SectionHeader', link: '/components/section-header' },
             { text: 'EmptyState', link: '/components/empty-state' },
             { text: 'HDialog', link: '/components/h-dialog' },
             { text: 'HTooltip', link: '/components/h-tooltip' },

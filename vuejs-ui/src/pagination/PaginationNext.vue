@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronRightIcon } from '@lucide/vue';
+import { IconChevronRight } from '@tabler/icons-vue';
 import { reactiveOmit } from '@vueuse/core';
 import type { PaginationNextProps } from 'reka-ui';
 import { PaginationNext, useForwardProps } from 'reka-ui';
@@ -35,7 +35,7 @@ const texts = useLibraryTexts();
   >
     <slot>
       <span class="hidden sm:block">{{ texts.pagination.next }}</span>
-      <ChevronRightIcon />
+      <IconChevronRight />
     </slot>
   </PaginationNext>
 </template>

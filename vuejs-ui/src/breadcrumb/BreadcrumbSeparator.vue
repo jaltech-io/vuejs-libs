@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ChevronRight } from '@lucide/vue';
+import { IconChevronRight } from '@tabler/icons-vue';
 import type { HTMLAttributes } from 'vue';
 import { cn } from '../utils';
 
@@ -16,7 +16,7 @@ const props = defineProps<{
     :class="cn('[&>svg]:size-3.5', props.class)"
   >
     <slot>
-      <ChevronRight />
+      <IconChevronRight />
     </slot>
   </li>
 </template>

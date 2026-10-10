@@ -1,3 +1,21 @@
+## 0.6.0 (2026-10-10)
+
+UN motif par action : composants pour les actions de ligne, les en-têtes de section et les états vides ; une seule famille d'icônes.
+
+### 🚀 Features
+
+- **RowActions** (nouveau, `@jaltech/vuejs-ui/row-actions`) : actions d'une ligne, alignées à droite. Props `actions: RowAction[]` (`{ key, label, icon, onClick, danger?, hidden?, disabled? }`), `max` (défaut 3), `moreLabel`. Icônes au style unique (`hicon` / `hicon-danger`, taille `hicon`), infobulle `HTooltip` + `aria-label` sur chacune ; au-delà de `max`, `max - 1` icônes puis un menu « ⋯ » (entrées `danger` en variante `destructive`). Le clic ne remonte pas à la ligne. Utilitaire `rowActionsCell(actions, options?)` pour les colonnes TanStack (`cell: ({ row }) => rowActionsCell([...])`).
+- **SectionHeader** (nouveau, `@jaltech/vuejs-ui/section-header`) : UN style de titre de section (`text-base font-semibold`), props `title`, `count?` (Badge `secondary`, chiffres tabulaires), `as?` (`h1`…`h6`, défaut `h2`) ; slot `actions` aligné à droite (bouton « Nouveau … »).
+- **EmptyState** (refondu) : l'état vide recommandé, construit sur les primitives `Empty*` (toujours exportées). Props `icon?` (composant), `text?` (« Aucun … ») ; slot `action` facultatif ; marges uniformes. Le slot par défaut (contenu libre) reste accepté.
+- **FormDialog:** prop `submitVariant: 'default' | 'destructive'` (défaut `default`) — bouton de validation rouge pour une action négative (rejeter…). Rétrocompatible.
+- **texts:** nouvelle section `rowActions` (`more` : « Plus d'actions »).
+
+### 🩹 Changements
+
+- **icônes:** UNE famille d'icônes, Tabler (`@tabler/icons-vue`). Les 57 composants qui importaient `lucide-vue-next` ou `@lucide/vue` (primitives shadcn : fermeture des dialogues et panneaux, combobox, case à cocher, select, menus, pagination, calendriers, sonner, data-table avancé…) passent aux équivalents Tabler (94 imports), mêmes classes de taille. Les puces des éléments radio utilisent `IconCircleFilled`.
+- **deps:** `lucide-vue-next` et `@lucide/vue` retirés des dépendances. Une application qui les utilisait par transitivité doit les déclarer elle-même.
+- Vitrine : pages RowActions, SectionHeader, EmptyState refaite, `submitVariant` de FormDialog ; colonne d'actions dans la démo DataTable ; icônes Tabler partout ; les boutons et titres des composants ne sont plus écrasés par les styles de VitePress (boutons transparents).
+
 ## 0.5.0 (2026-10-05)
 
 ### 🚀 Features

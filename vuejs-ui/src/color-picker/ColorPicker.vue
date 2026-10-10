@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check } from '@lucide/vue';
+import { IconCheck } from '@tabler/icons-vue';
 import { ref, watch } from 'vue';
 import { Button } from '../button';
 import { Input } from '../input';
@@ -78,7 +78,7 @@ function onDraft(value: string | number | null) {
           :style="{ background: color }"
           @click="choose(color)"
         >
-          <Check v-if="props.modelValue?.toLowerCase() === color.toLowerCase()" class="size-3.5 text-white drop-shadow" />
+          <IconCheck v-if="props.modelValue?.toLowerCase() === color.toLowerCase()" class="size-3.5 text-white drop-shadow" />
         </button>
       </div>
       <div class="mt-3 flex items-center gap-2">

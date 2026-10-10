@@ -40,3 +40,12 @@
   gap: 0.75rem;
   align-items: center;
 }
+
+/* VitePress' base and .vp-doc styles are unlayered, so they beat Tailwind's layered utilities
+   (buttons rendered transparent, headings and paragraphs of components restyled as prose).
+   Roll those rules back for library components only. */
+button[data-slot],
+.vp-doc [data-slot] :is(h1, h2, h3, h4, h5, h6, p),
+.vp-doc :is(h1, h2, h3, h4, h5, h6, p)[data-slot] {
+  all: revert-layer;
+}
