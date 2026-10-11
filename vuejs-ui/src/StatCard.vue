@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="rounded-xl border bg-card p-5">
+  <div class="min-w-0 rounded-xl border bg-card p-5 wrap-anywhere">
     <div class="flex items-center justify-between">
       <span v-if="icon" class="grid h-9 w-9 place-items-center rounded-lg bg-primary/10 text-primary">
         <component :is="icon" class="h-5 w-5" />

@@ -1,3 +1,15 @@
+## 0.8.1 (2026-10-11)
+
+Correctif, rétrocompatible : aucune API de composant ne change.
+
+### 🩹 Fixes
+
+- **card:** sur petit écran, le texte ne sort plus du cadre des cartes : elles rétrécissent dans une grille ou une ligne flex et coupent les mots longs (e-mail, identifiant, titre sans espace).
+  - `Card` : `min-w-0` et `wrap-anywhere` (`overflow-wrap: anywhere`, hérité par tout le contenu).
+  - `CardHeader` : `min-w-0` et colonne `grid-cols-[minmax(0,1fr)]` ; avec `CardAction`, `grid-cols-[minmax(0,1fr)_auto]` au lieu de `[1fr_auto]` (la colonne du titre pouvait déborder, y compris avec un titre `truncate`).
+  - `StatCard`, `HMetricCard` : `min-w-0` et `wrap-anywhere`.
+- **section-header:** le titre tronqué porte une infobulle native (`title`) avec le texte complet.
+
 ## 0.8.0 (2026-10-11)
 
 Nouvelle fonctionnalité, rétrocompatible : sans `getSubRows`, un tableau se comporte exactement comme avant.

@@ -23,7 +23,7 @@ const props = withDefaults(
 <template>
   <div data-slot="section-header" :class="cn('flex min-h-8 items-center justify-between gap-3', props.class)">
     <div class="flex min-w-0 items-center gap-2">
-      <component :is="as" class="truncate text-base font-semibold text-foreground">{{ title }}</component>
+      <component :is="as" class="truncate text-base font-semibold text-foreground" :title="title">{{ title }}</component>
       <Badge v-if="count !== undefined" variant="secondary" class="tabular-nums">{{ count }}</Badge>
     </div>
     <div v-if="$slots.actions" class="flex shrink-0 items-center gap-2">
