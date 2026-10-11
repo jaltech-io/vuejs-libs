@@ -9,54 +9,76 @@
     :pending="pending"
     @submit="onSubmit"
   >
-    <div class="space-y-1.5">
-      <label class="text-sm font-medium">{{ texts.dataTableViews.formNameLabel }} <span class="text-destructive">*</span></label>
-      <input
+    <FormField v-slot="{ id, controlAttributes }" :label="texts.dataTableViews.formNameLabel" required :error="error">
+      <Input
+        :id="id"
         ref="nameInputRef"
         v-model="name"
+        v-bind="controlAttributes"
         :placeholder="texts.dataTableViews.formNamePlaceholder"
-        class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
       />
-      <p v-if="error" class="text-xs text-destructive">{{ error }}</p>
-    </div>
+    </FormField>
 
-    <button
+    <Button
       v-if="mode === 'edit'"
       type="button"
-      :disabled="deleting"
-      class="inline-flex h-8 items-center gap-1.5 self-start rounded-md border border-destructive px-3 text-xs font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50"
+      variant="outline"
+      size="sm"
+      class="self-start border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive"
+      :pending="deleting"
       @click="onDelete"
     >
-      <IconTrash class="size-3.5" />
+      <IconTrash />
       {{ deleting ? texts.dataTableViews.formDeleting : texts.dataTableViews.formDelete }}
-    </button>
+    </Button>
   </FormDialog>
 </template>
 
 <script setup lang="ts">
-import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
-import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
+// Création (ou renommage / suppression) d'une vue enregistrée. En création, les colonnes visibles
+// et les filtres courants sont lus d'eux-mêmes sur la table partagée (`provideTableInstance`) et
+// dans l'URL : les props `columns` / `filterParams` ne servent qu'à forcer d'autres valeurs.
 import { IconTrash } from '@tabler/icons-vue';
-import { computed, nextTick, ref, watch } from 'vue';
+import { computed, inject, nextTick, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Button } from '../../../button';
+import { showConfirm } from '../../../composables/useConfirm';
+import { TableInstanceKey } from '../../../composables/useTableInstance';
 import FormDialog from '../../../FormDialog.vue';
+import { FormField } from '../../../form-field';
+import { Input } from '../../../input';
 import { useLibraryTexts } from '../../../texts';
+import type {
+  CreateViewCallback,
+  DeleteViewCallback,
+  FilterParams,
+  UpdateViewCallback,
+  ViewCallbackResult,
+  ViewItem,
+} from '../../../types';
+import { type FilterField, filterParamsFromQuery, visibleHideableColumnIds } from './utils';
 
 const props = defineProps<{
   open: boolean;
   mode: 'create' | 'edit';
   view?: ViewItem | null;
-  columns: string[];
-  filterParams: FilterParams;
-  onCreateView: (p: { name: string; columns?: string[]; filterParams?: FilterParams }) => Promise<any>;
-  onUpdateView: (id: string, p: { name: string; columns?: string[]; filterParams?: FilterParams }) => Promise<any>;
-  onDeleteView: (id: string) => Promise<any>;
+  /** Colonnes de la vue créée. Défaut : colonnes masquables visibles de la table partagée. */
+  columns?: string[];
+  /** Filtres de la vue créée. Défaut : filtres courants lus dans l'URL. */
+  filterParams?: FilterParams;
+  /** Champs filtrables (ceux de la barre d'outils) ; défaut : les colonnes de la table partagée. */
+  filterFields?: FilterField[];
+  onCreateView: CreateViewCallback;
+  onUpdateView: UpdateViewCallback;
+  onDeleteView: DeleteViewCallback;
 }>();
 const emit = defineEmits<(e: 'update:open', v: boolean) => void>();
 
 const texts = useLibraryTexts();
 const router = useRouter();
 const route = useRoute();
+// Table partagée facultative : sans elle, `columns` / `filterParams` doivent être fournis.
+const tableContext = inject(TableInstanceKey, undefined);
 
 const openModel = computed({ get: () => props.open, set: (v) => emit('update:open', v) });
 
@@ -64,7 +86,18 @@ const name = ref('');
 const error = ref('');
 const pending = ref(false);
 const deleting = ref(false);
-const nameInputRef = ref<HTMLInputElement | null>(null);
+const nameInputRef = ref<{ $el?: HTMLInputElement } | null>(null);
+
+function currentColumns(): string[] | undefined {
+  if (props.columns) return props.columns;
+  return tableContext ? visibleHideableColumnIds(tableContext.table) : undefined;
+}
+
+function currentFilterParams(): FilterParams | undefined {
+  if (props.filterParams) return props.filterParams;
+  const fields = props.filterFields ?? tableContext?.table.getAllLeafColumns().map((column) => ({ value: column.id }));
+  return fields ? filterParamsFromQuery(route.query, fields) : undefined;
+}
 
 watch(
   () => props.open,
@@ -72,7 +105,7 @@ watch(
     if (v) {
       name.value = props.mode === 'edit' ? (props.view?.name ?? '') : '';
       error.value = '';
-      nextTick(() => nameInputRef.value?.focus());
+      nextTick(() => nameInputRef.value?.$el?.focus());
     }
   },
 );
@@ -88,18 +121,19 @@ async function onSubmit() {
   }
   pending.value = true;
   try {
-    const res =
+    const res = (
       props.mode === 'create'
         ? await props.onCreateView({
             name: name.value.trim(),
-            columns: props.columns,
-            filterParams: props.filterParams,
+            columns: currentColumns(),
+            filterParams: currentFilterParams(),
           })
         : await props.onUpdateView(props.view!.id, {
             name: name.value.trim(),
             columns: props.view!.columns ?? undefined,
             filterParams: props.view!.filterParams ?? undefined,
-          });
+          })
+    ) as ViewCallbackResult;
     // Message d'échec renvoyé par le consommateur, affiché tel quel (à lui de le traduire).
     if (res?.status === 'error') {
       error.value = res.message ?? '';
@@ -107,7 +141,7 @@ async function onSubmit() {
     }
     // La vue créée devient la vue active (même comportement que les autres chemins de création).
     if (props.mode === 'create' && res?.view?.id) {
-      router.replace({ path: route.path, query: { ...(route.query as Record<string, any>), viewId: res.view.id, page: '1' } });
+      router.replace({ path: route.path, query: { ...route.query, viewId: res.view.id, page: '1' } });
     }
     openModel.value = false;
   } finally {
@@ -127,7 +161,7 @@ async function onDelete() {
   if (!ok) return;
   deleting.value = true;
   try {
-    const res = await props.onDeleteView(view.id);
+    const res = (await props.onDeleteView(view.id)) as ViewCallbackResult;
     if (res?.status === 'error') {
       error.value = res.message ?? '';
       return;

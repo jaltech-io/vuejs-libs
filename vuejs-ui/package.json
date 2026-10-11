@@ -1,6 +1,6 @@
 {
   "name": "@jaltech/vuejs-ui",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Accessible, reusable Vue 3 components and composables — a source-first design system.",
   "type": "module",
   "sideEffects": [
@@ -346,18 +346,6 @@
       "types": "./src/ConfirmDialog.vue",
       "import": "./src/ConfirmDialog.vue"
     },
-    "./activity-feed": {
-      "types": "./src/ActivityFeed.vue",
-      "import": "./src/ActivityFeed.vue"
-    },
-    "./stat-card": {
-      "types": "./src/StatCard.vue",
-      "import": "./src/StatCard.vue"
-    },
-    "./h-metric-card": {
-      "types": "./src/HMetricCard.vue",
-      "import": "./src/HMetricCard.vue"
-    },
     "./h-dialog": {
       "types": "./src/HDialog.vue",
       "import": "./src/HDialog.vue"
@@ -374,10 +362,6 @@
       "types": "./src/EmptyState.vue",
       "import": "./src/EmptyState.vue"
     },
-    "./router-tabs-nav": {
-      "types": "./src/RouterTabsNav.vue",
-      "import": "./src/RouterTabsNav.vue"
-    },
     "./table-selection-bar": {
       "types": "./src/TableSelectionBar.vue",
       "import": "./src/TableSelectionBar.vue"
@@ -393,6 +377,22 @@
     "./section-header": {
       "types": "./src/SectionHeader.vue",
       "import": "./src/SectionHeader.vue"
+    },
+    "./metric-card": {
+      "types": "./src/metric-card/index.ts",
+      "import": "./src/metric-card/index.ts"
+    },
+    "./form-field": {
+      "types": "./src/form-field/index.ts",
+      "import": "./src/form-field/index.ts"
+    },
+    "./status-badge": {
+      "types": "./src/status-badge/index.ts",
+      "import": "./src/status-badge/index.ts"
+    },
+    "./tones": {
+      "types": "./src/tones.ts",
+      "import": "./src/tones.ts"
     },
     "./*": "./src/*"
   },

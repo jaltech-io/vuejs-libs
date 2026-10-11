@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconLoader2, IconPlus } from '@tabler/icons-vue';
+import { IconPlus } from '@tabler/icons-vue';
 import { computed } from 'vue';
 import { Button } from './button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './dialog';
@@ -77,10 +77,10 @@ function onCancel() {
         <Button
           type="button"
           :variant="submitVariant ?? 'default'"
-          :disabled="pending || submitDisabled"
+          :disabled="submitDisabled"
+          :pending="pending"
           @click="emit('submit')"
         >
-          <IconLoader2 v-if="pending" class="animate-spin" />
           {{ pending ? (pendingLabel ?? submitText) : submitText }}
         </Button>
       </DialogFooter>

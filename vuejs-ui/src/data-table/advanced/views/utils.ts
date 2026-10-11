@@ -1,16 +1,5 @@
-import type { DataTableFilterOption, FilterItem, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
+import type { DataTableFilterField, DataTableFilterOption, FilterItem, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
 import type { Table, VisibilityState } from '@tanstack/vue-table';
-
-/**
- * @deprecated Colonnes d'un écran particulier (tickets), conservé pour compatibilité : la lib
- * dérive désormais les colonnes masquables de la table elle-même (`getHideableColumnIds`).
- */
-export const COLUMNS = ['title', 'status', 'priority', 'createdAt'] as const;
-/**
- * @deprecated Champs d'un écran particulier (tickets), conservé pour compatibilité : une vue
- * applique désormais TOUS ses filtres (`calcViewSearchParams`).
- */
-export const FILTERABLE_FIELDS = ['title', 'status', 'priority', 'sort', 'operator'] as const;
 
 /** Paramètre d'URL portant les colonnes visibles (ids séparés par `.`), absent = tout visible. */
 export const COLUMNS_QUERY_KEY = 'cols';
@@ -59,6 +48,34 @@ export function calcFilterParams(
     operator: (query.operator as 'and' | 'or') || 'and',
     sort: query.sort || undefined,
   };
+}
+
+/**
+ * Champ filtrable minimal pour relire les filtres de l'URL : `value` (id de la colonne) et, pour un
+ * champ « à options », `options` (opérateur par défaut `eq` au lieu de `ilike`).
+ */
+export type FilterField = Pick<DataTableFilterField, 'value'> & Partial<Pick<DataTableFilterField, 'label' | 'options'>>;
+
+/**
+ * Filtres courants (forme d'une vue enregistrée) lus dans l'URL, pour les champs donnés : même
+ * résultat que la barre d'outils avancée.
+ */
+export function filterParamsFromQuery(query: Record<string, unknown>, fields: readonly FilterField[]): FilterParams {
+  const stringQuery: Record<string, string> = {};
+  for (const [key, value] of Object.entries(query)) if (typeof value === 'string') stringQuery[key] = value;
+  const options: DataTableFilterOption[] = fields.map((field) => ({
+    id: field.value,
+    label: field.label ?? field.value,
+    value: field.value,
+    options: field.options ?? [],
+  }));
+  return calcFilterParams(buildFilterOptionsFromQuery(options, stringQuery), stringQuery);
+}
+
+/** Colonnes masquables actuellement visibles (colonnes d'une vue à enregistrer). */
+export function visibleHideableColumnIds(table: Table<any>): string[] {
+  const visible = new Set(table.getVisibleLeafColumns().map((column) => column.id));
+  return getHideableColumnIds(table).filter((id) => visible.has(id));
 }
 
 /** Ids des colonnes que l'utilisateur peut masquer/afficher sur CETTE table. */
@@ -161,12 +178,4 @@ export function calcViewSearchParams(view: ViewItem, allColumns?: readonly strin
   params.page = '1';
   params.viewId = view.id;
   return params;
-}
-
-export function getIsFiltered(query: Record<string, string>, fields: readonly string[] = ['title', 'status', 'priority']): boolean {
-  return (
-    fields.some((f) => !!query[f]) ||
-    (!!query.sort && query.sort !== 'createdAt.desc') ||
-    (!!query.operator && query.operator !== 'and')
-  );
 }

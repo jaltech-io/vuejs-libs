@@ -1,3 +1,42 @@
+## 0.9.0 (2026-10-11)
+
+Le tableau avec vues devient un composant, les motifs répétés côté application passent dans la lib, et la lib perd ce qui était propre à un écran. **Version à CHANGEMENTS CASSANTS** : voir la section dédiée, chaque point dit comment migrer.
+
+### 🚀 Features
+
+- **`useClientDataTable({ data, columns, initialSorting?, getRowId?, tree?, pageSize?, enableRowSelection?, clearSelectionOnEscape?, provide? })`** (`@jaltech/vuejs-ui/data-table`) : table TanStack « côté client » complète — état (filtres, tri, visibilité, sélection, pagination à 20), `onXChange`, row models (dont facettes), `provideTableInstance`, Échap qui vide la sélection. Renvoie `table`, les refs d'état, `selectedRows`, `selectedCount`, `clearSelection()` (+ `expanded` en arbre). `tree` accepte le résultat de `useDataTableTree` ou ses options.
+- **`SavedViewsDataTable`** (`@jaltech/vuejs-ui/data-table`) : la coque du tableau avec vues — squelette (`loading`), `DataTableAdvancedToolbar`, `ViewsSidebar`, `DataTable`, `DataTablePagination`, `ViewFormModal`, export CSV (toutes les lignes filtrées) et export de la sélection. Props `table`, `columns`, `filterFields`, `viewsSource` (`{ list, create, update, delete }`, fourni par l'appelant : la lib n'appelle aucune API), `defaultLabel`, `exportFilename`, `exportExcludeColumns`, `exportable`, `selectionLabel(s)`. Slots `create`, `actions`, `selection-actions` (`{ rows, count, clear }`). Hauteur de la carte bornée par la variable CSS `--h-table-max-height` (aucune borne sans elle).
+- **Colonnes** : `createActionsColumn(actionsOf, { header?, max?, size? })` (en-tête aligné à droite, `RowActions`, ni tri ni masquage), `sortableHeader(title)` (titre ou getter lu au rendu), filtre `oneOf` (valeur parmi les valeurs choisies).
+- **CSV** : `exportTableToCsv(table, { filename?, excludeColumns?, onlySelected? })`, `tableToCsv(...)` — toutes les lignes filtrées et triées, pas seulement la page affichée.
+- **`Button` : prop `pending`** — spinner à la place de l'icône (ou avant le libellé), bouton désactivé, `aria-busy`. `FormDialog` et `TableSelectionBarButton` l'utilisent.
+- **`FormField`** (`@jaltech/vuejs-ui/form-field`) : libellé, astérisque si `required`, contrôle en slot (`{ id, invalid, controlAttributes }`), `description`, `error` ; bâti sur les primitives `field/`.
+- **`SkeletonList`** (`@jaltech/vuejs-ui/skeleton`) : `count` lignes, `itemClass`, `class`.
+- **`MetricCard`** (`@jaltech/vuejs-ui/metric-card`) : LA carte de KPI — `label`, `value`, `icon?`, `tone?`, `sub?`, `to?` (route), `href?` (lien externe).
+- **`StatusBadge`** (`@jaltech/vuejs-ui/status-badge`) : pastille de statut pilotée par une variante (`gray`, `blue`, `green`, `amber`, `red`, `purple`), `label` ou slot, `dot`. Cellule `statusBadgeCell(variant, label, { dot? })`.
+- **`InitialsAvatar`** (`@jaltech/vuejs-ui/avatar`) : initiales sur pastille teintée, `name`, `tone`, `size` (`xs` / `sm` / `md` / `lg`).
+- **Tonalités** (`@jaltech/vuejs-ui/tones`) : `Tone`, `TONES`, `badgeToneClasses`, `chipToneClasses`, partagées par `StatusBadge`, `InitialsAvatar` et `MetricCard`. Jetons `--h-blue-600` et `--h-purple-600` ajoutés à `styles.css` (déjà utilisés par la lib, jusqu'ici fournis par l'application).
+- **Types** : `ViewPayload`, `ViewActionResult`, `ViewCallbackResult`, `CreateViewCallback`, `UpdateViewCallback`, `DeleteViewCallback`, `SavedViewsSource`, `DataTableFilterField` ; utilitaires `filterParamsFromQuery(query, fields)`, `visibleHideableColumnIds(table)`.
+- **`ViewFormModal`** : en création, calcule lui-même les colonnes visibles (table partagée) et les filtres courants (URL, `filterFields` ou à défaut les colonnes de la table) ; `columns` / `filterParams` deviennent facultatifs. Champ du nom en `FormField` + `Input`.
+- **texts** : `dataTable.actions`, `dataTable.exportCsv`, `dataTable.exportSelection`.
+- Vitrine : page DataTable refaite autour de `SavedViewsDataTable` ; pages Button (pending), FormField, MetricCard, StatusBadge, InitialsAvatar, SkeletonList.
+
+### ⚠️ CHANGEMENTS CASSANTS — migration
+
+- **`ViewsSidebar.onDeleteView` reçoit l'IDENTIFIANT** (`(id: string) => Promise`), comme `ViewFormModal`, `DataTableAdvancedToolbar` et `DataTableViewsDropdown`, et la lib demande la confirmation elle-même (`showConfirm`, `<ConfirmDialog />` monté une fois).
+  Migration : supprimer l'adaptateur `deleteViewById` ; passer la même fonction `deleteView(id)` partout ; retirer la confirmation de l'application (`confirmDelete`) dans ce callback, sinon elle s'affiche deux fois. Le retour à « Tous » quand la vue active est supprimée est déjà fait par la lib.
+- **Vues personnelles : `isPublic` retiré** du type `ViewItem` et l'option « vue publique » retirée de `DataTableViewsDropdown` (`isPublic` n'est plus envoyé dans les payloads). `programReference` et `ownerEmail` deviennent facultatifs.
+  Migration : supprimer `toLibraryViews` (les vues de l'API se passent telles quelles) ; retirer `makePublic` et `public` de la section `dataTableViews` des textes fournis.
+- **`ViewsSidebar` : plus de largeur fixe `w-52` ni de classe `h-table-wrap`** — pleine largeur sur mobile, largeur des noms entre 10 et 16 rem au-delà ; carte autonome (jetons `--h-*`), hook `[data-slot=views-sidebar]`.
+  Migration : supprimer les 24 `:deep(aside.h-table-wrap) { … }` ; définir `:root { --h-table-max-height: calc(100vh - 310px) }` pour garder la hauteur bornée.
+- **Retirés (spécifiques à un écran ou inutilisés)** : `issue-panel/` (IssueHeaderCard, IssueMetaPanel, IssueTabsNav, helpers, types), `ai-dev-panel/`, `ActivityFeed` (+ types `ActivityEventKind`, `ActivityEventItem`, sous-chemin `./activity-feed`), `RouterTabsNav` (`./router-tabs-nav`), constantes de tickets `COLUMNS`, `FILTERABLE_FIELDS` et `getIsFiltered` (utils des vues). Sections de textes `activityFeed`, `issuePanel`, `aiDevPanel` retirées.
+  Migration : aucun usage dans ProjectFlow ; retirer ces trois sections (et `dataTableViews.makePublic` / `public`) de `shared/i18n/libraryTexts.ts`, sans quoi le typage refuse les clés inconnues.
+- **Cartes de KPI : `StatCard` et `HMetricCard` retirés** (sous-chemins `./stat-card`, `./h-metric-card`), remplacés par `MetricCard`.
+  Migration : `HMetricCard label value` → `MetricCard label value` (`sub` conservé) ; la bande `OverviewKpiStrip` garde sa grille et rend des `MetricCard` (`tile.tone` devient une `Tone` : `bg-(--h-blue-50) text-(--h-blue-600)` → `blue`, `purple` → `purple`, `red` / `amber` / `green` idem, `NEUTRAL` → `gray`) ; `to` / `href` sont des props.
+- **`Button` déclare `disabled`** (prop booléenne, combinée à `pending`) au lieu de le laisser passer en attribut : sans effet pour `<Button :disabled>` ; vérifier seulement un `disabled` posé sur un `Button` rendu `as="a"`.
+- **`DataTableAdvancedToolbar` / `ViewFormModal` / `DataTableViewsDropdown`** : callbacks typés (`CreateViewCallback`, `UpdateViewCallback`, `DeleteViewCallback`, `Promise<unknown>`) au lieu de `any` ; `filterFields` typé `DataTableFilterField[]`. Sans effet à l'exécution.
+
+Migration type d'un tableau ProjectFlow : le contrôleur remplace son bloc `useVueTable` (refs, `onXChange`, row models, `provideTableInstance`, Échap, `selectedXxx`) par `useClientDataTable({ data, columns, getRowId, initialSorting })` ; le composant remplace squelette + barre d'outils + `ViewsSidebar` + carte + `ViewFormModal` + calcul de `currentColumns` / `currentFilterParams` par `<SavedViewsDataTable :views-source="{ list, create, update, delete }">` (création en slot `create`, actions de sélection en slot `selection-actions`, export intégré) ; `views`/`fetchViews` du contrôleur deviennent `list` (attente de l'auth : passer `null` tant qu'elle charge) ; dans les colonnes, `oneOf` local → `oneOf` de la lib, `h(DataTableColumnHeader, { column, title })` → `sortableHeader(title)`, colonne `actions` → `createActionsColumn`, `h(HBadge, …)` → `statusBadgeCell(…)`, `Avatar`+`AvatarFallback`+`getInitials` → `InitialsAvatar` ; `<IconLoader2 v-if animate-spin>` dans un `Button` → `:pending` ; `<div class="space-y-1.5"><Label>…*</Label>…` → `FormField` ; sélecteurs e2e `.h-table-wrap table` → `[data-slot=saved-views-data-table] table` si la classe disparaît de l'application.
+
 ## 0.8.1 (2026-10-11)
 
 Correctif, rétrocompatible : aucune API de composant ne change.

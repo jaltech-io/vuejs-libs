@@ -36,10 +36,6 @@
               @keyup.enter="handleCreate"
               @keyup.escape="mode = 'list'"
             />
-            <label class="flex items-center gap-2 text-xs text-muted-foreground">
-              <input type="checkbox" v-model="createIsPublic" />
-              {{ texts.dataTableViews.makePublic }}
-            </label>
             <p v-if="createError" class="text-xs text-destructive">{{ createError }}</p>
             <button
               type="button"
@@ -69,10 +65,6 @@
               @keyup.enter="handleEdit"
               @keyup.escape="mode = 'list'"
             />
-            <label class="flex items-center gap-2 text-xs text-muted-foreground">
-              <input type="checkbox" v-model="editIsPublic" />
-              {{ texts.dataTableViews.makePublic }}
-            </label>
             <p v-if="editError" class="text-xs text-destructive">{{ editError }}</p>
             <div class="flex gap-2">
               <button
@@ -125,7 +117,6 @@
               @click="selectView(view)"
             >
               <span class="truncate">{{ view.name }}</span>
-              <span v-if="view.isPublic" class="ml-1 shrink-0 rounded bg-accent px-1 text-2xs uppercase text-muted-foreground">{{ texts.dataTableViews.public }}</span>
               <span
                 class="invisible ml-auto flex size-5 shrink-0 items-center justify-center rounded p-0.5 hover:bg-neutral-200 group-hover:visible dark:hover:bg-neutral-700"
                 @click.stop="openEdit(view)"
@@ -161,28 +152,28 @@
 import { useLayer } from '../../../composables/useLayer';
 import { showConfirm } from '@jaltech/vuejs-ui/composables/useConfirm';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
-import type { FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
+import type {
+  CreateViewCallback,
+  DeleteViewCallback,
+  FilterParams,
+  UpdateViewCallback,
+  ViewCallbackResult,
+  ViewItem,
+} from '@jaltech/vuejs-ui/types';
 import { getIsMacOS } from '@jaltech/vuejs-ui/utils';
 import { IconChevronDown, IconChevronLeft, IconPencil, IconPlus, IconSearch } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLibraryTexts } from '../../../texts';
-import { calcViewSearchParams, getHideableColumnIds } from './utils';
+import { calcViewSearchParams, getHideableColumnIds, visibleHideableColumnIds } from './utils';
 
 const props = defineProps<{
   views: ViewItem[];
   filterParams: FilterParams;
-  onCreateView: (p: {
-    name: string;
-    columns?: string[];
-    filterParams?: FilterParams;
-    isPublic?: boolean;
-  }) => Promise<any>;
-  onUpdateView: (
-    id: string,
-    p: { name: string; columns?: string[]; filterParams?: FilterParams; isPublic?: boolean },
-  ) => Promise<any>;
-  onDeleteView: (id: string) => Promise<any>;
+  onCreateView: CreateViewCallback;
+  onUpdateView: UpdateViewCallback;
+  /** Suppression par IDENTIFIANT, après confirmation par la lib. */
+  onDeleteView: DeleteViewCallback;
   defaultLabel?: string;
 }>();
 
@@ -204,11 +195,9 @@ const mode = ref<'list' | 'create' | 'edit'>('list');
 const search = ref('');
 const createName = ref('');
 const createError = ref('');
-const createIsPublic = ref(false);
 const creating = ref(false);
 const editName = ref('');
 const editError = ref('');
-const editIsPublic = ref(false);
 const editing = ref(false);
 const deleting = ref(false);
 const editingView = ref<ViewItem | null>(null);
@@ -253,7 +242,6 @@ function openEdit(view: ViewItem) {
   editingView.value = view;
   editName.value = view.name;
   editError.value = '';
-  editIsPublic.value = view.isPublic;
   mode.value = 'edit';
   nextTick(() => editInputRef.value?.focus());
 }
@@ -266,15 +254,13 @@ async function handleCreate() {
   }
   if (creating.value) return;
   creating.value = true;
-  const visible = new Set(table.getVisibleFlatColumns().map((c) => c.id));
-  let res: any;
+  let res: ViewCallbackResult;
   try {
-    res = await props.onCreateView({
+    res = (await props.onCreateView({
       name: createName.value.trim(),
-      columns: getHideableColumnIds(table).filter((id) => visible.has(id)),
+      columns: visibleHideableColumnIds(table),
       filterParams: props.filterParams,
-      isPublic: createIsPublic.value,
-    });
+    })) as ViewCallbackResult;
   } finally {
     creating.value = false;
   }
@@ -285,11 +271,9 @@ async function handleCreate() {
 
   // ✅ Navigate to the new view
   if (res?.view?.id) {
-    const newViewParams: Record<string, string> = { ...(route.query as any), viewId: res.view.id, page: '1' };
-    router.replace({ query: newViewParams });
+    router.replace({ query: { ...route.query, viewId: res.view.id, page: '1' } });
   }
   createName.value = '';
-  createIsPublic.value = false;
   close();
 }
 
@@ -301,14 +285,13 @@ async function handleEdit() {
   }
   if (editing.value) return;
   editing.value = true;
-  let res: any;
+  let res: ViewCallbackResult;
   try {
-    res = await props.onUpdateView(editingView.value.id, {
+    res = (await props.onUpdateView(editingView.value.id, {
       name: editName.value.trim(),
       columns: editingView.value.columns ?? undefined,
       filterParams: editingView.value.filterParams ?? undefined,
-      isPublic: editIsPublic.value,
-    });
+    })) as ViewCallbackResult;
   } finally {
     editing.value = false;
   }
@@ -330,9 +313,9 @@ async function handleDelete() {
   });
   if (!ok) return;
   deleting.value = true;
-  let res: any;
+  let res: ViewCallbackResult;
   try {
-    res = await props.onDeleteView(view.id);
+    res = (await props.onDeleteView(view.id)) as ViewCallbackResult;
   } finally {
     deleting.value = false;
   }

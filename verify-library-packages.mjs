@@ -141,7 +141,7 @@ try {
 
   writeFileSync(
     consumerEntry,
-    "import { Dialog, HBadge, Tabs } from '@jaltech/vuejs-ui'\nvoid [Dialog, HBadge, Tabs]\n",
+    "import { Dialog, FormField, HBadge, MetricCard, SavedViewsDataTable, StatusBadge, Tabs, useClientDataTable } from '@jaltech/vuejs-ui'\nvoid [Dialog, FormField, HBadge, MetricCard, SavedViewsDataTable, StatusBadge, Tabs, useClientDataTable]\n",
     'utf8',
   );
   writeFileSync(

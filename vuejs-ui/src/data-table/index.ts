@@ -15,3 +15,6 @@ export {
   isTreeTable,
   useDataTableTree,
 } from './tree';
+export { type ActionsColumnOptions, createActionsColumn, oneOf, sortableHeader } from './columns';
+export { exportTableToCsv, type TableCsvOptions, tableToCsv } from './csv';
+export { type ClientDataTable, type ClientDataTableOptions, useClientDataTable } from './useClientDataTable';

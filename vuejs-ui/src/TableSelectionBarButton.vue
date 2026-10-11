@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconLoader2 } from '@tabler/icons-vue';
 import { Button } from './button';
 import HTooltip from './HTooltip.vue';
 import { cn } from './utils';
@@ -24,7 +23,8 @@ defineEmits<(e: 'click') => void>();
       variant="hicon"
       size="hicon"
       :aria-label="props.title"
-      :disabled="props.disabled || props.pending"
+      :disabled="props.disabled"
+      :pending="props.pending"
       :class="
         cn(
           props.destructive && 'text-destructive hover:text-destructive',
@@ -33,8 +33,7 @@ defineEmits<(e: 'click') => void>();
       "
       @click="$emit('click')"
     >
-      <IconLoader2 v-if="props.pending" class="animate-spin" />
-      <slot v-else />
+      <slot />
     </Button>
   </HTooltip>
 </template>

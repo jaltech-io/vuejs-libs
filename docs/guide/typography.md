@@ -37,4 +37,4 @@ Base size is **14 px** (dense application). Never use an arbitrary size (`text-[
 
 ## Tabular figures
 
-`StatCard`, `HMetricCard`, `Pagination`, calendar cells, `NumberField`, `SidebarMenuBadge` and the selection bar counter use `tabular-nums`: digits share one width, so counters and values do not jitter. Add it yourself on any other element that shows **only** a number (KPI, amount, duration, numeric table cell, count badge). Never on a text container (a whole table, a text badge): Inter's `tnum` also widens punctuation such as the hyphen.
+`MetricCard`, `Pagination`, calendar cells, `NumberField`, `SidebarMenuBadge` and the selection bar counter use `tabular-nums`: digits share one width, so counters and values do not jitter. Add it yourself on any other element that shows **only** a number (KPI, amount, duration, numeric table cell, count badge). Never on a text container (a whole table, a text badge): Inter's `tnum` also widens punctuation such as the hyphen.

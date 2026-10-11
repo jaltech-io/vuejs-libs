@@ -19,7 +19,7 @@ import { type ComboboxTexts, defaultComboboxTexts } from '../combobox/texts';
  * Un pluriel est une fonction `(count) => string`.
  */
 export interface LibraryTextsDefinition {
-  /** Langue des dates (BCP 47) : DatePicker, ActivityFeed, panneau de ticket. */
+  /** Langue des dates (BCP 47) : DatePicker. */
   locale: string;
   combobox: Required<ComboboxTexts>;
   selectionBar: {
@@ -45,6 +45,12 @@ export interface LibraryTextsDefinition {
     toggleRow: string;
     expandAll: string;
     collapseAll: string;
+    /** En-tête de la colonne d'actions (`createActionsColumn`). */
+    actions: string;
+    /** Bouton d'export CSV de `SavedViewsDataTable` (toutes les lignes filtrées). */
+    exportCsv: string;
+    /** Bouton d'export CSV de la sélection (barre de sélection de `SavedViewsDataTable`). */
+    exportSelection: string;
   };
   dataTableFilters: {
     filter: string;
@@ -80,13 +86,11 @@ export interface LibraryTextsDefinition {
     newView: string;
     editView: string;
     namePlaceholder: string;
-    makePublic: string;
     saving: string;
     save: string;
     update: string;
     delete: string;
     searchViews: string;
-    public: string;
     noViewFound: string;
     addView: string;
     dropdownNameRequired: string;
@@ -109,50 +113,6 @@ export interface LibraryTextsDefinition {
     sidebarEdit: string;
     sidebarDelete: string;
   };
-  activityFeed: {
-    eventCount: (count: number) => string;
-    empty: string;
-    filterAll: string;
-    filterCreations: string;
-    filterStatusChanges: string;
-    filterComments: string;
-    filterAssignments: string;
-    justNow: string;
-    minutesAgo: (minutes: number) => string;
-    hoursAgo: (hours: number) => string;
-    daysAgo: (days: number) => string;
-  };
-  issuePanel: {
-    statuses: Record<'open' | 'in-progress' | 'in-review' | 'done' | 'closed', string>;
-    priorities: Record<'critical' | 'high' | 'medium' | 'low', string>;
-    types: Record<'bug' | 'feature' | 'task' | 'improvement', string>;
-    status: string;
-    priority: string;
-    type: string;
-    assignee: string;
-    unassigned: string;
-    sprint: string;
-    linkedSprint: string;
-    noSprint: string;
-    points: string;
-    dueDate: string;
-    parent: string;
-    detach: string;
-    attach: string;
-    chooseParent: string;
-    labels: string;
-    none: string;
-    createdAt: string;
-    updatedAt: string;
-    tabDescription: string;
-    tabSubtasks: string;
-    tabComments: string;
-    tabAttachments: string;
-    tabTime: string;
-    tabActivity: string;
-    tabRelations: string;
-  };
-  aiDevPanel: { tabDev: string; tabMerge: string; tabDeploy: string };
   tenantPanel: {
     tabInformations: string;
     tabPrograms: string;
@@ -203,6 +163,9 @@ export const defaultLibraryTexts: LibraryTextsDefinition = {
     toggleRow: 'Afficher les sous-lignes',
     expandAll: 'Tout déplier',
     collapseAll: 'Tout replier',
+    actions: 'Actions',
+    exportCsv: 'Exporter en CSV',
+    exportSelection: 'Exporter la sélection',
   },
   dataTableFilters: {
     filter: 'Filtrer',
@@ -237,13 +200,11 @@ export const defaultLibraryTexts: LibraryTextsDefinition = {
     newView: 'New view',
     editView: 'Edit view',
     namePlaceholder: 'View name',
-    makePublic: 'Rendre publique (visible par tous)',
     saving: 'Saving…',
     save: 'Save view',
     update: 'Update',
     delete: 'Delete',
     searchViews: 'Search views…',
-    public: 'Public',
     noViewFound: 'No view found.',
     addView: 'Add view',
     dropdownNameRequired: 'Name is required',
@@ -266,50 +227,6 @@ export const defaultLibraryTexts: LibraryTextsDefinition = {
     sidebarEdit: 'Modifier',
     sidebarDelete: 'Supprimer',
   },
-  activityFeed: {
-    eventCount: (count) => `${count} événement${count > 1 ? 's' : ''}`,
-    empty: 'Aucun événement dans cette catégorie.',
-    filterAll: 'Tout',
-    filterCreations: 'Créations',
-    filterStatusChanges: 'Changements de statut',
-    filterComments: 'Commentaires',
-    filterAssignments: 'Assignations',
-    justNow: "à l'instant",
-    minutesAgo: (minutes) => `il y a ${minutes} min`,
-    hoursAgo: (hours) => `il y a ${hours}h`,
-    daysAgo: (days) => `il y a ${days}j`,
-  },
-  issuePanel: {
-    statuses: { open: 'Ouvert', 'in-progress': 'En cours', 'in-review': 'En revue', done: 'Terminé', closed: 'Fermé' },
-    priorities: { critical: 'Critique', high: 'Haute', medium: 'Moyenne', low: 'Basse' },
-    types: { bug: 'Bug', feature: 'Feature', task: 'Tâche', improvement: 'Amélioration' },
-    status: 'Statut',
-    priority: 'Priorité',
-    type: 'Type',
-    assignee: 'Assigné à',
-    unassigned: 'Non assigné',
-    sprint: 'Sprint',
-    linkedSprint: 'Sprint lié',
-    noSprint: 'Aucun sprint',
-    points: 'Points',
-    dueDate: 'Échéance',
-    parent: 'Parent',
-    detach: 'Détacher',
-    attach: 'Rattacher…',
-    chooseParent: '— Choisir un parent —',
-    labels: 'Labels',
-    none: 'Aucun',
-    createdAt: 'Créé le',
-    updatedAt: 'Modifié le',
-    tabDescription: 'Description',
-    tabSubtasks: 'Sous-tâches',
-    tabComments: 'Commentaires',
-    tabAttachments: 'Pièces jointes',
-    tabTime: 'Temps',
-    tabActivity: 'Activité',
-    tabRelations: 'Relations',
-  },
-  aiDevPanel: { tabDev: 'Dev', tabMerge: 'Merge', tabDeploy: 'Déployer' },
   tenantPanel: {
     tabInformations: 'Informations générales',
     tabPrograms: 'Programmes',

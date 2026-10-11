@@ -13,7 +13,7 @@ Priority: **prop > provided texts > defaults**. Every section and every key is o
 import { installLibraryTexts } from '@jaltech/vuejs-ui/texts'
 
 installLibraryTexts(app, () => ({
-  locale: i18n.global.locale.value, // dates: DatePicker, ActivityFeed, issue panel
+  locale: i18n.global.locale.value, // dates: DatePicker
   confirmDialog: { cancel: t('cancel'), confirm: t('confirm') },
   selectionBar: {
     selectedCount: (count) => t('selectedCount', { count }, count),
@@ -28,18 +28,17 @@ installLibraryTexts(app, () => ({
 
 | Section | Used by |
 | --- | --- |
-| `locale` | `DatePicker` (calendar + displayed date), `ActivityFeed` (dates older than a week), issue panel dates |
+| `locale` | `DatePicker` (calendar + displayed date) |
 | `combobox` | `Combobox` |
 | `selectionBar` | `TableSelectionBar` |
 | `confirmDialog` | `ConfirmDialog` / `showConfirm` |
 | `formDialog` | `FormDialog` |
 | `rowActions` | `RowActions` / `rowActionsCell` (« ⋯ » trigger) |
 | `datePicker` | `DatePicker` |
-| `dataTable` | `DataTable`, `createSelectColumn`, `DataTableColumnHeader`, `DataTableColumnsVisibility`, tree mode (`DataTableTreeCell`: `toggleRow`; `DataTableExpandToggle`: `expandAll` / `collapseAll`) |
+| `dataTable` | `DataTable`, `createSelectColumn`, `DataTableColumnHeader`, `DataTableColumnsVisibility`, tree mode (`DataTableTreeCell`: `toggleRow`; `DataTableExpandToggle`: `expandAll` / `collapseAll`), `createActionsColumn` (`actions`), `SavedViewsDataTable` (`exportCsv`, `exportSelection`) |
 | `dataTableFilters` | advanced toolbar filters and operators |
 | `dataTableViews` | saved views (toolbar, dropdown, `ViewFormModal`, `ViewsSidebar`) |
-| `activityFeed` | `ActivityFeed` (counter, filters, relative dates) |
-| `issuePanel`, `aiDevPanel`, `tenantPanel` | the panel components |
+| `tenantPanel` | the tenant panel components |
 | `dialog`, `sheet`, `pagination`, `carousel`, `breadcrumb`, `sidebar`, `spinner`, `messageScroller`, `command` | accessible names of the shadcn-vue primitives |
 
 The full list of keys, with their default values, is the `LibraryTextsDefinition` type and the `defaultLibraryTexts` object exported by `@jaltech/vuejs-ui/texts`.

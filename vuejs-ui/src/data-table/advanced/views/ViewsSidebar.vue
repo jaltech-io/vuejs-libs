@@ -1,5 +1,11 @@
 <template>
-  <aside class="h-table-wrap w-full md:w-52 shrink-0 self-start">
+  <!-- Largeur souple : toute la largeur sur mobile ; au-delà, celle des noms de vues, entre 10 et
+       16 rem (les noms plus longs sont tronqués). Carte autonome (jetons --h-*), hauteur bornée par
+       `--h-table-max-height` comme le tableau voisin. -->
+  <aside
+    data-slot="views-sidebar"
+    class="flex w-full shrink-0 flex-col self-start overflow-hidden rounded-(--h-radius-lg) border-[0.5px] border-(--h-border) bg-(--h-surface) shadow-[0_1px_3px_rgba(0,0,0,0.07),0_4px_14px_rgba(0,0,0,0.05)] md:w-auto md:min-w-40 md:max-w-64 md:max-h-(--h-table-max-height)"
+  >
     <div class="flex h-[38px] items-center justify-between whitespace-nowrap bg-(--h-surface2) px-3.5 text-2xs font-semibold uppercase tracking-[0.06em] text-(--h-text-3)">
       <span>{{ texts.dataTableViews.sidebarTitle }}</span>
       <HTooltip placement="top-end" :text="texts.dataTableViews.sidebarNewView">
@@ -21,7 +27,7 @@
         @click="selectView(null)"
       >
         <IconList class="size-3.5 shrink-0" :class="!currentView ? 'text-(--h-blue-600)' : 'opacity-60'" />
-        <span class="min-w-0 flex-1 truncate">{{ defaultLabel }}</span>
+        <span class="min-w-0 flex-1 truncate">{{ defaultLabel ?? texts.dataTableViews.all }}</span>
       </button>
 
       <template v-for="view in views" :key="view.id">
@@ -71,35 +77,30 @@
 </template>
 
 <script setup lang="ts">
-// Sidebar de VUES SAUVEGARDÉES réutilisable — unique pour tous les programmes à table.
-// UX « Éléments de travail » (programme issues) : icône par vue, renommage INLINE (le seul
-// champ modifiable étant le nom), corbeille, et bouton « + » qui émet `create` (le programme
-// ouvre son propre ViewFormModal en mode création). Les colonnes masquables sont DÉRIVÉES de
-// l'instance de table partagée (useTableInstance) : la visibilité des colonnes d'une vue n'est
-// donc plus figée sur le jeu de colonnes d'issues (correctif du hardcode historique de COLUMNS),
-// et aucun programme n'a à déclarer ses colonnes ici.
+// Sidebar de VUES SAUVEGARDÉES réutilisable — unique pour tous les tableaux.
+// Icône par vue, renommage INLINE (le seul champ modifiable étant le nom), corbeille (confirmation
+// demandée ICI, le callback reçoit l'identifiant), et bouton « + » qui émet `create` (l'appelant
+// ouvre ViewFormModal en mode création ; SavedViewsDataTable le fait seul). Les colonnes masquables
+// sont DÉRIVÉES de la table partagée (useTableInstance) : aucun tableau n'a à les déclarer ici.
 import { computed, nextTick, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { showConfirm } from '../../../composables/useConfirm';
 import { useTableInstance } from '../../../composables/useTableInstance';
 import HTooltip from '../../../HTooltip.vue';
 import { useLibraryTexts } from '../../../texts';
-import type { FilterParams, ViewItem } from '../../../types';
+import type { DeleteViewCallback, UpdateViewCallback, ViewCallbackResult, ViewItem } from '../../../types';
 import { IconBookmark, IconList, IconLoader2, IconPencil, IconPlus, IconTrash } from '@tabler/icons-vue';
 import { calcViewSearchParams, getHideableColumnIds } from './utils';
 
 // Contrat des callbacks : résoudre APRÈS avoir rafraîchi `views` ; en cas d'échec, renvoyer
 // `{ status: 'error', message }` — le message est affiché tel quel sous le champ de renommage
 // (au consommateur de le traduire, et libre à lui d'afficher aussi un toast).
-type ViewCallbackResult = { status?: string; message?: string } | undefined | void;
-
 const props = defineProps<{
   views: ViewItem[];
   defaultLabel?: string;
-  onUpdateView: (
-    id: string,
-    payload: { name: string; columns?: string[]; filterParams?: FilterParams },
-  ) => Promise<unknown>;
-  onDeleteView: (view: ViewItem) => Promise<unknown>;
+  onUpdateView: UpdateViewCallback;
+  /** Suppression par IDENTIFIANT, après confirmation par la lib (le callback ne confirme pas). */
+  onDeleteView: DeleteViewCallback;
 }>();
 const emit = defineEmits<(e: 'create') => void>();
 
@@ -183,8 +184,15 @@ async function saveEdit(view: ViewItem, fromBlur = false) {
 }
 
 async function onDelete(view: ViewItem) {
+  const ok = await showConfirm({
+    title: texts.value.dataTableViews.deleteTitle,
+    description: texts.value.dataTableViews.deleteDescription(view.name),
+    confirmLabel: texts.value.dataTableViews.deleteConfirm,
+    variant: 'destructive',
+  });
+  if (!ok) return;
   const wasActive = route.query.viewId === view.id;
-  const res = (await props.onDeleteView(view)) as ViewCallbackResult;
+  const res = (await props.onDeleteView(view.id)) as ViewCallbackResult;
   // Supprimer la vue active ramène à « Tous » (vue absente de la liste rafraîchie, ou succès explicite).
   const deleted = (res && res.status === 'success') || !props.views.some((v) => v.id === view.id);
   if (wasActive && deleted && route.query.viewId === view.id) selectView(null);

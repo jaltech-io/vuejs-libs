@@ -85,7 +85,7 @@ export default {
 
 ```vue
 <script setup lang="ts">
-import { HBadge } from '@jaltech/vuejs-ui'
+import { StatusBadge } from '@jaltech/vuejs-ui'
 import { Dialog, DialogContent, DialogTrigger } from '@jaltech/vuejs-ui/dialog'
 </script>
 
@@ -93,7 +93,7 @@ import { Dialog, DialogContent, DialogTrigger } from '@jaltech/vuejs-ui/dialog'
   <Dialog>
     <DialogTrigger>Open</DialogTrigger>
     <DialogContent>
-      <HBadge>New</HBadge>
+      <StatusBadge variant="blue" label="New" />
     </DialogContent>
   </Dialog>
 </template>

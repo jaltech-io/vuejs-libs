@@ -170,7 +170,15 @@
 <script setup lang="ts">
 import { useLayer } from '../../composables/useLayer';
 import { useTableInstance } from '@jaltech/vuejs-ui/composables/useTableInstance';
-import type { DataTableFilterOption, FilterParams, ViewItem } from '@jaltech/vuejs-ui/types';
+import type {
+  CreateViewCallback,
+  DataTableFilterField,
+  DataTableFilterOption,
+  DeleteViewCallback,
+  UpdateViewCallback,
+  ViewCallbackResult,
+  ViewItem,
+} from '@jaltech/vuejs-ui/types';
 import { IconBookmark, IconBookmarkPlus, IconCheck, IconDeviceFloppy, IconFilter, IconList, IconLoader2, IconRotate, IconTypography, IconX } from '@tabler/icons-vue';
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -190,18 +198,19 @@ import {
 } from './views/utils';
 
 const props = defineProps<{
-  filterFields: { label: string; value: string; placeholder?: string; options?: { label: string; value: string }[] }[];
+  filterFields: DataTableFilterField[];
   views: ViewItem[];
   // Contrat des callbacks de vues : résoudre APRÈS avoir rafraîchi `views`, et renvoyer
   // `{ status: 'error', message }` en cas d'échec — `message` est affiché tel quel (au
   // consommateur de le traduire). La création renvoie `{ view: { id } }` : la vue créée devient
   // la vue active.
-  onCreateView: (p: any) => Promise<any>;
-  onUpdateView: (id: string, p: any) => Promise<any>;
-  onDeleteView: (id: string) => Promise<any>;
+  onCreateView: CreateViewCallback;
+  onUpdateView: UpdateViewCallback;
+  /** Suppression par IDENTIFIANT, après confirmation par la lib (le callback ne confirme pas). */
+  onDeleteView: DeleteViewCallback;
   defaultLabel?: string;
   // Le programme fournit son propre sélecteur de vues (ex. sidebar à gauche du
-  // tableau) plutôt que le dropdown intégré — voir pages/tenants/components/ViewsSidebar.vue.
+  // tableau, ViewsSidebar) plutôt que le dropdown intégré.
   hideViewsDropdown?: boolean;
 }>();
 
@@ -410,16 +419,16 @@ async function handleSaveView() {
   }
   saving.value = true;
   try {
-    const res = await props.onCreateView({
+    const res = (await props.onCreateView({
       name: newViewName.value.trim(),
       columns: [...currentColumns.value],
       filterParams: currentFilterParams.value,
-    });
+    })) as ViewCallbackResult;
     if (res?.status === 'error') {
       saveViewError.value = res.message ?? '';
       return;
     }
-    if (res?.view?.id) router.replace({ query: { ...(route.query as any), viewId: res.view.id } });
+    if (res?.view?.id) router.replace({ query: { ...route.query, viewId: res.view.id } });
     openSaveView.value = false;
     newViewName.value = '';
     saveViewError.value = '';
@@ -433,11 +442,11 @@ async function handleUpdateView() {
   saving.value = true;
   updateViewError.value = '';
   try {
-    const res = await props.onUpdateView(currentView.value.id, {
+    const res = (await props.onUpdateView(currentView.value.id, {
       name: currentView.value.name,
       columns: [...currentColumns.value],
       filterParams: currentFilterParams.value,
-    });
+    })) as ViewCallbackResult;
     if (res?.status === 'error') updateViewError.value = res.message ?? '';
   } finally {
     saving.value = false;
