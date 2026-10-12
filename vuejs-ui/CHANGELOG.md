@@ -1,3 +1,7 @@
+## 0.9.1
+
+- `DataTable` et `SavedViewsDataTable` : emplacement `empty` pour l'état vide propre à un écran (par défaut, le texte « Aucun résultat »). Rétrocompatible.
+
 ## 0.9.0 (2026-10-11)
 
 Le tableau avec vues devient un composant, les motifs répétés côté application passent dans la lib, et la lib perd ce qui était propre à un écran. **Version à CHANGEMENTS CASSANTS** : voir la section dédiée, chaque point dit comment migrer.

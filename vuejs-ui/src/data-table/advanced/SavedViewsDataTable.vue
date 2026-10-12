@@ -58,7 +58,9 @@
         />
 
         <div :class="[cardClass, 'w-full min-w-0 flex-1 max-md:order-3']">
-          <DataTable :table="table" :columns="columns" />
+          <DataTable :table="table" :columns="columns">
+            <template v-if="$slots.empty" #empty><slot name="empty" /></template>
+          </DataTable>
           <div class="shrink-0 border-t-[0.5px] border-t-(--h-border) bg-(--h-surface2) px-2.5 py-[3px]">
             <DataTablePagination :table="table" />
           </div>
@@ -134,6 +136,8 @@ defineSlots<{
   actions?(): unknown;
   /** Actions sur la sélection (barre de sélection), après l'export de la sélection. */
   'selection-actions'?(props: { rows: TData[]; count: number; clear: () => void }): unknown;
+  /** État vide propre à l'écran (par défaut : « Aucun résultat »). */
+  empty?(): unknown;
 }>();
 
 const texts = useLibraryTexts();

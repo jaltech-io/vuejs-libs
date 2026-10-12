@@ -45,7 +45,7 @@
         </template>
         <tr v-else>
           <td :colSpan="columns.length" class="h-dt-empty">
-            {{ texts.dataTable.noResults }}
+            <slot name="empty">{{ texts.dataTable.noResults }}</slot>
           </td>
         </tr>
       </tbody>
