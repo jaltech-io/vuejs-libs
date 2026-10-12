@@ -1,3 +1,7 @@
+## 0.9.2
+
+- `DataTableAdvancedToolbar` (et `SavedViewsDataTable`) : les filtres actifs s'affichent sur la ligne du bouton Filtrer, à sa droite, et passent à la ligne seulement quand la place manque ; les actions de droite restent alignées à droite. Rétrocompatible.
+
 ## 0.9.1
 
 - `DataTable` et `SavedViewsDataTable` : emplacement `empty` pour l'état vide propre à un écran (par défaut, le texte « Aucun résultat »). Rétrocompatible.

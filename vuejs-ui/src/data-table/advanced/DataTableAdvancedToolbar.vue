@@ -1,9 +1,9 @@
 <template>
   <div class="flex w-full flex-col overflow-x-auto">
 
-    <!-- ── Row 1 : Filtre · Views (gauche) · Actions (droite) ── -->
-    <div class="flex flex-wrap items-center justify-between gap-2 pb-0">
-      <div class="flex flex-wrap items-center gap-2 min-w-0">
+    <!-- ── Filtre · Filtres actifs · Actions de vue (gauche) · Actions (droite) ── -->
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <div class="flex min-w-0 grow basis-64 flex-wrap items-center gap-2">
         <DataTableViewsDropdown
           v-if="!hideViewsDropdown"
           :views="views"
@@ -47,122 +47,118 @@
             </div>
           </Teleport>
         </div>
+
+        <!-- Filtres actifs et actions de vue : sur la ligne du bouton Filtrer, à la ligne si la place manque -->
+        <!-- Filtres simples -->
+        <DataTableFilterItem
+          v-for="opt in singleFilters"
+          :key="opt.id"
+          :option="opt"
+          :autoOpen="opt.id === lastAddedId"
+          @update="updateOption"
+          @remove="removeOption"
+        />
+
+        <!-- Groupe multi-filtre -->
+        <DataTableMultiFilter
+          v-if="multiFilters.length > 0"
+          :options="multiFilters"
+          :allOptions="allOptions"
+          :selectedOptions="selectedOptions"
+          :operator="multiOperator"
+          @update:operator="updateOperator"
+          @update:selectedOptions="onMultiUpdate"
+        />
+
+        <!-- Separateur vertical avant les actions de vue -->
+        <div
+          v-if="showViewActions"
+          class="h-4 w-px bg-border/70"
+        />
+
+        <!-- Reinitialiser (vue active modifiee) -->
+        <button
+          v-if="isUpdated && currentView"
+          type="button"
+          @click="resetToCurrentView"
+          class="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          <IconRotate class="size-3" />
+          {{ texts.dataTableViews.reset }}
+        </button>
+
+        <!-- Bouton Sauvegarder la vue -->
+        <template v-if="hasActiveFilterValues && !currentView">
+          <!-- Etat ferme : bouton bookmark -->
+          <button
+            v-if="!openSaveView"
+            type="button"
+            @click="openSaveView = true; $nextTick(() => saveInputRef?.focus())"
+            class="inline-flex h-7 items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2.5 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50"
+          >
+            <IconBookmarkPlus class="size-3.5" />
+            {{ texts.dataTableViews.saveView }}
+          </button>
+
+          <!-- Etat ouvert : saisie inline -->
+          <div
+            v-else
+            class="flex items-center gap-1.5 rounded-md border border-primary/30 bg-background px-2.5 py-1 shadow-xs"
+          >
+            <IconBookmark class="size-3.5 shrink-0 text-primary" />
+            <input
+              ref="saveInputRef"
+              v-model="newViewName"
+              :placeholder="texts.dataTableViews.saveNamePlaceholder"
+              class="w-32 bg-transparent text-xs outline-hidden placeholder:text-muted-foreground"
+              @keyup.enter="handleSaveView"
+              @keyup.escape="openSaveView = false; newViewName = ''"
+            />
+            <p v-if="saveViewError" class="text-xs text-destructive">{{ saveViewError }}</p>
+            <div class="flex items-center gap-1">
+              <button
+                type="button"
+                @click="handleSaveView"
+                :disabled="saving"
+                :title="texts.dataTableViews.saveHint"
+                class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-2xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              >
+                <IconLoader2 v-if="saving" class="size-3 animate-spin" />
+                <IconCheck v-else class="size-3" />
+              </button>
+              <button
+                type="button"
+                @click="openSaveView = false; newViewName = ''"
+                :title="texts.dataTableViews.cancelHint"
+                class="flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+              >
+                <IconX class="size-3" />
+              </button>
+            </div>
+          </div>
+        </template>
+
+        <!-- Mettre a jour la vue active -->
+        <button
+          v-if="isUpdated && currentView"
+          type="button"
+          :disabled="saving"
+          @click="handleUpdateView"
+          class="inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+        >
+          <IconLoader2 v-if="saving" class="size-3.5 animate-spin" />
+          <IconDeviceFloppy v-else class="size-3.5" />
+          {{ texts.dataTableViews.updateView }}
+        </button>
+        <p v-if="updateViewError && isUpdated && currentView" class="text-xs text-destructive">{{ updateViewError }}</p>
       </div>
-      <div class="flex flex-wrap items-center gap-2 min-w-0">
+      <div class="ml-auto flex min-w-0 flex-wrap items-center gap-2">
         <slot name="selection" />
         <slot />
         <!-- Tableau en arbre uniquement (useDataTableTree) : rien sinon. -->
         <DataTableExpandToggle />
         <DataTableColumnsVisibility />
       </div>
-    </div>
-
-    <!-- ── Row 2 : Filtres actifs + actions vue ── -->
-    <div v-if="selectedOptions.length > 0 || showViewActions" class="flex flex-wrap items-center gap-2 pt-3 min-h-[36px]">
-
-      <!-- Filtres simples -->
-      <DataTableFilterItem
-        v-for="opt in singleFilters"
-        :key="opt.id"
-        :option="opt"
-        :autoOpen="opt.id === lastAddedId"
-        @update="updateOption"
-        @remove="removeOption"
-      />
-
-      <!-- Groupe multi-filtre -->
-      <DataTableMultiFilter
-        v-if="multiFilters.length > 0"
-        :options="multiFilters"
-        :allOptions="allOptions"
-        :selectedOptions="selectedOptions"
-        :operator="multiOperator"
-        @update:operator="updateOperator"
-        @update:selectedOptions="onMultiUpdate"
-      />
-
-      <!-- Separateur vertical avant les actions de vue -->
-      <div
-        v-if="showViewActions"
-        class="h-4 w-px bg-border/70"
-      />
-
-      <!-- Reinitialiser (vue active modifiee) -->
-      <button
-        v-if="isUpdated && currentView"
-        type="button"
-        @click="resetToCurrentView"
-        class="inline-flex h-7 items-center gap-1 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-      >
-        <IconRotate class="size-3" />
-        {{ texts.dataTableViews.reset }}
-      </button>
-
-      <!-- Bouton Sauvegarder la vue -->
-      <template v-if="hasActiveFilterValues && !currentView">
-        <!-- Etat ferme : bouton bookmark -->
-        <button
-          v-if="!openSaveView"
-          type="button"
-          @click="openSaveView = true; $nextTick(() => saveInputRef?.focus())"
-          class="inline-flex h-7 items-center gap-1.5 rounded-md border border-primary/30 bg-primary/5 px-2.5 text-xs font-medium text-primary transition-all hover:bg-primary/10 hover:border-primary/50"
-        >
-          <IconBookmarkPlus class="size-3.5" />
-          {{ texts.dataTableViews.saveView }}
-        </button>
-
-        <!-- Etat ouvert : saisie inline -->
-        <div
-          v-else
-          class="flex items-center gap-1.5 rounded-md border border-primary/30 bg-background px-2.5 py-1 shadow-xs"
-        >
-          <IconBookmark class="size-3.5 shrink-0 text-primary" />
-          <input
-            ref="saveInputRef"
-            v-model="newViewName"
-            :placeholder="texts.dataTableViews.saveNamePlaceholder"
-            class="w-32 bg-transparent text-xs outline-hidden placeholder:text-muted-foreground"
-            @keyup.enter="handleSaveView"
-            @keyup.escape="openSaveView = false; newViewName = ''"
-          />
-          <p v-if="saveViewError" class="text-xs text-destructive">{{ saveViewError }}</p>
-          <div class="flex items-center gap-1">
-            <button
-              type="button"
-              @click="handleSaveView"
-              :disabled="saving"
-              :title="texts.dataTableViews.saveHint"
-              class="flex h-5 items-center justify-center rounded bg-primary px-1.5 text-2xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
-            >
-              <IconLoader2 v-if="saving" class="size-3 animate-spin" />
-              <IconCheck v-else class="size-3" />
-            </button>
-            <button
-              type="button"
-              @click="openSaveView = false; newViewName = ''"
-              :title="texts.dataTableViews.cancelHint"
-              class="flex size-5 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              <IconX class="size-3" />
-            </button>
-          </div>
-        </div>
-      </template>
-
-      <!-- Mettre a jour la vue active -->
-      <button
-        v-if="isUpdated && currentView"
-        type="button"
-        :disabled="saving"
-        @click="handleUpdateView"
-        class="inline-flex h-7 items-center gap-1.5 rounded-md bg-primary px-2.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
-      >
-        <IconLoader2 v-if="saving" class="size-3.5 animate-spin" />
-        <IconDeviceFloppy v-else class="size-3.5" />
-        {{ texts.dataTableViews.updateView }}
-      </button>
-      <p v-if="updateViewError && isUpdated && currentView" class="text-xs text-destructive">{{ updateViewError }}</p>
-
     </div>
   </div>
 </template>
